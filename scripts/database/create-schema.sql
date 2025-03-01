@@ -1,0 +1,66 @@
+CREATE DATABASE IF NOT EXISTS `tcc_database`
+CHARACTER SET utf8 -- Codificação de caracteres
+COLLATE utf8_general_ci; -- Comparação de strings insensível a maiúsculas e minúsculas
+
+USE `tcc_database`;
+
+-- Tabela para 'endereço'
+CREATE TABLE IF NOT EXISTS `endereco` (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  cidade VARCHAR(100) NOT NULL,
+  estado CHAR(2) NOT NULL,
+  bairro VARCHAR(100) NOT NULL,
+  rua VARCHAR(100) NOT NULL,
+  numero SMALLINT NOT NULL,
+  cep CHAR(7) NOT NULL,
+  fk_usuario BIGINT NOT NULL,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela para 'usuario'
+CREATE TABLE IF NOT EXISTS `usuario` (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nome VARCHAR(100) NOT NULL,
+  cpf CHAR(11) NULL, -- Passível de criptografia
+  cnpj CHAR(14) NULL, -- Passível de criptografia
+  email VARCHAR(100) UNIQUE NOT NULL,
+  senha CHAR(64) NOT NULL, -- ex: hash(sha256)
+  foto VARCHAR(64) NULL, -- Renomear nome do arquivo para um hash, ao armazenar o caminho do arquivo
+  celular VARCHAR(12) NULL, -- ex: 6133333333 ou 61999999999
+  tipo ENUM ('CLIENTE', 'PRESTADOR_SERVICO', 'ADMINISTRADOR') NOT NULL,
+  situacao ENUM ('ATIVO', 'BLOQUEADO') DEFAULT 'ATIVO',
+    CHECK (cpf IS NOT NULL OR cnpj IS NOT NULL) -- CPF ou CNPJ devem ser preenchidos
+);
+
+-- Tabela para o 'anuncio do serviço'
+CREATE TABLE IF NOT EXISTS `anuncio_servico` (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  titulo VARCHAR(100) NOT NULL,
+  descricao TEXT NULL,
+  valor DECIMAL(7, 2) NOT NULL, -- Valores até 99_999,99
+  categoria VARCHAR(64) NULL, -- ex: Babá, Cozinheiro, Diarista, Estética...
+  data_criacao TIMESTAMP NOT NULL DEFAULT UTC_TIMESTAMP() -- Data e hora sem marcação de fuso, 
+  data_atualizacao TIMESTAMP NULL,
+  fk_prestador_servico BIGINT NOT NULL,
+    FOREIGN KEY (fk_prestador_servico) REFERENCES usuario (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela 'serviços favoritados por usuário'
+CREATE TABLE IF NOT EXISTS `servico_favorito_usuario` (
+  fk_usuario BIGINT NOT NULL,
+  fk_servico BIGINT NOT NULL,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (fk_servico) REFERENCES servico (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabela para 'avaliação do serviço'
+CREATE TABLE IF NOT EXISTS `avaliacao_servico` (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nota TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  comentario TEXT NULL,
+  data_hora TIMESTAMP NOT NULL DEFAULT UTC_TIMESTAMP(),
+  fk_servico BIGINT NOT NULL,
+  fk_usuario BIGINT NOT NULL,
+    FOREIGN KEY (fk_servico) REFERENCES servico (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
