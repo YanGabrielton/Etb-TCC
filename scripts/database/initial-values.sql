@@ -1,35 +1,35 @@
 USE `tcc_database`;
 
 -- Inserindo valores na tabela 'usuario'
-INSERT INTO `usuario` (nome, cpf, cnpj, email, senha, foto, celular, tipo, situacao) VALUES
+INSERT INTO `usuario` (nome, cpf, email, senha, foto, celular, data_nascimento, tipo, situacao) VALUES
   (
     'João Silva',
     '12345678901',
-    NULL,
     'joao.silva@example.com',
-    '2c26b46b68ffc68ff99b453c1d30413413422f1640d5e8a2d8e6a4d7f8a4e7e3',
+    '0586c8116e212fd39c228d97c5f699303ca7635fe9483e1ad526056ab2b271a1',
     NULL,
     '61999999999',
+    '2000-01-01',
     'CLIENTE'
   ),
   (
     'Maria Oliveira',
-    NULL,
-    '12345678000199',
+    '12345678000',
     'maria.oliveira@example.com',
-    '3a7bd3e2360a3d5b2f8a4d7f8a4e7e3d8e6a4d7f8a4e7e3d8e6a4d7f8a4e7e3d',
+    '318b054eaaaf2a62a7881bab13e5872790741b19dac9e8695634ae48f0e6acf7',
     NULL,
     '6133333333',
+    '2000-01-01',
     'PRESTADOR_SERVICO'
   ),
   (
     'Admin'
     '98765432154',
-    NULL,
     'admin@example.com',
-    '5e884898da28047151d0e56f8dc6292773603d0d6aabbddc8a3d7f8a4e7e3d8e',
+    'dc97f93426094116d4eda8c41f1fd255c42246dcb9dff167cc4313a7f22ad987',
     NULL,
     '6100000000',
+    '2000-01-01',
     'ADMINISTRADOR'
   );
 
