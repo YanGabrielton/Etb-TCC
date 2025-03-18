@@ -1,0 +1,18 @@
+# Use o docker-compose apenas em ambiente de desenvolvimento
+
+services:
+  database:
+    container_name: postgres
+    image: postgres:17.4-bullseye
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    expose:
+      - ${POSTGRES_PORT}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
