@@ -1,1 +1,0 @@
-CREATE USER '%backend-api%';
