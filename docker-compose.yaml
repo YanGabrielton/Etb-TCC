@@ -1,10 +1,11 @@
 # Use o docker-compose apenas em ambiente de desenvolvimento
 services:
   postgres:
-    container_name: postgres
-    build:
-      context: ./scripts/database
-      dockerfile: Dockerfile
+    container_name: postgres_db
+    image: postgres:17.4-bullseye
+    # build:
+    #   context: ./scripts/database
+    #   dockerfile: Dockerfile
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_SUPER_USER}
