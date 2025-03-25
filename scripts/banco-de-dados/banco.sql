@@ -1,15 +1,8 @@
-CREATE TABLE conta_usuario (
-  _id              INT AUTO_INCREMENT PRIMARY KEY,
-  nome             VARCHAR(40) NOT NULL CHECK (length(nome) > 0),
-  email            VARCHAR(100) NOT NULL CHECK (length(email) > 0),
-  senha            CHAR(64) NOT NULL CHECK (length(senha) > 0),
-  foto             TEXT NULL CHECK (foto IS NULL OR foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
-  celular          CHAR(11) NULL,
-  data_criacao     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  status           ENUM('ATIVO', 'EM_ANÁLISE', 'BLOQUEADO') DEFAULT 'EM_ANÁLISE',
-  chave_endereco   INT NULL,
-  FOREIGN KEY (chave_endereco) REFERENCES endereco(_id)
-) ENGINE=InnoDB;
+CREATE DATABASE IF NOT EXISTS JOB4YOU
+CHARACTER SET utf8
+COLLATE utf8_general_ci;
+
+USE JOB4YOU;
 
 CREATE TABLE endereco (
   _id               INT AUTO_INCREMENT PRIMARY KEY,
@@ -20,19 +13,33 @@ CREATE TABLE endereco (
   rua               TEXT NOT NULL
 ) ENGINE=InnoDB;
 
+CREATE TABLE conta_usuario (
+  _id               INT AUTO_INCREMENT PRIMARY KEY,
+  nome              VARCHAR(40) NOT NULL CHECK (length(nome) > 0),
+  email             VARCHAR(100) NOT NULL CHECK (length(email) > 0),
+  senha             CHAR(64) NOT NULL CHECK (length(senha) > 0),
+  foto              TEXT NULL CHECK (foto IS NULL OR foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
+  celular           CHAR(11) NULL,
+  data_criacao      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status            ENUM('ATIVO', 'EM_ANÁLISE', 'BLOQUEADO') DEFAULT 'EM_ANÁLISE',
+  chave_endereco    INT NULL,
+  FOREIGN KEY (chave_endereco) REFERENCES endereco(_id)
+) ENGINE=InnoDB;
+
+
 CREATE TABLE cliente (
-  _id              INT AUTO_INCREMENT PRIMARY KEY,
-  chave_usuario    INT NOT NULL,
-  cpf              CHAR(11) NOT NULL UNIQUE CHECK (length(cpf) > 0),
-  data_nascimento  DATE NOT NULL CHECK (data_nascimento < CURRENT_DATE AND data_nascimento > DATE_SUB(CURRENT_DATE, INTERVAL 100 YEAR)),
+  _id               INT AUTO_INCREMENT PRIMARY KEY,
+  chave_usuario     INT NOT NULL,
+  cpf               CHAR(11) NOT NULL UNIQUE CHECK (length(cpf) > 0),
+  data_nascimento   DATE NOT NULL,
   FOREIGN KEY (chave_usuario) REFERENCES conta_usuario(_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE prestador (
-  _id              INT AUTO_INCREMENT PRIMARY KEY,
-  chave_usuario    INT NOT NULL,
-  cnpj             CHAR(14) NOT NULL UNIQUE CHECK (length(cnpj) > 0),
-  curriculo        TEXT NOT NULL CHECK (length(curriculo) > 0 AND curriculo REGEXP '\\.(pdf|jpg|jpeg|png|webp|bmp)$'),
+  _id               INT AUTO_INCREMENT PRIMARY KEY,
+  chave_usuario     INT NOT NULL,
+  cnpj              CHAR(14) NOT NULL UNIQUE CHECK (length(cnpj) > 0),
+  curriculo         TEXT NOT NULL CHECK (length(curriculo) > 0 AND curriculo REGEXP '\\.(pdf|jpg|jpeg|png|webp|bmp)$'),
   FOREIGN KEY (chave_usuario) REFERENCES conta_usuario(_id)
 ) ENGINE=InnoDB;
 
