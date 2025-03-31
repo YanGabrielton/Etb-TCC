@@ -9,8 +9,8 @@ USE JOB4YOU;
 DROP TABLE IF EXISTS endereco;
 CREATE TABLE endereco (
   id                INT AUTO_INCREMENT,
-  cep               CHAR(8) NOT NULL CHECK (cep REGEXP '\\[0-9]{8}'),
-  estado            CHAR(2) NOT NULL CHECK (estado REGEXP '\\[a-zA-Z]{2}'),
+  cep               CHAR(8) NOT NULL CHECK (cep REGEXP '[0-9]{8}'),
+  estado            CHAR(2) NOT NULL CHECK (estado REGEXP '[a-zA-Z]{2}'),
   cidade            VARCHAR(255) NOT NULL CHECK (length(cidade) > 1),
   bairro            VARCHAR(255) NOT NULL CHECK (length(bairro) > 1),
   rua               VARCHAR(255) NOT NULL CHECK (length(rua) > 1),
@@ -24,7 +24,7 @@ CREATE TABLE conta_usuario (
   email             VARCHAR(100) NOT NULL CHECK (length(email) > 1),
   senha             CHAR(64) NOT NULL CHECK (length(senha) = 64),
   foto              TEXT NULL CHECK (foto IS NULL OR foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
-  celular           CHAR(11) NULL CHECK (celular REGEXP '\\[0-9]{11}'),
+  celular           CHAR(11) NULL CHECK (celular REGEXP '[0-9]{11}'),
   data_criacao      TIMESTAMP DEFAULT (UTC_TIMESTAMP),
   status_conta      ENUM('ATIVO', 'EM_ANÁLISE', 'BLOQUEADO') DEFAULT 'EM_ANÁLISE',
   fk_endereco       INT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE conta_usuario (
 DROP TABLE IF EXISTS cliente;
 CREATE TABLE cliente (
   id_conta_usuario  INT NOT NULL,
-  cpf               CHAR(11) NOT NULL UNIQUE CHECK (cpf REGEXP '\\[0-9]{11}'),
+  cpf               CHAR(11) NOT NULL UNIQUE CHECK (cpf REGEXP '[0-9]{11}'),
   data_nascimento   DATE NOT NULL,
   PRIMARY KEY       (id_conta_usuario),
   FOREIGN KEY       (id_conta_usuario) REFERENCES conta_usuario(id) ON DELETE CASCADE ON UPDATE CASCADE
