@@ -1,128 +1,117 @@
 DROP SCHEMA IF EXISTS JOB4YOU;
 
 CREATE SCHEMA JOB4YOU
-CHARACTER SET utf8
-COLLATE utf8_general_ci;
+CHARACTER SET UTF8MB4
+COLLATE utf8mb4_0900_ai_ci;
 
 USE JOB4YOU;
 
-DROP TABLE IF EXISTS endereco;
-CREATE TABLE endereco (
-  id                INT AUTO_INCREMENT,
-  cep               CHAR(8) NOT NULL CHECK (cep REGEXP '[0-9]{8}'),
-  estado            CHAR(2) NOT NULL CHECK (estado REGEXP '[a-zA-Z]{2}'),
-  cidade            VARCHAR(255) NOT NULL CHECK (length(cidade) > 1),
-  bairro            VARCHAR(255) NOT NULL CHECK (length(bairro) > 1),
-  rua               VARCHAR(255) NOT NULL CHECK (length(rua) > 1),
-  PRIMARY KEY       (id)
+CREATE TABLE IF NOT EXISTS Endereco(
+    ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    CEP                 CHAR(8) NOT NULL,
+    Estado              CHAR(2) NOT NULL,
+    Cidade              VARCHAR(255) NOT NULL,
+    Bairro              VARCHAR(255) NOT NULL,
+    Rua                 VARCHAR(255) NOT NULL,
+    CONSTRAINT          CheckCEP CHECK (CEP REGEXP '[0-9]{8}'),
+    CONSTRAINT          CheckEstado CHECK (Estado REGEXP '[a-zA-Z]{2}'),
+    CONSTRAINT          CheckCidade CHECK (length(Cidade) > 2),
+    CONSTRAINT          CheckBairro CHECK (length(Bairro) > 2),
+    CONSTRAINT          CheckRua CHECK (length(Rua) > 2)
 );
 
-DROP TABLE IF EXISTS conta_usuario;
-CREATE TABLE conta_usuario (
-  id                INT AUTO_INCREMENT,
-  nome              VARCHAR(40) NOT NULL CHECK (length(nome) > 1),
-  email             VARCHAR(100) NOT NULL CHECK (length(email) > 1),
-  senha             CHAR(64) NOT NULL CHECK (length(senha) = 64),
-  foto              TEXT NULL CHECK (foto IS NULL OR foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
-  celular           CHAR(11) NULL CHECK (celular REGEXP '[0-9]{11}'),
-  data_criacao      TIMESTAMP DEFAULT (UTC_TIMESTAMP),
-  status_conta      ENUM('ATIVO', 'EM_ANÁLISE', 'BLOQUEADO') DEFAULT 'EM_ANÁLISE',
-  fk_endereco       INT NULL,
-  PRIMARY KEY       (id),
-  FOREIGN KEY       (fk_endereco) REFERENCES endereco(id) ON DELETE SET NULL ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS NivelAcesso(
+    ID                  TINYINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    TipoConta           VARCHAR(255) NOT NULL,
+    CONSTRAINT          CheckTipoConta CHECK (length(TipoConta) > 2)
 );
 
-DROP TABLE IF EXISTS cliente;
-CREATE TABLE cliente (
-  id_conta_usuario  INT NOT NULL,
-  cpf               CHAR(11) NOT NULL UNIQUE CHECK (cpf REGEXP '[0-9]{11}'),
-  data_nascimento   DATE NOT NULL,
-  PRIMARY KEY       (id_conta_usuario),
-  FOREIGN KEY       (id_conta_usuario) REFERENCES conta_usuario(id) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS Credencial(
+    ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Email               VARCHAR(100) UNIQUE NOT NULL,
+    Senha               CHAR(64) NOT NULL,
+    FKNivelAcesso       TINYINT UNSIGNED NOT NULL,
+    FOREIGN KEY         (FKNivelAcesso) REFERENCES NivelAcesso(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT          CheckEmail CHECK (Email REGEXP '(^[a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]*)(\.[a-zA-Z]{2,}){1,2}$'),
+    CONSTRAINT          CheckSenha CHECK (Senha REGEXP '[a-z0-9]{64}')
 );
 
-DROP TABLE IF EXISTS prestador;
-CREATE TABLE prestador (
-  id_conta_usuario  INT NOT NULL,
-  cnpj              CHAR(14) NOT NULL UNIQUE CHECK (length(cnpj) = 14),
-  curriculo         TEXT NOT NULL CHECK (curriculo REGEXP '\\.(pdf|jpg|jpeg|png|webp|bmp)$'),
-  PRIMARY KEY       (id_conta_usuario),
-  FOREIGN KEY       (id_conta_usuario) REFERENCES conta_usuario(id) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS Usuario(
+    ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Nome                VARCHAR(50) NOT NULL,
+    CPF                 CHAR(11) UNIQUE NOT NULL,
+    Foto                VARCHAR(255) NULL,
+    Celular             CHAR(11) NULL,
+    FKCredencial        INT UNSIGNED NOT NULL,
+    FKEndereco          INT UNSIGNED NULL,
+    DataCriacao         TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP),
+    UltimaAtualizacao   TIMESTAMP NULL,
+    StatusUsuario       ENUM('ATIVO', 'EM_ANÁLISE', 'BLOQUEADO') DEFAULT 'EM_ANÁLISE',
+    FOREIGN KEY         (FKCredencial) REFERENCES Credencial(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY         (FKEndereco) REFERENCES Endereco(ID) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT          CheckNome CHECK (Nome REGEXP '/(^[a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]*)\s([a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]+)$'),
+    CONSTRAINT          CheckCPF CHECK (CPF REGEXP '[0-9]{11}'),
+    CONSTRAINT          CheckFoto CHECK (Foto IS NULL OR Foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
+    CONSTRAINT          CheckCelular CHECK (Celular REGEXP '[0-9]{11}')
 );
 
-DROP TABLE IF EXISTS categoria_servico;
-CREATE TABLE categoria_servico (
-  id                SMALLINT AUTO_INCREMENT,
-  titulo            VARCHAR(25) NOT NULL CHECK (length(titulo) > 1),
-  icone             VARCHAR(30) NOT NULL CHECK (length(icone) > 1),
-  PRIMARY KEY       (id)
+CREATE TABLE IF NOT EXISTS TipoContato(
+    ID                  TINYINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Nome                VARCHAR(255) NOT NULL
 );
 
-DROP TABLE IF EXISTS anuncio_servico;
-CREATE TABLE anuncio_servico (
-  id                INT AUTO_INCREMENT,
-  titulo            VARCHAR(50) NOT NULL CHECK (length(titulo) > 1),
-  sobre             VARCHAR(255) NULL,
-  valor             DECIMAL(7,2) NOT NULL,
-  categoria         SMALLINT NOT NULL,
-  fk_prestador      INT NOT NULL,
-  data_criacao      TIMESTAMP DEFAULT (UTC_TIMESTAMP),
-  data_atualizacao  TIMESTAMP NULL,
-  PRIMARY KEY       (id),
-  FOREIGN KEY       (fk_prestador) REFERENCES prestador(id_conta_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY       (categoria) REFERENCES categoria_servico(id) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS InfomacaoContato(
+    ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Contato             VARCHAR(255) NULL,
+    FKUsuario           INT UNSIGNED NOT NULL,
+    FKTipoContato       TINYINT UNSIGNED NOT NULL,
+    FOREIGN KEY         (FKUsuario) REFERENCES Usuario(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY         (FKTipoContato) REFERENCES TipoContato(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT          CheckContato CHECK (length(Contato) > 2)
 );
 
-DROP TABLE IF EXISTS servico;
-CREATE TABLE servico (
-  id                INT AUTO_INCREMENT,
-  fk_cliente        INT NOT NULL,
-  fk_prestador      INT NOT NULL,
-  data_criacao      TIMESTAMP DEFAULT (UTC_TIMESTAMP),
-  data_atualizacao  TIMESTAMP NULL,
-  status_servico    ENUM('ACEITO', 'REJEITADO', 'PENDENTE', 'FINALIZADO') DEFAULT 'PENDENTE',
-  PRIMARY KEY       (id),
-  FOREIGN KEY       (fk_cliente) REFERENCES cliente(id_conta_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY       (fk_prestador) REFERENCES prestador(id_conta_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS CategoriaServico (
+    ID                  SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Nome                VARCHAR(25) NOT NULL
 );
 
-DROP TABLE IF EXISTS servico_favorito_usuario;
-CREATE TABLE servico_favorito_usuario (
-  id_servico        INT NOT NULL,
-  id_cliente        INT NOT NULL,
-  PRIMARY KEY       (id_servico, id_cliente),
-  FOREIGN KEY       (id_servico) REFERENCES anuncio_servico(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY       (id_cliente) REFERENCES cliente(id_conta_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE IF NOT EXISTS PublicacaoServico(
+    ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Titulo              VARCHAR(50) NOT NULL,
+    Sobre               VARCHAR(255) NULL,
+    Valor               DECIMAL(7,2) NOT NULL,
+    QuantidadeFavorito  INTEGER UNSIGNED NOT NULL DEFAULT 0,
+    FKCategoria         SMALLINT UNSIGNED NOT NULL,
+    FKUsuario           INT UNSIGNED NOT NULL,
+    DataCriacao         TIMESTAMP DEFAULT (UTC_TIMESTAMP),
+    UltimaAtualizacao   TIMESTAMP NULL,
+    StatusPublicacao    ENUM('ATIVO', 'EM_ANÁLISE', 'ARQUIVADO', 'BLOQUEADO') NOT NULL DEFAULT 'EM_ANÁLISE',
+    FOREIGN KEY         (FKUsuario) REFERENCES Usuario(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY         (FKCategoria) REFERENCES CategoriaServico(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS avaliacao;
-CREATE TABLE avaliacao (
-  id                INT AUTO_INCREMENT,
-  nota_avaliacao    TINYINT NULL DEFAULT 0 CHECK(nota_avaliacao BETWEEN 0 AND 10),
-  comentario        TEXT NULL,
-  data_criacao      TIMESTAMP DEFAULT (UTC_TIMESTAMP),
-  data_atualizacao  TIMESTAMP NULL,
-  PRIMARY KEY       (id)
+CREATE TABLE IF NOT EXISTS ServicoFavorito(
+    IDServico           INT UNSIGNED NOT NULL PRIMARY KEY,
+    IDUsuario           INT UNSIGNED NOT NULL PRIMARY KEY,
+    FOREIGN KEY         (IDServico) REFERENCES PublicacaoServico(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY         (IDUsuario) REFERENCES Usuario(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS avaliacao_cliente;
-CREATE TABLE avaliacao_cliente (
-  id_avaliacao      INT NOT NULL,
-  fk_prestador      INT NOT NULL,
-  fk_cliente        INT NOT NULL,
-  PRIMARY KEY       (id_avaliacao),
-  FOREIGN KEY       (id_avaliacao) REFERENCES avaliacao(id),
-  FOREIGN KEY       (fk_prestador) REFERENCES prestador(id_conta_usuario),
-  FOREIGN KEY       (fk_cliente) REFERENCES cliente(id_conta_usuario)
+CREATE TABLE IF NOT EXISTS Avaliacao (
+    ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Nota                TINYINT NULL DEFAULT 0,
+    Comentario          VARCHAR(255) NULL,
+    DataCriacao         TIMESTAMP DEFAULT (UTC_TIMESTAMP),
+    UltimaAtualizacao   TIMESTAMP NULL,
+    CONSTRAINT          CheckNota CHECK (Nota BETWEEN 0 AND 5),
+    CONSTRAINT          CheckComentario CHECK (Comentario IS NULL OR length(Comentario) > 20)
 );
 
-DROP TABLE IF EXISTS avaliacao_servico;
-CREATE TABLE avaliacao_servico (
-  id_avaliacao      INT NOT NULL,
-  fk_servico        INT NOT NULL,
-  fk_prestador      INT NOT NULL,
-  PRIMARY KEY       (id_avaliacao),
-  FOREIGN KEY       (id_avaliacao) REFERENCES avaliacao(id),
-  FOREIGN KEY       (fk_servico) REFERENCES servico(id),
-  FOREIGN KEY       (fk_prestador) REFERENCES prestador(id_conta_usuario)
+CREATE TABLE IF NOT EXISTS AvaliacaoPublicacaoServico (
+    IDAvaliacao        INT UNSIGNED NOT NULL PRIMARY KEY,
+    FkPublicacao       INT UNSIGNED NOT NULL,
+    FKUsuario          INT UNSIGNED NOT NULL,
+    FOREIGN KEY        (IDAvaliacao) REFERENCES Avaliacao(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY        (FkPublicacao) REFERENCES PublicacaoServico(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY        (FKUsuario) REFERENCES Usuario(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
