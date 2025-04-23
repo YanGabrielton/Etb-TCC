@@ -29,11 +29,11 @@ CREATE TABLE IF NOT EXISTS NivelAcesso(
 CREATE TABLE IF NOT EXISTS Credencial(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     Email               VARCHAR(100) UNIQUE NOT NULL,
-    Senha               CHAR(64) NOT NULL,
+    Senha               CHAR(60) NOT NULL,
     FKNivelAcesso       TINYINT UNSIGNED NOT NULL,
     FOREIGN KEY         (FKNivelAcesso) REFERENCES NivelAcesso(ID) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT          CheckEmail CHECK (Email REGEXP '(^[a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]*)(\.[a-zA-Z]{2,}){1,2}$'),
-    CONSTRAINT          CheckSenha CHECK (Senha REGEXP '[a-z0-9]{64}')
+    CONSTRAINT          CheckSenhaBCrypt CHECK (Senha REGEXP '^\\$2[abxy]\\$[0-9]{2}\\$[A-Za-z0-9\\./]{53}$')
 );
 
 CREATE TABLE IF NOT EXISTS Usuario(
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS Usuario(
     StatusUsuario       ENUM('ATIVO', 'EM_ANÁLISE', 'BLOQUEADO') DEFAULT 'EM_ANÁLISE',
     FOREIGN KEY         (FKCredencial) REFERENCES Credencial(ID) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY         (FKEndereco) REFERENCES Endereco(ID) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT          CheckNome CHECK (Nome REGEXP '/(^[a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]*)\s([a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]+)$'),
+    CONSTRAINT          CheckNome CHECK (Nome REGEXP '(^[a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]*)\s([a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]+)$'),
     CONSTRAINT          CheckCPF CHECK (CPF REGEXP '[0-9]{11}'),
     CONSTRAINT          CheckFoto CHECK (Foto IS NULL OR Foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
     CONSTRAINT          CheckCelular CHECK (Celular REGEXP '[0-9]{11}')
