@@ -1,3 +1,5 @@
+-- Gatilhos para atualizar a quantidade de favoritos na tabela PublicacaoServico
+
 DROP TRIGGER IF EXISTS AumentaFavorito;
 
 DELIMITER //
@@ -12,7 +14,6 @@ BEGIN
 END //
 
 DELIMITER ;
-
 
 DROP TRIGGER IF EXISTS DiminuiFavorito;
 
