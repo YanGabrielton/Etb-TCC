@@ -1,6 +1,6 @@
 DROP SCHEMA IF EXISTS JOB4YOU;
 
-SET GLOBAL time_zone = '+8:00';
+SET GLOBAL time_zone = 'UTC';
 
 CREATE SCHEMA JOB4YOU
 CHARACTER SET UTF8MB4
@@ -16,17 +16,24 @@ CREATE TABLE IF NOT EXISTS Endereco(
     Bairro              VARCHAR(255) NOT NULL,
     Rua                 VARCHAR(255) NOT NULL,
     CONSTRAINT          CheckCEP CHECK (CEP REGEXP '[0-9]{8}'),
-    CONSTRAINT          CheckEstado CHECK (Estado REGEXP '[a-zA-Z]{2}'),
-    CONSTRAINT          CheckCidade CHECK (length(Cidade) > 2),
-    CONSTRAINT          CheckBairro CHECK (length(Bairro) > 2),
-    CONSTRAINT          CheckRua CHECK (length(Rua) > 2)
+    CONSTRAINT          CheckEstado CHECK (Estado REGEXP '[A-Z]{2}'),
+    CONSTRAINT          CheckCidade CHECK (Cidade REGEXP '^[a-zA-ZÀ-ÖØ-öø-ÿ .]+$'),
+    CONSTRAINT          CheckBairro CHECK (Bairro REGEXP '^[a-zA-ZÀ-ÖØ-öø-ÿ .]+$'),
+    CONSTRAINT          CheckRua CHECK (Rua REGEXP '^[a-zA-ZÀ-ÖØ-öø-ÿ .]+$')
 );
+
+CREATE TABLE IF NOT EXISTS NivelAcesso(
+     ID                  TINYINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+     Grupo               VARCHAR(255) NOT NULL,
+     CONSTRAINT          CheckGrupo CHECK (Grupo REGEXP '^[A-Z_]+$')
+ );
 
 CREATE TABLE IF NOT EXISTS Credencial(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     Email               VARCHAR(100) UNIQUE NOT NULL,
     Senha               CHAR(60) NOT NULL,
-    NivelAcesso         ENUM('USUARIO_COMUM', 'PRESTADOR', 'ADMINISTRADOR') DEFAULT 'USUARIO_COMUM',
+    FKNivelAcesso       TINYINT UNSIGNED NOT NULL,
+    FOREIGN KEY         (FKNivelAcesso) REFERENCES NivelAcesso(ID) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT          CheckEmail CHECK (Email REGEXP '(^[a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]*)(\.[a-zA-Z]{2,}){1,2}$'),
     CONSTRAINT          CheckSenhaBCrypt CHECK (Senha REGEXP '^\\$2[abxy]\\$[0-9]{2}\\$[A-Za-z0-9\./]{53}$')
 );
@@ -44,19 +51,24 @@ CREATE TABLE IF NOT EXISTS Usuario(
     StatusUsuario       ENUM('ATIVO', 'EM_ANALISE', 'BLOQUEADO', 'BANIDO') DEFAULT 'EM_ANALISE',
     FOREIGN KEY         (FKCredencial) REFERENCES Credencial(ID) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY         (FKEndereco) REFERENCES Endereco(ID) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT          CheckNome CHECK (Nome REGEXP '(^[a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]+)[[:space:]]([a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ]+)$'),
+    CONSTRAINT          CheckNome CHECK (Nome REGEXP '^[a-zA-ZÀ-ÖØ-öø-ÿ][[:space:]][a-zA-ZÀ-ÖØ-öø-ÿ]$'),
     CONSTRAINT          CheckCPF CHECK (CPF REGEXP '[0-9]{11}'),
     CONSTRAINT          CheckFoto CHECK (Foto IS NULL OR Foto REGEXP '\\.(jpg|jpeg|png|webp|bmp)$'),
     CONSTRAINT          CheckCelular CHECK (Celular REGEXP '[0-9]{11}')
 );
 
+CREATE TABLE IF NOT EXISTS CategoriaContato(
+    ID                  TINYINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    Nome                VARCHAR(255) NOT NULL
+ );
+
 CREATE TABLE IF NOT EXISTS InformacaoContato(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     Contato             VARCHAR(255) NULL,
     FKUsuario           INT UNSIGNED NOT NULL,
-    CategoriaContato    ENUM('WHATSAPP', 'INSTAGRAM', 'TELEFONE', 'FACEBOOK', 'EMAIL', 'OUTROS') DEFAULT 'OUTROS',
+    FKCategoriaContato  TINYINT UNSIGNED NOT NULL,
     FOREIGN KEY         (FKUsuario) REFERENCES Usuario(ID) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT          CheckContato CHECK (length(Contato) > 2)
+    FOREIGN KEY         (FKCategoriaContato) REFERENCES CategoriaContato(ID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS CategoriaServico (
@@ -89,7 +101,7 @@ CREATE TABLE IF NOT EXISTS ServicoFavorito(
 
 CREATE TABLE IF NOT EXISTS AvaliacaoServico (
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    Nota                TINYINT NULL DEFAULT 0,
+    Nota                TINYINT UNSIGNED NOT NULL DEFAULT 0,
     Comentario          VARCHAR(255) NULL,
     FkPublicacao        INT UNSIGNED NOT NULL,
     FKUsuario           INT UNSIGNED NOT NULL,

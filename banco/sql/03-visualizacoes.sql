@@ -1,37 +1,64 @@
 CREATE OR REPLACE VIEW ViewUsuarioLogin AS
 SELECT
-    Usuario.ID AS IDUsuario,
-    Usuario.Nome,
-    Usuario.Foto,
-    Usuario.Celular,
-    Usuario.StatusUsuario,
-    Credencial.Email,
-    Credencial.Senha,
-    Credencial.NivelAcesso
-FROM Usuario
-    INNER JOIN Credencial ON Usuario.FKCredencial = Credencial.ID;
+    u.ID,
+    u.Nome,
+    u.Foto,
+    u.StatusUsuario,
+    c.Email,
+    c.Senha,
+    na.Grupo
+FROM Usuario u
+    INNER JOIN Credencial c ON c.ID = u.FKCredencial
+    INNER JOIN NivelAcesso na ON na.ID = c.FKNivelAcesso
+WHERE StatusUsuario = 'ATIVO';
 
 CREATE OR REPLACE VIEW ViewPublicacao AS
 SELECT
-    pub.ID AS IDPublicacao,
-    pub.Titulo,
-    pub.Sobre,
-    pub.Valor,
-    pub.QuantidadeFavorito,
-    pub.DataCriacao AS PublicadoEm,
-    cat.Nome AS Categoria,
-    usu.Nome AS NomeUsuario,
-    usu.Foto AS FotoUsuario,
-    usu.ID as IDUsuario,
-    MAX(CASE WHEN cont.CategoriaContato = 'Email' THEN cont.Contato END) AS Email,
-    MAX(CASE WHEN cont.CategoriaContato = 'Facebook' THEN cont.Contato END) AS Facebook,
-    MAX(CASE WHEN cont.CategoriaContato = 'Telefone' THEN cont.Contato END) AS Telefone,
-    MAX(CASE WHEN cont.CategoriaContato = 'WhatsApp' THEN cont.Contato END) AS Whatsapp,
-    MAX(CASE WHEN cont.CategoriaContato = 'Instagram' THEN cont.Contato END) AS Instagram,
-    MAX(CASE WHEN cont.CategoriaContato = 'Outros' THEN cont.Contato END) AS OutroContatos
-FROM PublicacaoServico pub
-    INNER JOIN CategoriaServico AS cat ON pub.FKCategoria = cat.ID
-    INNER JOIN Usuario AS usu ON pub.FKUsuario = usu.ID AND usu.StatusUsuario = 'ATIVO'
-    LEFT JOIN InformacaoContato AS cont ON usu.ID = cont.FKUsuario
-WHERE pub.StatusPublicacao = 'ATIVO'
-GROUP BY pub.ID;
+    p.ID AS IDPublicacao,
+    u.Nome AS NomeUsuario,
+    u.Foto AS FotoUsuario,
+    p.Titulo,
+    p.Sobre,
+    p.Valor,
+    p.QuantidadeFavorito,
+    p.DataCriacao AS PublicadoEm,
+    p.UltimaAtualizacao AS EditadoEm,
+    cs.Nome AS Categoria,
+    MAX(CASE WHEN cc.Nome = 'Email' THEN ic.Contato END) AS Email,
+    MAX(CASE WHEN cc.Nome = 'Facebook' THEN ic.Contato END) AS Facebook,
+    MAX(CASE WHEN cc.Nome = 'Celular' THEN ic.Contato END) AS Celular,
+    MAX(CASE WHEN cc.Nome = 'WhatsApp' THEN ic.Contato END) AS Whatsapp,
+    MAX(CASE WHEN cc.Nome = 'Instagram' THEN ic.Contato END) AS Instagram,
+    MAX(CASE WHEN cc.Nome = 'Outros' THEN ic.Contato END) AS OutroContato
+FROM PublicacaoServico p
+    INNER JOIN Usuario u ON u.ID = p.FKUsuario 
+    INNER JOIN CategoriaServico cs ON cs.ID = p.FKCategoria
+    LEFT JOIN InformacaoContato ic ON ic.FKUsuario = u.ID
+    LEFT JOIN CategoriaContato cc ON cc.ID = ic.FKCategoriaContato
+WHERE p.StatusPublicacao = 'ATIVO' AND u.StatusUsuario = 'ATIVO'
+GROUP BY 
+    p.ID,
+    u.Nome,
+    u.Foto,
+    p.Titulo,
+    p.Sobre,
+    p.Valor,
+    p.QuantidadeFavorito,
+    p.DataCriacao,
+    p.UltimaAtualizacao,
+    cs.Nome;
+
+CREATE OR REPLACE VIEW ViewAvaliacaoServico AS
+SELECT
+    a.ID AS IDAvaliacao,
+    a.Nota,
+    a.Comentario,
+    a.FkPublicacao AS IDPublicacao,
+    a.FKUsuario AS IDUsuario,
+    u.Nome AS NomeUsuario,
+    u.Foto AS FotoUsuario,
+    a.DataCriacao AS PublicadoEm,
+    a.UltimaAtualizacao as EditadoEm
+FROM AvaliacaoServico a
+    INNER JOIN Usuario u ON u.ID = a.FKUsuario
+WHERE u.StatusUsuario = 'ATIVO';
