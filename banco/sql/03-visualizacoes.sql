@@ -9,8 +9,7 @@ SELECT
     na.Grupo
 FROM Usuario u
     INNER JOIN Credencial c ON c.ID = u.FKCredencial
-    INNER JOIN NivelAcesso na ON na.ID = c.FKNivelAcesso
-WHERE StatusUsuario = 'ATIVO';
+    INNER JOIN NivelAcesso na ON na.ID = c.FKNivelAcesso;
 
 CREATE OR REPLACE VIEW ViewPublicacao AS
 SELECT

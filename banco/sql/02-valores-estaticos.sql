@@ -14,18 +14,18 @@ INSERT INTO CategoriaServico (Nome) VALUES
     ('Esteticista'); -- 13
 
 INSERT INTO CategoriaContato (Nome) VALUES
-     ('Whatsapp'),
-     ('Instagram'),
-     ('Celular'),
-     ('Facebook'),
-     ('Email'),
-     ('Outros');
+    ('Whatsapp'),
+    ('Instagram'),
+    ('Celular'),
+    ('Facebook'),
+    ('Email'),
+    ('Outros');
 
 
  INSERT INTO NivelAcesso (Grupo) VALUES
-     -- Revisa e gerencia publicações, remove conteúdo impróprio, bane usuários, visualiza denúncias
-     ('ADMINISTRADOR'),
-     -- Cria/gerencia/atualiza suas próprias publicações de serviço
-     ('PRESTADOR'),
-     -- Procura por serviços, entra em contato com prestadores, avalia serviços
-     ('CLIENTE');
+    -- Revisa e gerencia publicações, remove conteúdo impróprio, bane usuários, visualiza denúncias
+    ('ADMINISTRADOR'),
+    -- Cria/gerencia/atualiza suas próprias publicações de serviço
+    ('PRESTADOR'),
+    -- Procura por serviços, entra em contato com prestadores, avalia serviços
+    ('CLIENTE');

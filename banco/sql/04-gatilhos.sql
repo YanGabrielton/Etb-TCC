@@ -7,9 +7,9 @@ DELIMITER //
     BEGIN
         UPDATE PublicacaoServico
         SET QuantidadeFavorito = QuantidadeFavorito + 1
-        WHERE ID = NEW.IDServico;
+        WHERE PublicacaoServico.ID = NEW.IDServico;
     END //
-DELIMITER ;
+DELIMITER;
 
 DROP TRIGGER IF EXISTS DiminuiFavorito;
 
@@ -20,7 +20,7 @@ DELIMITER //
     BEGIN
         UPDATE PublicacaoServico
         SET QuantidadeFavorito = QuantidadeFavorito - 1
-        WHERE ID = OLD.IDServico AND QuantidadeFavorito >= 0;
+        WHERE PublicacaoServico.ID = OLD.IDServico AND QuantidadeFavorito >= 0;
     END //
-DELIMITER ;
+DELIMITER;
 
