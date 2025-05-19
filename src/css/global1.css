@@ -1,5 +1,3 @@
-
-
 body {
   min-height: 100vh;
   display: flex;
@@ -29,14 +27,14 @@ body {
 }
   
 .btn-login {
-  background-color: #FFD700;
+  background-color: #f64b5a;
   color: #000000;
   font-weight: bold;
   border: none;
 }
   
 .btn-login:hover {
-  background-color: #e6c200;
+  background-color: #d13e47; 
   color: #000000;
 }
   
@@ -48,8 +46,8 @@ body {
 }
   
 .btn-outline-primary:hover {
-  background-color: #FFD700;
-  border-color: #FFD700;
+  background-color: #f64b5a;
+  border-color: #f64b5a;
   color: black;
 }
   
@@ -101,40 +99,40 @@ body {
 
 
 .login-card .btn-login {
-  background-color: #FFD700;
+  background-color: #f64b5a;
   color: #000000;
   font-weight: bold;
   border: none;
 }
 
 .login-card .btn-login:hover {
-  background-color: #e6c200;
+  background-color: #d13e47;
   color: #000000;
 }
 
 /* em fase de teste */
 .btn-warning {
-  background-color: #FFD700;
+  background-color: #f64b5a;
   color: black;
   font-weight: bold;
   border: none;
 }
 
 .btn-warning:hover {
-  background-color: #e6c200;
+  background-color: #d13e47;
   color: black;
 }
 
-/* Cartões de categorias */
+/* categorias */
 .card .btn-primary {
-  background-color: #FFD700;
+  background-color: #f64b5a;
   color: black;
   font-weight: bold;
   border: none;
 }
 
 .card .btn-primary:hover {
-  background-color: #e6c200;
+  background-color: #d13e47;
   color: black;
 }
 
@@ -144,4 +142,3 @@ footer {
   padding: 20px 0;
   text-align: center;
 }
-  
