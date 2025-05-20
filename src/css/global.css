@@ -1,147 +1,143 @@
+/* ================================
+Global Css - Job4You :)
+================================ */
 
-
+/* Organiza a tela para usar todo o espaço disponível */
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-  
+
+/* Faz a área principal crescer para preencher o espaço */
 .main-content {
   flex: 1;
 }
-  
+
+/* Espaçamento nas seções principais */
 .hero-section {
   padding: 60px 0;
 }
-  
+
+/* Imagens responsivas */
 .hero-img {
   max-width: 100%;
   height: auto;
 }
 
+/* ================================
+Navbar
+================================ */
+
+/* Fundo escuro e texto claro */
 .navbar {
-  background-color: #000000 !important;
+  background-color: #000 !important;
 }
-  
+
 .navbar .nav-link,
 .navbar .navbar-brand {
-  color: white !important;
+  color: #fff !important;
 }
-  
-.btn-login {
+
+/* ================================
+Botões principais
+================================ */
+
+/* Estilo base para botões de ação */
+.btn-login,
+.btn-warning,
+.card .btn-primary,
+.btn-primary {
   background-color: #FFD700;
-  color: #000000;
+  color: #000;
   font-weight: bold;
   border: none;
 }
-  
-.btn-login:hover {
+
+.btn-login:hover,
+.btn-warning:hover,
+.card .btn-primary:hover,
+.btn-primary:hover {
   background-color: #e6c200;
-  color: #000000;
+  color: #000;
 }
-  
+
+/* Botões com borda escura */
 .btn-outline-primary {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
   font-weight: bold;
 }
-  
+
 .btn-outline-primary:hover {
   background-color: #FFD700;
   border-color: #FFD700;
-  color: black;
+  color: #000;
 }
-  
-.login-container, .container.d-flex {
-  flex: 1;                   
+
+/* ================================
+Formulários de login e cadastro
+================================ */
+
+/* Centraliza o formulário na tela */
+.login-container,
+.container.d-flex {
+  flex: 1;
   display: flex;
-  align-items: center;       
-  justify-content: center;   
-  padding: 0;                
-}
-  
-.login-card {
-  max-width: 400px;
-  width: 100%;
-  padding: 1.5rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border-radius: 12px;
-}
-  
-
-.input-group .btn-outline-secondary {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
-
+/* Estilo do cartão dos formulários */
 .login-card {
   max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Títulos dos formulários */
 .login-card h3 {
   text-align: center;
   font-weight: bold;
 }
 
-.login-card .form-label {
-  font-weight: 500;
-}
-
+/* Espaço entre campos */
 .login-card .form-control,
-.login-card .form-select {
+.login-card .form-select,
+.login-card .form-label {
   margin-bottom: 1rem;
 }
 
-
-.login-card .btn-login {
-  background-color: #FFD700;
-  color: #000000;
-  font-weight: bold;
-  border: none;
+/* Ajuste no botão de alternar senha */
+.input-group .btn-outline-secondary {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.login-card .btn-login:hover {
-  background-color: #e6c200;
-  color: #000000;
+/* ================================
+Cards interativos
+================================ */
+
+/* Leve efeito de zoom ao passar o mouse */
+.card:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease-in-out;
 }
 
-/* em fase de teste */
-.btn-warning {
-  background-color: #FFD700;
-  color: black;
-  font-weight: bold;
-  border: none;
-}
+/* ================================
+Rodapé
+================================ */
 
-.btn-warning:hover {
-  background-color: #e6c200;
-  color: black;
-}
-
-/* Cartões de categorias */
-.card .btn-primary {
-  background-color: #FFD700;
-  color: black;
-  font-weight: bold;
-  border: none;
-}
-
-.card .btn-primary:hover {
-  background-color: #e6c200;
-  color: black;
-}
-
+/* Barra fixa na parte inferior */
 footer {
-  background-color: #000000;
-  color: white;
+  background-color: #000;
+  color: #fff;
   padding: 20px 0;
   text-align: center;
+  margin-top: auto;
 }
-  
