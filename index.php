@@ -29,16 +29,16 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="#">Sobre a Empresa</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="/src/pages/cadastro_usuario.html">Cadastre-se</a>
+                    <a class="nav-link" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="btn btn-login" href="/src/pages/login.html">Login</a>
+                    <a class="btn btn-login" href="/src/pages/login.php">Login</a>
 
                 </li>
             </ul>
