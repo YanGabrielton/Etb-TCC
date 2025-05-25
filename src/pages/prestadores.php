@@ -72,7 +72,7 @@
                         <h5 class="card-title fw-bold">Nome do prestador</h5>
                         <p class="card-text text-muted mb-1">Cidade tal, sigla</p>
                         <p class="card-text">Horario de atendimento: 08:00 às 18:00 de segunda a sexta</p>
-                        <a href="#" class="btn btn-warning">Ver perfil</a>
+                        <a href="login.html" class="btn btn-warning">Ver perfil</a>
                     </div>
                 </div>
             </div>
