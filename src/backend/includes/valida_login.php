@@ -1,17 +1,10 @@
 <?php
-if(isset($_SESSION["nome"])){
-	
-	
-	echo $_SESSION["nome"];
-}else{
-	
-	echo "<script>
-		alert('você não está logado!!!')
-	</script>";
-	echo "<script>
-	location.href=('index.php')
-	</script>";
+session_start();
+if(!isset($_SESSION["id_usuario"])) {
+    echo "<script>
+            alert('Você precisa estar logado!');
+            location.href = '../index.php';
+          </script>";
+    exit;
 }
-
-
 ?>

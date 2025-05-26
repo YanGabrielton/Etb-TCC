@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/src/css/global.css">
+    <link rel="stylesheet" href="../css/global.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
                     <a class="nav-link" href="#">Sobre a Empresa</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
+                    <a class="nav-link" href="./cadastro_usuario.php">Cadastre-se</a>
                 </li>
                 <li class="nav-item mx-2">
                     <a class="btn btn-login" href="/src/pages/login.php">Login</a>
@@ -56,7 +56,7 @@
                     <button type="submit" class="btn btn-login">Entrar</button>
                 </div>
                 <div class="text-center">
-                    <a href="/src/pages/cadastro_usuario.php" class="btn btn-outline-secondary w-100">Criar uma conta</a>
+                    <a href="./cadastro_usuario.php" class="btn btn-outline-secondary w-100">Criar uma conta</a>
                 </div>
             </form>
         </div>

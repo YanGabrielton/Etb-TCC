@@ -1,34 +1,28 @@
 <?php
 session_start();
-require '../config/DataBase.php';
-include "../../includes/valida_login.php";
+require '../config/ConexaoBanco.php';
+require '../backend/funcoes.php';
+require '../backend/valida_login.php';
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titulo = $_POST["titulo"];
-    $descricao = $_POST["descricao"];
-    $preco = $_POST["preco"];
+    $sobre = $_POST["sobre"];
+    $valor = $_POST["valor"];
     $categoria = $_POST["categoria"];
-    $id_usuario = $_SESSION["id_usuario"];
-    
-    // Upload da imagem como no exemplo dos amplificadores
-    $foto_nome = "";
-    if(!empty($_FILES["foto"]["name"])) {
-        $foto_nome = "img/servicos/".$_FILES["foto"]["name"];
-        move_uploaded_file($_FILES["foto"]["tmp_name"], "../../".$foto_nome);
-    }
+    $usuarioID = $_SESSION["id_usuario"];
 
-    $sql = "INSERT INTO PublicacaoServico (Titulo, Sobre, Valor, FKCategoria, FKUsuario) 
-            VALUES ('$titulo', '$descricao', '$preco', '$categoria', '$id_usuario')";
-    
-    if(mysqli_query($conectar, $sql)) {
-        echo "<script>
-                alert('Serviço cadastrado com sucesso!');
-                location.href='buscar.php';
-              </script>";
+    $db = new DataBase();
+    $conexao = $db->getConnection();
+
+    $stmt = $conexao->prepare("INSERT INTO PublicacaoServico (Titulo, Sobre, Valor, FKCategoria, FKUsuario) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssdii", $titulo, $sobre, $valor, $categoria, $usuarioID);
+    if ($stmt->execute()) {
+        // Atualiza tipo automaticamente
+        verificaTipoUsuario($conexao, $usuarioID);
+
+        echo "<script>alert('Serviço cadastrado com sucesso!'); window.location.href='../pages/index.php';</script>";
     } else {
-        echo "<script>
-                alert('Erro ao cadastrar serviço!');
-                history.back();
-              </script>";
+        echo "Erro ao cadastrar serviço: " . $conexao->error;
     }
 }
+?>

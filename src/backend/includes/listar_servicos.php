@@ -1,10 +1,23 @@
 <?php
-include "../config/ConexaoBanco.php";
-include "../../includes/valida_login.php";
+require '../config/ConexaoBanco.php';
 
-$sql = "SELECT ps.ID, ps.Titulo, ps.Sobre, ps.Valor, cs.Nome as Categoria
+$db = new DataBase();
+$conn = $db->getConnection();
+
+$sql = "SELECT ps.Titulo, ps.Sobre, ps.Valor, u.Nome, cs.Nome AS Categoria
         FROM PublicacaoServico ps
-        JOIN CategoriaServico cs ON cs.ID = ps.FKCategoria
+        JOIN Usuario u ON ps.FKUsuario = u.ID
+        JOIN CategoriaServico cs ON ps.FKCategoria = cs.ID
         WHERE ps.StatusPublicacao = 'ATIVO'";
-$resultado = mysqli_query($conectar, $sql);
+
+$result = $conn->query($sql);
+
+while ($row = $result->fetch_assoc()) {
+    echo "<div>";
+    echo "<h3>" . $row['Titulo'] . " (" . $row['Categoria'] . ")</h3>";
+    echo "<p>Por: " . $row['Nome'] . "</p>";
+    echo "<p>Sobre: " . $row['Sobre'] . "</p>";
+    echo "<p>R$ " . number_format($row['Valor'], 2, ',', '.') . "</p>";
+    echo "</div><hr>";
+}
 ?>
