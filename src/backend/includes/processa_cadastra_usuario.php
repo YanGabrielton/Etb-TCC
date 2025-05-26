@@ -29,10 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insere endereço
-    $stmtEndereco = $conectar->prepare("INSERT INTO Endereco (CEP, Estado, Cidade, Bairro, Rua) VALUES (?, ?, ?, ?, ?)");
-    $stmtEndereco->bind_param("sssss", $cep, $estado, $cidade, $bairro, $rua);
-    $stmtEndereco->execute();
-    $idEndereco = $conectar->insert_id;
+ // Insere endereço
+$stmtEndereco = $conectar->prepare("INSERT INTO Endereco (CEP, Estado, Cidade, Bairro, Rua) VALUES (?, ?, ?, ?, ?)");
+$stmtEndereco->bind_param("sssss", $cep, $estado, $cidade, $bairro, $rua);
+if (!$stmtEndereco->execute()) {
+    echo "Erro ao inserir endereço: " . $stmtEndereco->error;
+    exit;
+}
+$idEndereco = $conectar->insert_id;
+$stmtEndereco->close();
 
     // Insere credencial
     $fkNivelAcesso = 3; // CLIENTE inicialmente
@@ -45,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmtUsuario = $conectar->prepare("INSERT INTO Usuario (Nome, CPF, Celular, DataNascimento, FKCredencial, FKEndereco) VALUES (?, ?, ?, ?, ?, ?)");
     $stmtUsuario->bind_param("ssssii", $nome, $cpf, $telefone, $data_nascimento, $idCredencial, $idEndereco);
     if ($stmtUsuario->execute()) {
-        echo "<script>alert('Usuário cadastrado com sucesso!'); window.location.href='../pages/login.php';</script>";
+        echo "<script>alert('Usuário cadastrado com sucesso!'); window.location.href='/index.php';</script>";
     } else {
         echo "Erro: " . $conectar->error;
     }
