@@ -43,7 +43,7 @@
     <main class="main-content d-flex align-items-center justify-content-center">
         <div class="login-card">
             <h2 class="text-center mb-4">Login</h2>
-            <form action="/backend/processa_login.php" method="POST">
+            <form action="../backend/includes/processa_login.php" method="POST">
                 <div class="mb-3">
                     <label for="email">E-mail</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>

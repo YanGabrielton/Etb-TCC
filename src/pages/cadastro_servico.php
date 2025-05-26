@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+include '../backend/config/ConexaoBanco.php';
+
+$database = new DataBase();
+$conexao = $database->getConnection();
+
+// Buscar categorias para o select
+$categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -71,18 +82,9 @@
         <div class="col-md-6">
           <select class="form-control" required>
             <option value="">Selecione a categoria</option>
-            <option>Babá</option>
-            <option>Faxina e Limpeza Residencial (Diarista)</option>
-            <option>Jardinagem</option>
-            <option>Mudança e Frete</option>
-            <option>Manutenção e Reparos Domésticos</option>
-            <option>Reforço Escolar</option>
-            <option>Cuidador de idoso</option>
-            <option>Passeador de Cães</option>
-            <option>Cozinheiro</option>
-            <option>Reparos de Roupas (Costureiro)</option>
-            <option>Fotógrafo Freelance</option>
-            <option>Esteticista</option>
+            <?php while($categoria = $categorias->fetch_assoc()): ?>
+                            <option value="<?= $categoria['ID'] ?>"><?= $categoria['Nome'] ?></option>
+                        <?php endwhile; ?>
           </select>
         </div>
         <div class="col-md-6"><input type="text" class="form-control" placeholder="Preço (R$)" required></div>
