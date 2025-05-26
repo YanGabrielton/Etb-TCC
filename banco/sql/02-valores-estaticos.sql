@@ -21,7 +21,6 @@ INSERT INTO CategoriaContato (Nome) VALUES
     ('Email'),
     ('Outros');
 
-
  INSERT INTO NivelAcesso (Grupo) VALUES
     -- Revisa e gerencia publicações, remove conteúdo impróprio, bane usuários, visualiza denúncias
     ('ADMINISTRADOR'),

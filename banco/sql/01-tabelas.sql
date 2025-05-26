@@ -1,17 +1,17 @@
-DROP SCHEMA IF EXISTS JOB4YOU;
+DROP SCHEMA IF EXISTS Teste;
+
+CREATE SCHEMA Teste
+CHARACTER SET UTF8MB4
+COLLATE utf8mb4_unicode_520_ci;
 
 SET GLOBAL time_zone = 'UTC';
 
-CREATE SCHEMA JOB4YOU
-CHARACTER SET UTF8MB4
-COLLATE utf8mb4_0900_ai_ci;
-
-USE JOB4YOU;
+USE Teste;
 
 CREATE TABLE IF NOT EXISTS Endereco(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     CEP                 CHAR(8) NOT NULL,
-    Estado              CHAR(2) NOT NULL,
+    Estado              CHAR(2) NOT NULL COLLATE utf8mb4_general_ci,
     Cidade              VARCHAR(255) NOT NULL,
     Bairro              VARCHAR(255) NOT NULL,
     Rua                 VARCHAR(255) NOT NULL,
@@ -24,14 +24,14 @@ CREATE TABLE IF NOT EXISTS Endereco(
 
 CREATE TABLE IF NOT EXISTS NivelAcesso(
     ID                  TINYINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    Grupo               VARCHAR(255) NOT NULL,
+    Grupo               VARCHAR(255) NOT NULL COLLATE utf8mb4_general_ci,
     CONSTRAINT          CheckGrupo CHECK (Grupo REGEXP '^[A-Z_]+$')
- );
+);
 
 CREATE TABLE IF NOT EXISTS Credencial(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    Email               VARCHAR(100) UNIQUE NOT NULL,
-    Senha               CHAR(60) NOT NULL,
+    Email               VARCHAR(100) UNIQUE NOT NULL COLLATE utf8mb4_general_ci,
+    Senha               CHAR(60) NOT NULL COLLATE utf8mb4_bin,
     FKNivelAcesso       TINYINT UNSIGNED NOT NULL,
     FOREIGN KEY         (FKNivelAcesso) REFERENCES NivelAcesso(ID) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT          CheckEmail CHECK (Email REGEXP '(^[a-zA-Z0-9._%+-]+)@([a-zA-Z0-9-]*)(\.[a-zA-Z]{2,}){1,2}$'),
@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS Credencial(
 CREATE TABLE IF NOT EXISTS Usuario(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     Nome                VARCHAR(50) NOT NULL,
-    CPF                 CHAR(11) UNIQUE NOT NULL,
-    Foto                VARCHAR(255) NULL,
-    Celular             CHAR(11) NULL,
+    CPF                 CHAR(11) UNIQUE NOT NULL COLLATE utf8mb4_general_ci,
+    Foto                VARCHAR(255) NULL COLLATE utf8mb4_bin,
+    Celular             CHAR(11) NULL COLLATE utf8mb4_general_ci,
     DataNascimento      DATE NOT NULL,
     FKCredencial        INT UNSIGNED NOT NULL,
     FKEndereco          INT UNSIGNED NULL,
@@ -61,11 +61,11 @@ CREATE TABLE IF NOT EXISTS Usuario(
 CREATE TABLE IF NOT EXISTS CategoriaContato(
     ID                  TINYINT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
     Nome                VARCHAR(255) NOT NULL
- );
+);
 
 CREATE TABLE IF NOT EXISTS InformacaoContato(
     ID                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    Contato             VARCHAR(255) NULL,
+    Contato             VARCHAR(255) NULL COLLATE utf8mb4_general_ci,
     FKUsuario           INT UNSIGNED NOT NULL,
     FKCategoriaContato  TINYINT UNSIGNED NOT NULL,
     FOREIGN KEY         (FKUsuario) REFERENCES Usuario(ID) ON DELETE CASCADE ON UPDATE CASCADE,
