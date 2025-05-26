@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+include '../backend/config/ConexaoBanco.php';
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -14,35 +20,30 @@
 </head>
 
 <body>
+ <!-- Navbar (Menu de Navegação) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand fw-bold" href="/index.php">Job4You</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/index.php">Home</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="#">Sobre a Empresa</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="./cadastro_usuario.php">Cadastre-se</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="btn btn-login" href="/src/pages/login.php">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-  <!-- Navbar (Menu de Navegação) -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-    <!-- Logo do site -->
-    <a class="navbar-brand fw-bold" href="index.html">Job4You</a>
-
-    <!-- Botão de menu para celular -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Itens do menu -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-center">
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="/index.html">Home</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Sobre a Empresa</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="/src/pages/cadastro_usuario.html">Cadastre-se</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="btn btn-login" href="/src/pages/login.html">Login</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
 
   <!-- Barra de pesquisa -->
   <header class="text-center py-5 bg-light">

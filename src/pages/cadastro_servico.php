@@ -26,54 +26,37 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
 
 <body>
 
-  <!-- Navbar (Menu de Navegação) -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-    <!-- Logo do site -->
-    <a class="navbar-brand fw-bold" href="/index.html">Job4You</a>
+ <!-- Navbar (Menu de Navegação) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand fw-bold" href="/index.php">Job4You</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/index.php">Home</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="#">Sobre a Empresa</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="./cadastro_usuario.php">Cadastre-se</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="btn btn-login" href="/src/pages/login.php">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- Botão de menu para celular -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Itens do menu -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-center">
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="/index.html">Home</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Sobre a Empresa</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="/src/pages/cadastro_usuario.html">Cadastre-se</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="btn btn-login" href="/src/pages/login.html">Login</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
 
   <!-- Formulário de cadastro serviço e prestador -->
   <main class="main-content container py-4">
     <h2 class="text-center mb-4">Cadastro de Serviço</h2>
     <form>
       <div class="row g-3">
-        <!-- Dados do prestador -->
-        <div class="col-md-6"><input type="text" class="form-control" placeholder="Nome completo" required></div>
-        <div class="col-md-6"><input type="text" class="form-control" placeholder="CPF ou CNPJ" required></div>
-        <div class="col-md-6"><input type="email" class="form-control" placeholder="Email" required></div>
-        <div class="col-md-6 input-group">
-          <input type="password" class="form-control" placeholder="Senha" required>
-        </div>
-        <div class="col-md-4"><input type="text" class="form-control" placeholder="CEP" required></div>
-        <div class="col-md-4"><input type="text" class="form-control" placeholder="Estado" required></div>
-        <div class="col-md-4"><input type="text" class="form-control" placeholder="Cidade" required></div>
-        <div class="col-md-6"><input type="text" class="form-control" placeholder="Bairro" required></div>
-        <div class="col-md-6"><input type="text" class="form-control" placeholder="Rua" required></div>
-        <div class="col-md-6"><input type="text" class="form-control" placeholder="Telefone" required></div>
-        <div class="col-md-6"><input type="date" class="form-control" required></div>
+      
 
         <!-- Dados do serviço -->
         <div class="col-md-12">

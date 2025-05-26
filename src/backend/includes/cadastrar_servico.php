@@ -1,7 +1,7 @@
 <?php
 session_start();
 require '../config/ConexaoBanco.php';
-require '../backend/includes/valida_login.php';
+require '../includes/valida_login.php';
 
 $database = new DataBase();
 $conectar = $database->getConnection();
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 history.back();
               </script>";
     }
-    
+    $idUsuario = $_SESSION["id_usuario"];
     $stmt->close();
     $database->closeConnection();
 }
