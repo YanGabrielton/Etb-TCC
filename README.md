@@ -58,7 +58,7 @@ Siga o passo a passo para executar o projeto na sua máquina.
 
 ## 🧠 Mentes por trás do projeto
 - [☕ Yan](https://github.com/YanGabrielton)
-- [🎨 Allana](https://github.com/)
-- [✍️ Aline](https://github.com/)
-- [🏅 Giovanna](https://github.com/)
+- [🎨 Allana](https://github.com/leitielly)
+- [✍️ Aline](https://github.com/alineop120)
+- [🏅 Giovanna](https://github.com/giihzinha0L70)
 - [🎲 Ítalo](https://github.com/ItaloBrazucaDeveloper)
