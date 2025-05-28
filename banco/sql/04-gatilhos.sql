@@ -23,4 +23,3 @@ DELIMITER //
         WHERE PublicacaoServico.ID = OLD.IDServico AND QuantidadeFavorito >= 0;
     END //
 DELIMITER;
-

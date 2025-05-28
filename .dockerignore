@@ -1,0 +1,7 @@
+# Arquivos e pastas que serão ignorados pelo docker
+/banco
+.idea
+.vscode
+.example.env
+*.md
+.gitignore
