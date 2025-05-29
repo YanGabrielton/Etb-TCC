@@ -5,6 +5,7 @@ class DataBase
     private $user = "";
     private $password = "";
     private $dbname = "";
+    private $port = 3306;
     public $conn;
 
     public function __construct()
@@ -13,7 +14,8 @@ class DataBase
             hostname: $this->host,
             database: $this->dbname,
             username: $this->user,
-            password: $this->password
+            password: $this->password,
+            port: $this->port
         );
 
         if ($this->conn->connect_error) {
