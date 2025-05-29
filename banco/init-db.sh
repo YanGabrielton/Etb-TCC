@@ -9,6 +9,9 @@ ENV_FILE="$SCRIPT_DIR/../.env"
 if [ -f "$ENV_FILE" ]; then
     echo "Carregando variáveis do arquivo: $ENV_FILE"
     source "$ENV_FILE"
+
+    # Renomeia a variável para compatibilidade
+    DB_PASSWORD="$DB_PASSWD"
 else
     echo "ERRO: O arquivo .env não foi encontrado em $ENV_FILE"
     echo "Certifique-se de que ele existe e está no diretório correto."
@@ -42,7 +45,7 @@ for script_name in "${SQL_FILES[@]}"; do
     # Verifica se o arquivo existe antes de tentar executá-lo
     if [ -f "$script_path" ]; then
         # Comando MySQL para executar o script
-        mysql -u "$DB_USER" -p"$DB_PASSWORD" "$DB_NAME" < "$script_path"
+        mysql -u "$DB_USER" -p"$DB_PASSWD" "$DB_NAME" < "$script_path"
 
         # Verifica o status de saída do comando mysql
         if [ $? -ne 0 ]; then
