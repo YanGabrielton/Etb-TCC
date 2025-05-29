@@ -6,7 +6,7 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
       dockerfile: Dockerfile # Especifica o Dockerfile a ser usado para construir o container MySQL
     restart: always # Reinicia o container automaticamente se ele falhar
     ports: # Faz o mapeamento de portas do container para a máquina local
-      - "3306"
+      - "3306:3306"
     environment: # Captura as variáveis de ambiente do arquivo '.env' para configuração do MySQL
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
@@ -25,16 +25,10 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
     restart: always # Reinicia o container automaticamente se ele falhar
     ports: # Faz o mapeamento de portas do container para a máquina local
       - "5173:5173"
-    environment: # Captura as variáveis de ambiente do arquivo '.env' para configuração do app
-      DB_HOST: ${DB_HOST:-mysql} # Define o host do banco de dados, padrão é 'mysql' (nome do serviço)
-      DB_PORT: ${DB_PORT:-3306} # Define a porta do banco de dados, padrão é '3306'
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWD}
     volumes: # Define volumes para persistência de dados do app
       # Mapeia o diretório local './app' para o diretório do container onde o código do app está localizado
       # (as alterações no código são refletidas imediatamente no container)
-      - .:/usr/src
+      - .:/job4you
 
 volumes: # Define volumes nomeados para persistência de dados
   db_data: # Volume nomeado para persistência de dados do MySQL
