@@ -1,11 +1,14 @@
 <?php
+
 class DataBase
 {
     private $host = "";
+    private $port = 3306;
+
+    private $dbname = "";
     private $user = "";
     private $password = "";
-    private $dbname = "";
-    private $port = 3306;
+    
     public $conn;
 
     public function __construct()

@@ -6,7 +6,7 @@ FROM mysql:8.4.0
 COPY ./sql /docker-entrypoint-initdb.d
 
 # Copia o arquivo de configuração personalizado para o diretório de configuração do MySQL
-COPY ./custom.cnf /etc/mysql/conf.d/custom.cnf
+COPY ./custom.cnf /etc/mysql/conf.d/
 
 # Expõe a porta 3306, que é a porta padrão do MySQL, no container
 EXPOSE 3306
