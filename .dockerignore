@@ -1,0 +1,14 @@
+.idea
+.vscode
+
+.example.env
+*.md
+
+.gitignore
+.dockerignore
+
+Dockerfile
+docker-compose.yml
+
+/vendor
+/banco

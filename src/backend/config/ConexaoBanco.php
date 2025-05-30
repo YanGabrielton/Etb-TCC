@@ -1,18 +1,28 @@
 <?php
+
 class DataBase
 {
-    private $host = "localhost";
-    private $user = "root";
+    private $host = "";
+    private $port = 3306;
+
+    private $dbname = "";
+    private $user = "";
     private $password = "";
-    private $dbname = "JOB4YOU";
+    
     public $conn;
 
     public function __construct()
     {
-        $this->conn = new mysqli($this->host, $this->user, $this->password, $this->dbname);
+        $this->conn = new mysqli(
+            hostname: $this->host,
+            database: $this->dbname,
+            username: $this->user,
+            password: $this->password,
+            port: $this->port
+        );
 
         if ($this->conn->connect_error) {
-            die("Falha na conexão com o banco de dados: " . $this->conn->connect_error);
+            die("Falha na conexão com o banco de dados: {$this->conn->connect_error}");
         }
     }
 
@@ -28,4 +38,3 @@ class DataBase
         }
     }
 }
-?>

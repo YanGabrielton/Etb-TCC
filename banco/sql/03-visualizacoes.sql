@@ -28,7 +28,7 @@ SELECT
     MAX(CASE WHEN cc.Nome = 'Celular' THEN ic.Contato END) AS Celular,
     MAX(CASE WHEN cc.Nome = 'WhatsApp' THEN ic.Contato END) AS Whatsapp,
     MAX(CASE WHEN cc.Nome = 'Instagram' THEN ic.Contato END) AS Instagram,
-    MAX(CASE WHEN cc.Nome = 'Outros' THEN ic.Contato END) AS OutroContato
+    MAX(CASE WHEN cc.Nome = 'Outro' THEN ic.Contato END) AS OutroContato
 FROM PublicacaoServico p
     INNER JOIN Usuario u ON u.ID = p.FKUsuario 
     INNER JOIN CategoriaServico cs ON cs.ID = p.FKCategoria
