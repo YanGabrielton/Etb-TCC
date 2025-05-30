@@ -1,34 +1,86 @@
 <?php
 session_start();
-include '../config/ConexaoBanco.php';
 
-// Verificar se o usuário está logado e é um prestador
-if (!isset($_SESSION["id_usuario"]) || $_SESSION["nivel_acesso"] != "PRESTADOR") {
-    header("Location: /index.php");
+if (!isset($_SESSION["id_usuario"])) {
+    header("Location: ../pages/login.php");
     exit;
 }
 
+include '../config/ConexaoBanco.php';
+
+$database = new DataBase();
+$conexao = $database->getConnection();
+
 $id_usuario = $_SESSION["id_usuario"];
+$titulo = $_POST["titulo"];
+$descricao = $_POST["descricao"];
+$valor = $_POST["preco"];
 $categoria = $_POST["categoria"];
-$preco = $_POST["preco"];
-$titulo = mysqli_real_escape_string($conexao, $_POST["titulo"]);
-$sobre = mysqli_real_escape_string($conexao, $_POST["sobre"]);
-$horario = mysqli_real_escape_string($conexao, $_POST["horario"]);
+$data_criacao = date("Y-m-d H:i:s");
+$status = 'ATIVO';
 
-// Processar upload da foto
-$foto_nome = "";
-if (!empty($_FILES["foto"]["name"])) {
-    $extensao = pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION);
-    $foto_nome = "servicos/" . uniqid() . "." . $extensao;
-    move_uploaded_file($_FILES["foto"]["tmp_name"], "../uploads/" . $foto_nome);
+// Upload da imagem (opcional)
+$foto = null;
+if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+    $nomeArquivo = basename($_FILES["foto"]["name"]);
+    $caminhoDestino = "../../uploads/" . $nomeArquivo;
+
+    if (move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoDestino)) {
+        $foto = $nomeArquivo;
+
+        // Atualizar a foto na tabela Usuario
+        $updateFotoUsuario = $conexao->prepare("UPDATE Usuario SET Foto = ? WHERE ID = ?");
+        $updateFotoUsuario->bind_param("si", $foto, $id_usuario);
+        $updateFotoUsuario->execute();
+        $updateFotoUsuario->close();
+    }
 }
 
-$sql = "INSERT INTO PublicacaoServico (Titulo, Sobre, Valor, FKCategoria, FKUsuario, StatusPublicacao) 
-        VALUES ('$titulo', '$sobre', $preco, $categoria, $id_usuario, 'EM_ANALISE')";
+// Inserir o serviço na tabela PublicacaoServico (sem o campo Foto)
+$stmt = $conexao->prepare("INSERT INTO PublicacaoServico 
+    (FKUsuario, Titulo, Sobre, Valor, FKCategoria, StatusPublicacao, DataCriacao)
+    VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("issdsss", $id_usuario, $titulo, $descricao, $valor, $categoria, $status, $data_criacao);
 
-if (mysqli_query($conexao, $sql)) {
-    echo "<script>alert('Serviço cadastrado com sucesso e está em análise!'); location.href='buscar_servicos.php';</script>";
+if ($stmt->execute()) {
+    // Verificar se o usuário tem serviços ativos
+    $verifica = $conexao->prepare("SELECT COUNT(*) AS total FROM PublicacaoServico WHERE FKUsuario = ? AND StatusPublicacao = 'ATIVO'");
+    $verifica->bind_param("i", $id_usuario);
+    $verifica->execute();
+    $res = $verifica->get_result()->fetch_assoc();
+    $verifica->close();
+
+    if ($res['total'] > 0) {
+        // Buscar a credencial do usuário
+        $buscaCredencial = $conexao->prepare("SELECT FKCredencial FROM Usuario WHERE ID = ?");
+        $buscaCredencial->bind_param("i", $id_usuario);
+        $buscaCredencial->execute();
+        $resultado = $buscaCredencial->get_result()->fetch_assoc();
+        $buscaCredencial->close();
+
+        $fk_credencial = $resultado['FKCredencial'];
+
+        // Buscar o ID do nível de acesso 'PRESTADOR'
+        $buscaNivel = $conexao->prepare("SELECT ID FROM NivelAcesso WHERE Grupo = 'PRESTADOR'");
+        $buscaNivel->execute();
+        $idNivel = $buscaNivel->get_result()->fetch_assoc();
+        $buscaNivel->close();
+
+        $id_prestador = $idNivel['ID'];
+
+        // Atualizar o nível de acesso na tabela Credencial
+        $atualizaNivel = $conexao->prepare("UPDATE Credencial SET FKNivelAcesso = ? WHERE ID = ?");
+        $atualizaNivel->bind_param("ii", $id_prestador, $fk_credencial);
+        $atualizaNivel->execute();
+        $atualizaNivel->close();
+    }
+
+    header("Location: /src/pages/prestadores.php?sucesso=1");
+    exit;
 } else {
-    echo "<script>alert('Erro ao cadastrar serviço!'); history.back();</script>";
+    echo "Erro ao cadastrar serviço: " . $stmt->error;
 }
+
+$stmt->close();
+$conexao->close();
 ?>

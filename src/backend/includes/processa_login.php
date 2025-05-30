@@ -27,6 +27,7 @@ if (mysqli_num_rows($resultado) == 1) {
         $_SESSION["nome_usuario"] = $registro["Nome"];
         $_SESSION["foto_usuario"] = $registro["Foto"];
         $_SESSION["nivel_acesso"] = $registro["Grupo"];
+        
         $id = $registro["ID"]; // capturando o ID
         
         // Redirecionar conforme o nível de acesso

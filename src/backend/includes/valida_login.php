@@ -1,10 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION["id_usuario"])) {
-    echo "<script>
-            alert('Você precisa estar logado!');
-            location.href = '../index.php';
-          </script>";
+    $_SESSION["erro"] = "Você precisa estar logado!";
+    header("Location: ../../pages/login.php");
     exit;
 }
-?>

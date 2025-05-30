@@ -65,7 +65,7 @@ session_start();
                 <div>
 
                     <a href="./src/pages/servicos.php" class="btn btn-outline-primary me-3">Ver Serviços</a>
-                    <a href="./src/pages/login.php" class="btn btn-outline-primary">Cadastrar Serviço</a>
+                    <a href="./src/pages/cadastro_servico.php" class="btn btn-outline-primary">Cadastrar Serviço</a>
 
                 </div>
             </div>
