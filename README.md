@@ -1,6 +1,6 @@
 <h1 align="center"> - Job4You - </h1>
 
-![Foto da página inicial](/src/docs/preview.png)
+![Foto da página inicial](preview.png)
 
 <div align="center">
 

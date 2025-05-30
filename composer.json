@@ -1,0 +1,31 @@
+{
+  "name": "TCC/JOB4YOU",
+  "type": "project",
+  "license": "MIT",
+  "scripts": {
+    "start": "php -S localhost:8080 -t public"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "KissPhp\\": "vendor/kiss-php/"
+    }
+  },
+  "authors": [
+    { "name": "Yan" },
+    { "name": "Allana" },
+    { "name": "Italo" }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.6.2",
+    "twig/twig": "^3.21.1"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.8.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
