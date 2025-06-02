@@ -46,6 +46,7 @@ session_start();
                     <a class="btn btn-login" href="./src/pages/login.php">Login</a>
 
                 </li>
+                <li><a href="./src/backend/includes/logout.php">Sair</a></li>
             </ul>
         </div>
     </nav>

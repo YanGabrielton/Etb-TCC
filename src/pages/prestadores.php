@@ -41,6 +41,7 @@ include '../backend/config/ConexaoBanco.php';
                 <li class="nav-item mx-2">
                     <a class="btn btn-login" href="/src/pages/login.php">Login</a>
                 </li>
+                <li><a href="../backend/includes/logout.php">Sair</a></li>
             </ul>
         </div>
     </nav>

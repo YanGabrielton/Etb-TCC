@@ -3,7 +3,7 @@ session_start();
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: login.php");
+    header("Location: cadastro_servico.php");
     exit;
 }
 
@@ -71,6 +71,7 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
                 <li class="nav-item mx-2">
                     <a class="btn btn-login" href="/src/pages/login.php">Login</a>
                 </li>
+                <li><a href="../backend/includes/logout.php">Sair</a></li>
             </ul>
         </div>
     </nav>
