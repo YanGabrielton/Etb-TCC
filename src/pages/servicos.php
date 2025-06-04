@@ -73,7 +73,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-person-bounding-box display-4 mb-3"></i>
               <h5 class="card-title">Babá</h5>
               <p class="card-text">Profissionais para cuidar de crianças com responsabilidade e carinho.</p>
-              <a href="/src/pages/prestadores.html" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-house-gear display-4 mb-3"></i>
               <h5 class="card-title">Faxina e Limpeza Residencial</h5>
               <p class="card-text">Diaristas especializadas em manter seu lar limpo e organizado.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-flower1 display-4 mb-3"></i>
               <h5 class="card-title">Jardinagem</h5>
               <p class="card-text">Serviços de cuidado com jardins e áreas verdes.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-truck display-4 mb-3"></i>
               <h5 class="card-title">Mudança e Frete</h5>
               <p class="card-text">Auxílio em mudanças e transporte de objetos com segurança.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-tools display-4 mb-3"></i>
               <h5 class="card-title">Manutenção e Reparos Domésticos</h5>
               <p class="card-text">Serviços como elétrica, hidráulica e pequenos consertos.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-book display-4 mb-3"></i>
               <h5 class="card-title">Reforço Escolar</h5>
               <p class="card-text">Aulas particulares para apoio escolar de diversas matérias.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -140,7 +140,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-person-wheelchair display-4 mb-3"></i>
               <h5 class="card-title">Cuidador de Idoso</h5>
               <p class="card-text">Profissionais preparados para cuidar de idosos com atenção e respeito.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-heart-pulse display-4 mb-3"></i>
               <h5 class="card-title">Passeador de Cães</h5>
               <p class="card-text">Serviço de passeio para seu pet com carinho e responsabilidade.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-egg-fried display-4 mb-3"></i>
               <h5 class="card-title">Cozinheiro</h5>
               <p class="card-text">Profissionais que preparam refeições com sabor e qualidade.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -173,7 +173,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-scissors display-4 mb-3"></i>
               <h5 class="card-title">Reparos de Roupas (Costureiro)</h5>
               <p class="card-text">Ajustes e consertos em peças de roupas de forma prática e rápida.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -184,7 +184,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-camera display-4 mb-3"></i>
               <h5 class="card-title">Fotógrafo Freelance</h5>
               <p class="card-text">Registros de momentos especiais com criatividade e técnica.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ include '../backend/config/ConexaoBanco.php';
               <i class="bi bi-brush display-4 mb-3"></i>
               <h5 class="card-title">Esteticista</h5>
               <p class="card-text">Cuidados com beleza como designer de sobrancelhas, unhas e cabelo.</p>
-              <a href="#" class="btn btn-primary">Ver Prestadores</a>
+              <a href="/src/pages/prestadores.php" class="btn btn-primary">Ver Prestadores</a>
             </div>
           </div>
         </div>
