@@ -1,0 +1,27 @@
+{% extends "Layouts/main.layout.twig" %}
+
+{% block main %}
+  <main class="main-content container py-4">
+    <h2 class="text-center mb-4">Cadastro de Serviço</h2>
+    <form>
+      <div class="row g-3">
+        <!-- Dados do serviço -->
+        <div class="col-md-12">
+          <input type="file" class="form-control" placeholder="Foto do serviço">
+        </div>
+        <div class="col-md-6">
+          <select class="form-control" required>
+            <option value="">Selecione a categoria</option>
+            <option value="id">Categoria</option>
+          </select>
+        </div>
+        <div class="col-md-6"><input type="text" class="form-control" placeholder="Preço (R$)" required></div>
+        <div class="col-md-12"><textarea class="form-control" rows="4" placeholder="Descrição do serviço"
+            required></textarea></div>
+        <div class="col-md-12"><input type="text" class="form-control" placeholder="Horário de trabalho" required></div>
+      </div>
+
+      <div class="d-grid mt-4"><button type="submit" class="btn btn-login">Cadastrar Serviço</button></div>
+    </form>
+  </main>
+{% endblock %}

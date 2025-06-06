@@ -17,7 +17,7 @@ class AutenticacaoController extends WebController {
     $user = $request->session->get($this->sessionKey);
     $request->session->remove($this->sessionKey);
 
-    $this->render('Pages/login/page', [
+    $this->render('Pages/autenticacao/page', [
       'user' => $user['UltimoEmailInserido'] ?? '',
       'password' => $user['UltimaSenhaInserida'] ?? '',
     ]);

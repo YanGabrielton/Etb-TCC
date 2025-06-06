@@ -8,8 +8,8 @@ use KissPhp\Attributes\Http\Get;
 #[Controller('/servicos')]
 class ServicosController extends WebController {
   
-  #[Get('')]
+  #[Get()]
   public function exibirPaginaDeServicos() {
-    $this->render('Pages/home');
+    $this->render('Pages/servicos/page');
   }
 }

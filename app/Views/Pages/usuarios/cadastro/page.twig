@@ -1,0 +1,13 @@
+{% extends "Layouts/main.layout.twig" %}
+
+{% block main %}
+  <main class="main-content container py-4">
+
+    <h2 class="text-center mb-4">Cadastro de Usuário</h2>
+    {% include "Pages/usuarios/cadastro/cadastrar-usuario-form.twig" %}
+
+    <div class="d-grid mt-4">
+      <button type="submit" class="btn btn-login">Cadastrar</button>
+    </div>
+  </main>
+{% endblock %}

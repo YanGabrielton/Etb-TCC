@@ -1,5 +1,40 @@
 {% extends "Layouts/main.layout.twig" %}
 
 {% block main %}
+	{# Barra de pesquisa #}
+	<header class="text-center py-5 bg-light">
+		<div class="container">
+			<h1 class="fw-bold">Encontre prestadores de serviços informais</h1>
+			<p class="lead">Busque por nome ou cidade</p>
+			<div class="row justify-content-center mt-4">
+				<div class="col-md-6">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Pesquisar prestador...">
+						<button class="btn btn-warning fw-bold text-black" type="button">Pesquisar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
 
+  {# Prestadores #}
+	<section class="container py-5">
+		<div class="row justify-content-center g-4">
+
+      {% for index in 0..10 %}
+        <div class="col-md-4">
+          <div class="card h-100 text-center">
+            <img src="/images/fotoperfil.jpg" width="100" height="100" alt="Prestador">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Nome do prestador</h5>
+              <p class="card-text text-muted mb-1">Cidade tal, sigla</p>
+              <p class="card-text">Horario de atendimento: 08:00 às 18:00 de segunda a sexta</p>
+              <a href="login.html" class="btn btn-warning">Ver perfil</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+		</div>
+	</section>
 {% endblock %}
