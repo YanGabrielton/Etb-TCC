@@ -7,15 +7,18 @@
     {% endblock %}
 
     {% block links %}
+      <link rel="stylesheet" href="/assets/css/bootstrap-icons.min.css">
       <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/assets/css/bootstrap-icon.min.css">
-      <link rel="stylesheet" href="/assets/css/style.css">
+      <link rel="stylesheet" href="/assets/css/global.css">
     {% endblock %}
 
-    <title>JOB4YOU</title>
+    <title>{% block pageTitle %} JOB4YOU {% endblock %}</title>
   </head>
   <body>
-    {% block content %}
+    {% block content %} {% endblock %}
+
+    {% block debugging %}
+      {% include '@Infra/DED/debug-container.twig' %}
     {% endblock %}
 
     {% block scripts %}

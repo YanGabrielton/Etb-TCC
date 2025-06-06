@@ -2,15 +2,16 @@
 
 require '../vendor/autoload.php';
 
-use Infra\DED\BoundinaryError;
-use Infra\Routing\DispatchRouter;
-use Infra\Config\{ Paths, Session };
-use Infra\Services\{ Container, Dotenv };
+use KissPhp\Config\Paths;
+use KissPhp\Config\Session;
+use KissPhp\Core\DED\BoundinaryError;
+use KissPhp\Core\Routing\DispatchRouter;
+use KissPhp\Services\Container;
+use KissPhp\Services\Dotenv as ServicesDotenv;
 
 BoundinaryError::register();
-
 Session::init();
-Dotenv::load(Paths::ENV_PATH);
+ServicesDotenv::load(Paths::ENV_PATH);
 
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 $uriParsed = parse_url($uri, PHP_URL_PATH) ?? '';

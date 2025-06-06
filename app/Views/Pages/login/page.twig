@@ -1,52 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
-    <a class="navbar-brand fw-bold" href="/index.php">Job4You</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav align-items-center">
-            <li class="nav-item mx-2">
-                <a class="nav-link" href="/index.php">Home</a>
-            </li>
-            <li class="nav-item mx-2">
-                <a class="nav-link" href="#">Sobre a Empresa</a>
-            </li>
-            <li class="nav-item mx-2">
-                <a class="nav-link" href="./cadastro_usuario.php">Cadastre-se</a>
-            </li>
-            <li class="nav-item mx-2">
-                <a class="btn btn-login" href="/src/pages/login.php">Login</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+{% extends "Layouts/main.layout.twig" %}
 
-<!-- Formulário de login -->
-<main class="main-content d-flex align-items-center justify-content-center">
-    <div class="login-card">
-        <h2 class="text-center mb-4">Login</h2>
-        <form action="../backend/includes/processa_login.php" method="POST">
-            <div class="mb-3">
-                <label for="email">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
-            </div>
+{% block main %}
+	<main class="d-flex flex-fill justify-content-center align-items-center vh-100">
+		<div class="card shadow-sm" style="width: 27rem;">
+			<div class="card-body">
 
-            <div class="d-grid mb-2">
-                <button type="submit" class="btn btn-login">Entrar</button>
-            </div>
-            <div class="text-center">
-                <a href="./cadastro_usuario.php" class="btn btn-outline-secondary w-100">Criar uma conta</a>
-            </div>
-        </form>
-    </div>
-</main>
+				<h2 class="car-title text-center mb-4">Login</h2>
 
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <p>&copy; 2025 Job4You - Todos os direitos reservados.</p>
-    </div>
-</footer>
+				{% include "Pages/login/autenticar-form.twig" %}
+
+				<div class="d-flex flex-column align-items-center text-center gap-3">
+					<button form="login-form" type="submit" class="btn btn-warning shadow-sm w-100 p-2">
+						<i class="bi bi-box-arrow-in-right"></i> Entrar 
+					</button>
+					
+					<span class="text-nowrap">
+						Não tem uma conta?
+						<a href="/user/register" class="link-dark link-opacity-50-hover w-100">
+							Cadastre-se
+						</a>
+					</span>
+				</div>
+
+			</div>
+		</div>
+	</main>
+{% endblock %}

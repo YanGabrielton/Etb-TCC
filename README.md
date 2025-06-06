@@ -1,14 +1,14 @@
-<h1 align="center"> - Job4You - </h1>
+<div align="center">
+
+  <h1> - Job4You - </h1>
 
   ![Foto da página inicial](preview.png)
 
-  <div align="center">
-
-    [![PHP Version](https://img.shields.io/badge/PHP-%38.4-blue.svg?style=for-the-badge&color=007BFF)](https://www.php.net/)
-    [![Bootstrap Version](https://img.shields.io/badge/Bootstrap-%35.0-blueviolet.svg?style=for-the-badge&color=6F42C1)](https://getbootstrap.com/)
-    [![MySQL Version](https://img.shields.io/badge/MySQL-%38.4-blue.svg?style=for-the-badge)](https://www.mysql.com/)
-    [![Made in Brazil](https://img.shields.io/badge/Made%20in-Brazil-009933.svg?style=for-the-badge&color=28A745)](https://github.com/YanGabrielton/Etb-Tcc)
-    [![Project Status](https://img.shields.io/badge/Status-Development-yellow.svg?style=for-the-badge&color=ffba00)](https://github.com/YanGabrielton/Etb-Tcc)
+  [![PHP Version](https://img.shields.io/badge/PHP-%38.4-blue.svg?style=for-the-badge&color=007BFF)](https://www.php.net/)
+  [![Bootstrap Version](https://img.shields.io/badge/Bootstrap-%35.0-blueviolet.svg?style=for-the-badge&color=6F42C1)](https://getbootstrap.com/)
+  [![MySQL Version](https://img.shields.io/badge/MySQL-%38.4-blue.svg?style=for-the-badge)](https://www.mysql.com/)
+  [![Made in Brazil](https://img.shields.io/badge/Made%20in-Brazil-009933.svg?style=for-the-badge&color=28A745)](https://github.com/YanGabrielton/Etb-Tcc)
+  [![Project Status](https://img.shields.io/badge/Status-Development-yellow.svg?style=for-the-badge&color=ffba00)](https://github.com/YanGabrielton/Etb-Tcc)
 
 </div>
 
@@ -33,7 +33,7 @@ Siga o passo a passo de como instalar o projeto na sua máquina.
 ## 🚀 Como iniciar o projeto
 Escolha uma das formas abaixo para executar o projeto na sua máquina.
 
-### ⛔🐳 Sem Docker
+### ⛔ 🐳 Sem Docker
 Siga o passo a passo para executar o projeto localmente.
 
 > **Atenção:** Certifique-se de ter o [Mysql](https://www.mysql.com/) e o [PHP](https://www.php.net/) instalados em sua máquina antes de usar este método.
@@ -68,7 +68,7 @@ Siga o passo a passo para executar o projeto localmente.
 
 5. **Acesse o projeto pelo navegador em: http://localhost:5173/**
 
-### ✅🐳 Com Docker
+### ✅ 🐳 Com Docker
 Siga o passo a passo para executar o projeto usando Docker.
 
 ---

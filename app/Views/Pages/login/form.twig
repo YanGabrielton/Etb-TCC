@@ -1,0 +1,28 @@
+<form action="/login" method="post" id="login-form">
+	<div class="mb-4">
+		<label for="email" class="form-label">E-mail</label>
+		<input
+			required
+			id="email"
+			name="email"
+			type="email"
+			class="form-control p-2"
+		>
+	</div>
+
+	<div class="mb-4">
+		<label for="password" class="form-label">Senha</label>
+		<input
+			required
+			id="password"
+			name="senha"
+			type="password"
+			class="form-control p-2"
+		>
+		<div class="form-text text-end">
+			<a href="/user/forget-password" class="opacity-75 link-dark link-opacity-50-hover">
+				Esqueceu sua senha?
+			</a>
+		</div>
+	</div>
+</form>
