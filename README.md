@@ -1,14 +1,14 @@
 <h1 align="center"> - Job4You - </h1>
 
-![Foto da página inicial](preview.png)
+  ![Foto da página inicial](preview.png)
 
-<div align="center">
+  <div align="center">
 
-  [![PHP Version](https://img.shields.io/badge/PHP-%38.4-blue.svg?style=for-the-badge&color=007BFF)](https://www.php.net/)
-  [![Bootstrap Version](https://img.shields.io/badge/Bootstrap-%35.0-blueviolet.svg?style=for-the-badge&color=6F42C1)](https://getbootstrap.com/)
-  [![MySQL Version](https://img.shields.io/badge/MySQL-%38.4-blue.svg?style=for-the-badge)](https://www.mysql.com/)
-  [![Made in Brazil](https://img.shields.io/badge/Made%20in-Brazil-009933.svg?style=for-the-badge&color=28A745)](https://github.com/YanGabrielton/Etb-Tcc)
-  [![Project Status](https://img.shields.io/badge/Status-Development-yellow.svg?style=for-the-badge&color=ffba00)](https://github.com/YanGabrielton/Etb-Tcc)
+    [![PHP Version](https://img.shields.io/badge/PHP-%38.4-blue.svg?style=for-the-badge&color=007BFF)](https://www.php.net/)
+    [![Bootstrap Version](https://img.shields.io/badge/Bootstrap-%35.0-blueviolet.svg?style=for-the-badge&color=6F42C1)](https://getbootstrap.com/)
+    [![MySQL Version](https://img.shields.io/badge/MySQL-%38.4-blue.svg?style=for-the-badge)](https://www.mysql.com/)
+    [![Made in Brazil](https://img.shields.io/badge/Made%20in-Brazil-009933.svg?style=for-the-badge&color=28A745)](https://github.com/YanGabrielton/Etb-Tcc)
+    [![Project Status](https://img.shields.io/badge/Status-Development-yellow.svg?style=for-the-badge&color=ffba00)](https://github.com/YanGabrielton/Etb-Tcc)
 
 </div>
 

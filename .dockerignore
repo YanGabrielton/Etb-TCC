@@ -4,11 +4,15 @@
 .example.env
 *.md
 
-.gitignore
+README.md
+preview.png
+
 .dockerignore
+.gitignore
 
 Dockerfile
-docker-compose.yml
+docker-compose.yaml
 
-/vendor
-/banco
+vendor/
+!vendor/kiss-php/
+database/

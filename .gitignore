@@ -2,3 +2,6 @@
 !.example.env
 .vscode
 .idea
+
+vendor/
+!vendor/kiss-php/
