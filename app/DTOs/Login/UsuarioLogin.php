@@ -4,7 +4,7 @@ namespace App\DTOs\Login;
 use KissPhp\Attributes\Data\Validate;
 use App\Validators\{ Password, Email };
 
-class UserLogin {
+class UsuarioLogin {
   #[Validate(Email::class)]
   public string $email;
 

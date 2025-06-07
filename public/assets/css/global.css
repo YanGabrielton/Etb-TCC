@@ -2,6 +2,9 @@
 
 * {
   font-family: "Reddit Sans", sans-serif;
+}
+
+body {
   -webkit-font-smothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
