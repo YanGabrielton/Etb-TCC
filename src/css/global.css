@@ -2,6 +2,7 @@
 Global Css - Job4You :)
 ================================ */
 
+
 html, body {
   height: 100%; /* Faz com que o body ocupe a tela toda */
 }
@@ -27,106 +28,3 @@ main {
 }
 
 
-/* ================================
-Botões principais
-================================ */
-
-/* Estilo base para botões de ação */
-.btn-login,
-.btn-warning,
-.card .btn-primary,
-.btn-primary {
-  background-color: #FFD700;
-  color: #000;
-  font-weight: bold;
-  border: none;
-}
-
-.btn-login:hover,
-.btn-warning:hover,
-.card .btn-primary:hover,
-.btn-primary:hover {
-  background-color: #e6c200;
-  color: #000;
-}
-
-/* Botões com borda escura */
-.btn-outline-primary {
-  background-color: #fff;
-  color: #000;
-  border: 2px solid #000;
-  font-weight: bold;
-}
-
-.btn-outline-primary:hover {
-  background-color: #FFD700;
-  border-color: #FFD700;
-  color: #000;
-}
-
-/* ================================
-Formulários de login e cadastro
-================================ */
-
-/* Centraliza o formulário na tela */
-.login-container,
-.container.d-flex {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-/* Estilo do cartão dos formulários */
-.login-card {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Títulos dos formulários */
-.login-card h3 {
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Espaço entre campos */
-.login-card .form-control,
-.login-card .form-select,
-.login-card .form-label {
-  margin-bottom: 1rem;
-}
-
-/* Ajuste no botão de alternar senha */
-.input-group .btn-outline-secondary {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-/* ================================
-Cards interativos
-================================ */
-
-/* Leve efeito de zoom ao passar o mouse */
-.card:hover {
-  transform: scale(1.03);
-  transition: transform 0.3s ease-in-out;
-}
-
-
-/* ================================
-Rodapé
-================================ */
-
-/* Barra fixa na parte inferior */
-footer {
-  background-color: #000;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-  margin-top: auto;
-}

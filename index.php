@@ -11,7 +11,9 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Job4You</title>
 
+    <!-- CSS global -->
     <link rel="stylesheet" href="/src/css/global.css">
+    
     <!-- Tailwind CSS direto da CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -48,11 +50,11 @@ session_start();
 
 <body class="bg-white font-sans flex flex-col min-h-screen">
 
-    <!-- MENU SUPERIOR -->
+    <!-- MENU DE NAVEGAÇÃO -->
     <nav class="bg-dark-800 py-4 px-6 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
 
-            <!-- LOGO DA PÁGINA -->
+            <!-- LOGO -->
             <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="index.php">Job4You</a>
 
             <!-- LINKS DO MENU (versão desktop) -->
