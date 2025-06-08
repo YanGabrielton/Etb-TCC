@@ -1,3 +1,8 @@
+<?php
+session_start();
+include '../backend/config/ConexaoBanco.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,332 +11,429 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Job4You - Prestadores</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <!-- Glider.js para o carrossel -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css">
-    <!-- Seu CSS global -->
+    <!-- CSS global -->
     <link rel="stylesheet" href="/src/css/global.css">
-    
-    <style>
-        /* Estilos personalizados */
-        .prestador-card {
-            transition: all 0.3s ease;
-            min-width: 280px;
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuração personalizada do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#F59E0B', // Amarelo principal
+                            600: '#D97706', // Tom mais escuro
+                        },
+                        dark: {
+                            800: '#1F2937', // Tom escuro do menu
+                            900: '#111827',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
         }
-        .prestador-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        .glider-slide {
-            padding: 0 15px;
-        }
-        .star-rating {
-            color: #fbbf24; /* Cor âmbar para as estrelas */
-            font-size: 0.9rem;
-            margin: 0.5rem 0;
-        }
-    </style>
+    </script>
+
+    <!-- Ícones do Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Fonte Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Glider CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css">
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-white font-sans flex flex-col min-h-screen">
 
-    <!-- Menu de Navegação -->
-    <nav class="bg-gray-800 text-white px-4 py-3 shadow-md">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between">
-            <a class="text-2xl font-bold text-white hover:text-gray-300" href="/index.php">
-                Job4You
-            </a>
+    <!-- MENU DE NAVEGAÇÃO -->
+    <nav class="bg-dark-800 py-4 px-6 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- LOGO -->
+            <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="index.php">Job4You</a>
 
-            <button class="md:hidden focus:outline-none text-white" type="button" id="mobile-menu-button">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-
-            <div class="hidden w-full md:flex md:w-auto md:items-center" id="navbarNav">
-                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 items-center">
-                    <li>
-                        <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
-                           href="/index.php">Home</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
-                           href="#">Sobre</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
-                           href="./cadastro_usuario.php">Cadastre-se</a>
-                    </li>
-                    <li>
-                        <a class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium" 
-                           href="/src/pages/login.php">Login</a>
-                    </li>
-                </ul>
+            <!-- LINKS DO MENU (versão desktop) -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
+                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="./src/pages/login.php">Login</a>
             </div>
+
+            <!-- BOTÃO HAMBÚRGUER (para mobile) -->
+            <button class="md:hidden text-white focus:outline-none" id="menuButton">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- MENU MOBILE (invisível até clicar) -->
+        <div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="index.php">Home</a>
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="#">Sobre</a>
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
+            <a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" href="./src/pages/login.php">Login</a>
         </div>
     </nav>
 
-    <!-- Cabeçalho -->
-    <header class="bg-white py-12 text-center">
-        <div class="container mx-auto px-4">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-                Nossos Prestadores
-            </h1>
-            <p class="text-gray-600 max-w-2xl mx-auto">
-                Profissionais qualificados prontos para ajudar você
-            </p>
-        </div>
-    </header>
-
-    <!-- Carrossel de Prestadores -->
-    <section class="container mx-auto py-8 px-4">
-        <div class="relative">
-            <div class="glider-contain">
-                <div class="glider">
-                    <!-- Prestador 1 -->
-                    <div class="glider-slide">
-                        <div class="bg-white rounded-lg shadow-md prestador-card p-6 text-center mx-auto">
-                            <div class="h-40 bg-gray-200 rounded-full w-40 mx-auto mb-4 overflow-hidden">
-                                <img src="/src/img/fotoperfil.jpg" alt="Prestador" class="h-full w-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-1">Ana Silva</h3>
-                            <p class="text-gray-600 text-sm mb-1">
-                                Encanadora Residencial
-                            </p>
-                            <p class="text-gray-500 text-sm mb-2">
-                                <i class="bi bi-geo-alt mr-1"></i> São Paulo, SP
-                            </p>
-                            <div class="flex justify-center star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                                <span class="text-gray-500 text-xs ml-1">(42)</span>
-                            </div>
-                            <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium w-full">
-                                Ver Perfil
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Prestador 2 -->
-                    <div class="glider-slide">
-                        <div class="bg-white rounded-lg shadow-md prestador-card p-6 text-center mx-auto">
-                            <div class="h-40 bg-gray-200 rounded-full w-40 mx-auto mb-4 overflow-hidden">
-                                <img src="/src/img/fotoperfil.jpg" alt="Prestador" class="h-full w-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-1">Carlos Oliveira</h3>
-                            <p class="text-gray-600 text-sm mb-1">
-                                Eletricista
-                            </p>
-                            <p class="text-gray-500 text-sm mb-2">
-                                <i class="bi bi-geo-alt mr-1"></i> Rio de Janeiro, RJ
-                            </p>
-                            <div class="flex justify-center star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <span class="text-gray-500 text-xs ml-1">(38)</span>
-                            </div>
-                            <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium w-full">
-                                Ver Perfil
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Prestador 3 -->
-                    <div class="glider-slide">
-                        <div class="bg-white rounded-lg shadow-md prestador-card p-6 text-center mx-auto">
-                            <div class="h-40 bg-gray-200 rounded-full w-40 mx-auto mb-4 overflow-hidden">
-                                <img src="/src/img/fotoperfil.jpg" alt="Prestador" class="h-full w-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-1">Mariana Costa</h3>
-                            <p class="text-gray-600 text-sm mb-1">
-                                Pintora Residencial
-                            </p>
-                            <p class="text-gray-500 text-sm mb-2">
-                                <i class="bi bi-geo-alt mr-1"></i> Belo Horizonte, MG
-                            </p>
-                            <div class="flex justify-center star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <span class="text-gray-500 text-xs ml-1">(56)</span>
-                            </div>
-                            <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium w-full">
-                                Ver Perfil
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Prestador 4 -->
-                    <div class="glider-slide">
-                        <div class="bg-white rounded-lg shadow-md prestador-card p-6 text-center mx-auto">
-                            <div class="h-40 bg-gray-200 rounded-full w-40 mx-auto mb-4 overflow-hidden">
-                                <img src="/src/img/fotoperfil.jpg" alt="Prestador" class="h-full w-full object-cover">
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-1">João Santos</h3>
-                            <p class="text-gray-600 text-sm mb-1">
-                                Marceneiro
-                            </p>
-                            <p class="text-gray-500 text-sm mb-2">
-                                <i class="bi bi-geo-alt mr-1"></i> Porto Alegre, RS
-                            </p>
-                            <div class="flex justify-center star-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                                <i class="bi bi-star"></i>
-                                <span class="text-gray-500 text-xs ml-1">(29)</span>
-                            </div>
-                            <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium w-full">
-                                Ver Perfil
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <button aria-label="Previous" class="glider-prev hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md">
-                    <i class="bi bi-chevron-left text-gray-700"></i>
-                </button>
-                <button aria-label="Next" class="glider-next hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md">
-                    <i class="bi bi-chevron-right text-gray-700"></i>
-                </button>
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="bg-white py-12">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Nossos Prestadores</h1>
+                <p class="text-xl text-gray-600">Profissionais qualificados prontos para ajudar você</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Modal de Perfil do Prestador -->
-    <div id="prestadorModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <!-- Cabeçalho do Modal -->
-            <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
-                <h3 class="text-xl font-bold text-gray-800">Perfil do Prestador</h3>
-                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
-                    <i class="bi bi-x-lg text-2xl"></i>
-                </button>
-            </div>
-            
-            <!-- Corpo do Modal -->
-            <div class="p-6">
-                <!-- Seção Superior -->
-                <div class="flex flex-col md:flex-row gap-6 mb-8">
-                    <!-- Foto e Favoritos -->
-                    <div class="flex-shrink-0">
-                        <div class="relative">
-                            <img id="modalFoto" src="" alt="Foto do Prestador" 
-                                 class="w-40 h-40 rounded-full object-cover border-4 border-blue-100">
-                            <button id="favoritarBtn" class="absolute -bottom-2 -right-2 bg-white p-2 rounded-full shadow-md">
-                                <i class="bi bi-heart text-2xl text-gray-400"></i>
-                                <span id="favoritosCount" class="absolute text-xs font-bold">0</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Dados do Prestador -->
-                    <div class="flex-grow">
-                        <h2 id="modalNome" class="text-2xl font-bold text-gray-800 mb-2"></h2>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <p class="text-gray-600"><i class="bi bi-calendar mr-2"></i> <span id="modalNascimento"></span></p>
-                                <p class="text-gray-600"><i class="bi bi-telephone mr-2"></i> <span id="modalTelefone"></span></p>
-                            </div>
-                            <div>
-                                <p class="text-gray-600"><i class="bi bi-geo-alt mr-2"></i> <span id="modalCidade"></span>, <span id="modalEstado"></span></p>
-                                <p class="text-gray-600"><i class="bi bi-cash-stack mr-2"></i> R$ <span id="modalValor"></span>/hora</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Descrição do Serviço -->
-                        <div class="mb-4">
-                            <h4 class="font-semibold text-gray-800 mb-1">Descrição do Serviço</h4>
-                            <p id="modalDescricao" class="text-gray-600"></p>
-                        </div>
-                        
-                        <!-- Botões de Ação -->
-                        <div class="flex flex-wrap gap-3">
-                            <!-- Botão Entrar em Contato (Dropdown) -->
-                            <div class="relative">
-                                <button id="contatoBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
-                                    <i class="bi bi-chat-left-text mr-2"></i> Entrar em Contato
-                                    <i class="bi bi-chevron-down ml-2"></i>
-                                </button>
-                                <div id="contatoDropdown" class="hidden absolute z-10 mt-1 w-48 bg-white rounded-md shadow-lg">
-                                    <div class="py-1">
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 contato-option" data-type="whatsapp">
-                                            <i class="bi bi-whatsapp mr-2 text-green-500"></i> WhatsApp
-                                        </a>
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 contato-option" data-type="email">
-                                            <i class="bi bi-envelope mr-2 text-blue-500"></i> E-mail
-                                        </a>
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 contato-option" data-type="telefone">
-                                            <i class="bi bi-telephone mr-2 text-gray-500"></i> Telefone
-                                        </a>
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 contato-option" data-type="instagram">
-                                            <i class="bi bi-instagram mr-2 text-pink-500"></i> Instagram
-                                        </a>
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 contato-option" data-type="facebook">
-                                            <i class="bi bi-facebook mr-2 text-blue-600"></i> Facebook
-                                        </a>
+        <!-- Carrossel de Prestadores -->
+        <section class="py-12 bg-gray-50 relative">
+            <div class="max-w-7xl mx-auto px-6 relative">
+                <div class="glider-contain">
+                    <div class="glider">
+                        <!-- Prestador 1 -->
+                        <div class="px-2">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+                                <div class="p-6 text-center">
+                                    <div class="h-32 w-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                                        <img src="/src/img/fotoperfil.jpg" alt="Ana Silva" class="h-full w-full object-cover">
                                     </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Ana Silva</h3>
+                                    <p class="text-gray-600 mb-1">Encanadora Residencial</p>
+                                    <p class="text-gray-500 text-sm mb-3">
+                                        <i class="bi bi-geo-alt mr-1"></i> São Paulo, SP
+                                    </p>
+                                    <div class="flex justify-center text-yellow-400 mb-4">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-half"></i>
+                                        <span class="text-gray-500 text-xs ml-1">(42)</span>
+                                    </div>
+                                    <button onclick="openModal('Ana Silva', 'Encanadora Residencial', 'São Paulo, SP', '4.5', '42', '/src/img/fotoperfil.jpg')" 
+                                            class="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                                        Ver Perfil
+                                    </button>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Prestador 2 -->
+                        <div class="px-2">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+                                <div class="p-6 text-center">
+                                    <div class="h-32 w-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                                        <img src="/src/img/fotoperfil.jpg" alt="Carlos Oliveira" class="h-full w-full object-cover">
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Carlos Oliveira</h3>
+                                    <p class="text-gray-600 mb-1">Eletricista</p>
+                                    <p class="text-gray-500 text-sm mb-3">
+                                        <i class="bi bi-geo-alt mr-1"></i> Rio de Janeiro, RJ
+                                    </p>
+                                    <div class="flex justify-center text-yellow-400 mb-4">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star"></i>
+                                        <span class="text-gray-500 text-xs ml-1">(38)</span>
+                                    </div>
+                                    <button onclick="openModal('Carlos Oliveira', 'Eletricista', 'Rio de Janeiro, RJ', '4.0', '38', '/src/img/fotoperfil.jpg')" 
+                                            class="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                                        Ver Perfil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prestador 3 -->
+                        <div class="px-2">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+                                <div class="p-6 text-center">
+                                    <div class="h-32 w-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                                        <img src="/src/img/fotoperfil.jpg" alt="Mariana Costa" class="h-full w-full object-cover">
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Mariana Costa</h3>
+                                    <p class="text-gray-600 mb-1">Pintora Residencial</p>
+                                    <p class="text-gray-500 text-sm mb-3">
+                                        <i class="bi bi-geo-alt mr-1"></i> Belo Horizonte, MG
+                                    </p>
+                                    <div class="flex justify-center text-yellow-400 mb-4">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <span class="text-gray-500 text-xs ml-1">(56)</span>
+                                    </div>
+                                    <button onclick="openModal('Mariana Costa', 'Pintora Residencial', 'Belo Horizonte, MG', '5.0', '56', '/src/img/fotoperfil.jpg')" 
+                                            class="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                                        Ver Perfil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prestador 4 -->
+                        <div class="px-2">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+                                <div class="p-6 text-center">
+                                    <div class="h-32 w-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                                        <img src="/src/img/fotoperfil.jpg" alt="João Santos" class="h-full w-full object-cover">
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">João Santos</h3>
+                                    <p class="text-gray-600 mb-1">Marceneiro</p>
+                                    <p class="text-gray-500 text-sm mb-3">
+                                        <i class="bi bi-geo-alt mr-1"></i> Porto Alegre, RS
+                                    </p>
+                                    <div class="flex justify-center text-yellow-400 mb-4">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-half"></i>
+                                        <i class="bi bi-star"></i>
+                                        <span class="text-gray-500 text-xs ml-1">(29)</span>
+                                    </div>
+                                    <button onclick="openModal('João Santos', 'Marceneiro', 'Porto Alegre, RS', '3.5', '29', '/src/img/fotoperfil.jpg')" 
+                                            class="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                                        Ver Perfil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button aria-label="Previous" class="glider-prev absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                        <i class="bi bi-chevron-left text-gray-700 text-xl"></i>
+                    </button>
+                    <button aria-label="Next" class="glider-next absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                        <i class="bi bi-chevron-right text-gray-700 text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Perfil -->
+    <div id="prestadorModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <!-- Cabeçalho do Modal -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800" id="modalNome"></h2>
+                    <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="bi bi-x-lg text-2xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Corpo do Modal -->
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Foto e Info Básica -->
+                    <div class="flex-shrink-0">
+                        <div class="relative">
+                            <img id="modalFoto" src="" alt="Foto do Prestador" class="w-40 h-40 rounded-full object-cover border-4 border-primary-100 mx-auto">
+                        </div>
+                        
+                        <div class="mt-4 text-center">
+                            <p class="text-gray-600 font-medium" id="modalProfissao"></p>
+                            <p class="text-gray-500 text-sm mt-1">
+                                <i class="bi bi-geo-alt mr-1"></i> <span id="modalLocalizacao"></span>
+                            </p>
                             
-                            <button id="reportarBtn" class="bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-md flex items-center">
-                                <i class="bi bi-flag mr-2"></i> Reportar Prestador
-                            </button>
+                            <div class="flex justify-center items-center mt-3">
+                                <div class="text-yellow-400 mr-2" id="modalEstrelas"></div>
+                                <span class="text-gray-500 text-sm">(<span id="modalAvaliacoes"></span> avaliações)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detalhes -->
+                    <div class="flex-grow">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Sobre</h3>
+                            <p class="text-gray-600">Profissional altamente qualificado com experiência comprovada na área. Comprometido com a excelência no atendimento e satisfação do cliente.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Serviços Oferecidos</h3>
+                            <ul class="list-disc list-inside text-gray-600">
+                                <li>Instalação e manutenção de encanamento</li>
+                                <li>Reparos em geral</li>
+                                <li>Desentupimento</li>
+                                <li>Instalação de torneiras e chuveiros</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <p class="text-gray-600"><i class="bi bi-cash-stack mr-2"></i> <span class="font-medium">R$ 80,00/h</span></p>
+                                <p class="text-gray-600"><i class="bi bi-clock mr-2"></i> <span class="font-medium">8h - 18h</span></p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600"><i class="bi bi-check-circle mr-2"></i> <span class="font-medium">Verificado</span></p>
+                                <p class="text-gray-600"><i class="bi bi-calendar-check mr-2"></i> <span class="font-medium">Disponível</span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Divisor -->
-                <div class="border-t border-gray-200 my-6"></div>
+                <!-- Botões de Ação -->
+                <div class="flex flex-wrap gap-3 mt-6">
+                    <button class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-md font-medium flex items-center transition-colors">
+                        <i class="bi bi-whatsapp mr-2"></i> Contatar
+                    </button>
+                    <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 py-2 rounded-md font-medium flex items-center transition-colors">
+                        <i class="bi bi-heart mr-2"></i> Favoritar
+                    </button>
+                    <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 py-2 rounded-md font-medium flex items-center transition-colors">
+                        <i class="bi bi-share mr-2"></i> Compartilhar
+                    </button>
+                </div>
                 
-                <!-- Seção de Avaliações -->
-                <div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-4">Avaliações do Prestador</h3>
+                <!-- Avaliações -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Avaliações</h3>
                     
-                    <!-- Média de Avaliações -->
-                    <div class="flex items-center mb-6">
-                        <div class="star-rating mr-2">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
+                    <div class="space-y-4">
+                        <!-- Avaliação 1 -->
+                        <div class="border-b border-gray-200 pb-4">
+                            <div class="flex justify-between">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-gray-200 mr-3"></div>
+                                    <div>
+                                        <p class="font-medium text-gray-800">Maria Souza</p>
+                                        <div class="flex text-yellow-400 text-sm">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 text-sm">2 semanas atrás</p>
+                            </div>
+                            <p class="text-gray-600 mt-2">Excelente profissional! Resolveu meu problema rapidamente e com ótimo custo-benefício.</p>
                         </div>
-                        <span class="text-gray-600"><span id="totalAvaliacoes">0</span> avaliações</span>
-                    </div>
-                    
-                    <!-- Lista de Avaliações -->
-                    <div id="avaliacoesContainer" class="space-y-4">
-                        <!-- As avaliações serão carregadas dinamicamente aqui -->
+                        
+                        <!-- Avaliação 2 -->
+                        <div class="border-b border-gray-200 pb-4">
+                            <div class="flex justify-between">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 rounded-full bg-gray-200 mr-3"></div>
+                                    <div>
+                                        <p class="font-medium text-gray-800">José Oliveira</p>
+                                        <div class="flex text-yellow-400 text-sm">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 text-sm">1 mês atrás</p>
+                            </div>
+                            <p class="text-gray-600 mt-2">Bom atendimento, mas chegou com 30 minutos de atraso.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="mb-0">© 2025 Job4You - Todos os direitos reservados.</p>
+    <!-- RODAPÉ FIXO -->
+    <footer class="bg-dark-800 py-6 text-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p>© 2025 Job4You - Todos os direitos reservados.</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
-    <script src="/src/js/prestadores.js"></script>
-    <script src="/src/js/modalPrestador.js"></script>
+    <script>
+        // Menu mobile
+        document.getElementById('menuButton').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Inicializa o carrossel
+        new Glider(document.querySelector('.glider'), {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            draggable: true,
+            arrows: {
+                prev: '.glider-prev',
+                next: '.glider-next'
+            },
+            responsive: [
+                {
+                    breakpoint: 640,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+
+        // Funções do Modal
+        function openModal(nome, profissao, localizacao, avaliacao, numAvaliacoes, foto) {
+            document.getElementById('modalNome').textContent = nome;
+            document.getElementById('modalProfissao').textContent = profissao;
+            document.getElementById('modalLocalizacao').textContent = localizacao;
+            document.getElementById('modalFoto').src = foto;
+            document.getElementById('modalAvaliacoes').textContent = numAvaliacoes;
+            
+            // Criar estrelas de avaliação
+            const estrelasContainer = document.getElementById('modalEstrelas');
+            estrelasContainer.innerHTML = '';
+            const rating = parseFloat(avaliacao);
+            
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                if (i <= Math.floor(rating)) {
+                    star.className = 'bi bi-star-fill';
+                } else if (i === Math.ceil(rating) && rating % 1 > 0) {
+                    star.className = 'bi bi-star-half';
+                } else {
+                    star.className = 'bi bi-star';
+                }
+                estrelasContainer.appendChild(star);
+            }
+            
+            document.getElementById('prestadorModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('prestadorModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('prestadorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
