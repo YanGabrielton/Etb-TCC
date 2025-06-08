@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Por favor, preencha todos os campos!'); // exibe alerta ao usuário
             }
 
-            // (aqui poderá ser feita a verificação no banco de dados via PHP)
         });
     }
 
