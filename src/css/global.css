@@ -2,42 +2,30 @@
 Global Css - Job4You :)
 ================================ */
 
-/* Organiza a tela para usar todo o espaço disponível */
+html, body {
+  height: 100%; /* Faz com que o body ocupe a tela toda */
+}
+
 body {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Deixa o footer lá embaixo */
 }
 
-/* Faz a área principal crescer para preencher o espaço */
-.main-content {
-  flex: 1;
+main {
+  flex: 1; /* Cresce para ocupar o espaço entre header e footer */
 }
 
-/* Espaçamento nas seções principais */
-.hero-section {
-  padding: 60px 0;
+.hero-image {
+  max-height: 80vh; /* Tamanho da imagem principal */
+  width: auto;
 }
 
-/* Imagens responsivas */
-.hero-img {
-  max-width: 100%;
-  height: auto;
+@media (max-width: 767px) {
+  .hero-image {
+    max-height: 50vh; /* Responsividade para telas menores */
+  }
 }
 
-/* ================================
-Navbar
-================================ */
-
-/* Fundo escuro e texto claro */
-.navbar {
-  background-color: #000 !important;
-}
-
-.navbar .nav-link,
-.navbar .navbar-brand {
-  color: #fff !important;
-}
 
 /* ================================
 Botões principais
@@ -129,6 +117,7 @@ Cards interativos
   transition: transform 0.3s ease-in-out;
 }
 
+
 /* ================================
 Rodapé
 ================================ */
@@ -141,5 +130,3 @@ footer {
   text-align: center;
   margin-top: auto;
 }
-
-
