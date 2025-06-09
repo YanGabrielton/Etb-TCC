@@ -1,4 +1,6 @@
-DROP TRIGGER IF EXISTS AumentaFavorito;
+DELIMITER //
+
+DROP TRIGGER IF EXISTS AumentaFavorito//
 
 CREATE TRIGGER AumentaFavorito
 AFTER INSERT ON ServicoFavorito
@@ -7,9 +9,13 @@ BEGIN
     UPDATE PublicacaoServico
     SET QuantidadeFavorito = QuantidadeFavorito + 1
     WHERE PublicacaoServico.ID = NEW.IDServico;
-END;
+END//
 
-DROP TRIGGER IF EXISTS DiminuiFavorito;
+DELIMITER ;
+
+DELIMITER //
+
+DROP TRIGGER IF EXISTS DiminuiFavorito//
 
 CREATE TRIGGER DiminuiFavorito
 AFTER DELETE ON ServicoFavorito
@@ -18,4 +24,6 @@ BEGIN
     UPDATE PublicacaoServico
     SET QuantidadeFavorito = QuantidadeFavorito - 1
     WHERE PublicacaoServico.ID = OLD.IDServico AND QuantidadeFavorito >= 0;
-END;
+END//
+
+DELIMITER ;

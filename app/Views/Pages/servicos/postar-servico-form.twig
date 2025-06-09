@@ -1,27 +1,60 @@
 {% extends "Layouts/main.layout.twig" %}
 
+{% import "Components/form/input.twig" as input %}
+{% import "Components/form/select.twig" as select %}
+
 {% block main %}
   <main class="main-content container py-4">
     <h2 class="text-center mb-4">Cadastro de Serviço</h2>
-    <form>
+    <form method="POST" action="/servicos/postar-servico" enctype="multipart/form-data">
       <div class="row g-3">
         <!-- Dados do serviço -->
         <div class="col-md-12">
-          <input type="file" class="form-control" placeholder="Foto do serviço">
+          {{ input.render(
+            name: 'foto',
+            type: 'file',
+            placeholder: 'Foto do serviço'
+          ) }}
         </div>
+
         <div class="col-md-6">
-          <select class="form-control" required>
-            <option value="">Selecione a categoria</option>
-            <option value="id">Categoria</option>
-          </select>
+          {{ select.render(
+            name: 'categoriaServico',
+            options: Categorias,
+            errorMessage: getInputError('categoriaServico')
+          ) }} 
         </div>
-        <div class="col-md-6"><input type="text" class="form-control" placeholder="Preço (R$)" required></div>
-        <div class="col-md-12"><textarea class="form-control" rows="4" placeholder="Descrição do serviço"
-            required></textarea></div>
-        <div class="col-md-12"><input type="text" class="form-control" placeholder="Horário de trabalho" required></div>
+
+        <div class="col-md-6">
+          {{ input.render(
+            name: 'preco',
+            placeholder: 'Preço (R$)',
+            errorMessage: getInputError('preco')
+          ) }}
+        </div>
+
+        <div class="col-md-12">
+          <textarea
+            required
+            name="descricao"
+            class="form-control"
+            rows="4"
+            placeholder="Descrição do serviço"
+          ></textarea>
+        </div>
+
+        <div class="col-md-12">
+          {{ input.render(
+            name: 'horarioTrabalho',
+            placeholder: 'Horário de trabalho',
+            errorMessage: getInputError('horarioTrabalho')
+          ) }}
+        </div>
       </div>
 
-      <div class="d-grid mt-4"><button type="submit" class="btn btn-login">Cadastrar Serviço</button></div>
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-warning shadow-sm">Cadastrar Serviço</button>
+      </div>
     </form>
   </main>
 {% endblock %}

@@ -6,8 +6,8 @@ use App\Validators\{ Password, Email };
 
 class UsuarioLogin {
   #[Validate(Email::class)]
-  public string $email;
+  public readonly string $email;
 
   #[Validate(Password::class)]
-  public string $senha;
+  public readonly string $senha;
 }

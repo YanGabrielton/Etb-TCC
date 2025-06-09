@@ -1,0 +1,33 @@
+{% macro render(
+  name,
+  label = '',
+  placeholder = '',
+  type = 'text',
+  required = true,
+  defaultValue = '',
+  errorMessage = ''
+) %}
+	<div class="mb-4">
+    {% if label is not empty %}
+      <label for="{{ id }}" class="form-label">{{ label }}</label>
+    {% endif %}
+
+		<input
+      id="{{ id }}"
+      name="{{ name }}"
+      type="{{ type }}"
+      class="form-control p-2"
+      required="{{ required }}"
+      value="{{ defaultValue }}"
+      {% if placeholder is not empty and label is empty %}
+        placeholder="{{ placeholder }}"
+      {% endif %}
+    >
+		
+    {% if errorMessage is not empty %}
+			<div id="{{ 'errorMessage_' ~ name }}" class="form-text text-danger">
+        {{ errorMessage }}
+      </div>
+		{% endif %}
+	</div>
+{% endmacro %}

@@ -1,0 +1,47 @@
+{% macro render(
+    name,
+    options,
+    label = null,
+    defaultSelected = null,
+    required = false,
+    placeholder = 'Selecione uma opção',
+    helpText = null,
+    error = null,
+    classes = ''
+) %}
+	<div class="mb-3">
+		{% if label %}
+			<label for="{{ name }}" class="form-label">{{ label }}</label>
+		{% endif %}
+
+		<select
+      id="{{ name }}"
+      name="{{ name }}"
+      {% if required %}required{% endif %}
+      class="form-select p-2 {{ error ? 'is-invalid' : '' }} {{ classes }}"
+    >
+			{% if placeholder %}
+				<option disabled value="" {% if defaultSelected is null %}selected{% endif %}>
+					{{ placeholder }}
+				</option>
+			{% endif %}
+
+			{% for option in options %}
+				<option
+					value="{{ option.ID }}" 
+					{% if option.ID == defaultSelected %}selected{% endif %}
+				>
+					{{ option.Nome }}
+				</option>
+			{% endfor %}
+		</select>
+
+		{% if helpText %}
+			<div class="form-text">{{ helpText }}</div>
+		{% endif %}
+
+		{% if error %}
+			<div class="invalid-feedback">{{ error }}</div>
+		{% endif %}
+	</div>
+{% endmacro %}

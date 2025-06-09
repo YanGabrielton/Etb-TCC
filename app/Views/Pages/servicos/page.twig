@@ -20,21 +20,30 @@
   {# Prestadores #}
 	<section class="container py-5">
 		<div class="row justify-content-center g-4">
-
-      {% for index in 0..10 %}
-        <div class="col-md-4">
-          <div class="card h-100 text-center">
-            <img src="/images/fotoperfil.jpg" width="100" height="100" alt="Prestador">
-            <div class="card-body">
-              <h5 class="card-title fw-bold">Nome do prestador</h5>
-              <p class="card-text text-muted mb-1">Cidade tal, sigla</p>
-              <p class="card-text">Horario de atendimento: 08:00 às 18:00 de segunda a sexta</p>
-              <a href="login.html" class="btn btn-warning">Ver perfil</a>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-
+			{% if Servicos is empty %}
+				<div class="col-md-12">
+					<div class="alert alert-warning" role="alert">
+						<h4 class="alert-heading">Nenhum prestador encontrado!</h4>
+						<p>Tente alterar a sua pesquisa.</p>
+					</div>
+				</div>
+			{% endif %}
+			
+			{% if Servicos is not empty %}
+				{% for servico in Servicos %}
+					<div class="col-md-4">
+						<div class="card h-100 text-center">
+							<img src="/images/fotoperfil.jpg" width="100" height="100" alt="Prestador">
+							<div class="card-body">
+								<h5 class="card-title fw-bold">Nome do prestador</h5>
+								<p class="card-text text-muted mb-1">Cidade tal, sigla</p>
+								<p class="card-text">Horario de atendimento: 08:00 às 18:00 de segunda a sexta</p>
+								<a href="login.html" class="btn btn-warning">Ver perfil</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
 		</div>
 	</section>
 {% endblock %}

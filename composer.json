@@ -10,7 +10,7 @@
       "App\\": "app/"
     },
     "files": [
-      "app/utils/bp.php"
+      "app/Utils/bp.php"
     ]
   },
   "authors": [

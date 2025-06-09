@@ -11,7 +11,7 @@ class AutenticacaoService {
     $usuario = $this->repository->buscarUsuarioPorEmail($credenciais->email);
     if (!$usuario) return null;
 
-    $senhaValida = password_verify($credenciais->senha, $usuario->senha); 
-    return $senhaValida ? $usuario : null; 
+    $senhaValida = password_verify($credenciais->senha, $usuario->senha);
+    return $senhaValida ? $usuario : null;
   }
 }
