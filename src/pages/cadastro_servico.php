@@ -155,6 +155,7 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
                                     </div>
                                 </div>
 
+<<<<<<< Updated upstream
                                 <!-- Email -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -168,6 +169,13 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
                                             readonly>
                                     </div>
                                 </div>
+=======
+      <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-login bg-black text-white">Cadastrar Serviço</button>
+      </div>
+    </form>
+  </main>
+>>>>>>> Stashed changes
 
                                 <!-- Telefone -->
                                 <div>
