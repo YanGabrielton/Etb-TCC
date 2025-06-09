@@ -108,7 +108,7 @@ session_start();
                            class="bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-6 rounded-full shadow-sm transition-colors">
                             Ver Serviços
                         </a>
-                        <a href="./src/pages/cadastro_servico.php" 
+                        <a href="/src/pages/cadastro_servico.php" 
                            class="border border-gray-300 hover:border-primary-500 text-gray-700 hover:text-primary-500 font-medium py-3 px-6 rounded-full transition-colors">
                             Cadastrar Serviço
                         </a>
