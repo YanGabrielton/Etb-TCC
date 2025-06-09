@@ -38,7 +38,7 @@ if ($categoria_selecionada) {
     <title>Job4You - Prestadores</title>
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="/src/css/global.css">
+    <link rel="stylesheet" href="/src/css/output.css">
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
