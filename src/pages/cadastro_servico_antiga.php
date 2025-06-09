@@ -1,3 +1,6 @@
+// caso a pagina configurada atualmente não funciona aqui está a original
+
+
 <?php
 session_start();
 
