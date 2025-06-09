@@ -34,6 +34,12 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
       # (as alterações no código são refletidas imediatamente no container)
       - ./app:/job4you/app
       - ./public:/job4you/public
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWD=${DB_PASSWD}
     networks:
       - job4you_network
 

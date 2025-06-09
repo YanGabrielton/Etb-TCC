@@ -9,8 +9,9 @@ class AutenticacaoService {
 
   public function obterUsuarioAutenticado(UsuarioLogin $credenciais): ?UsuarioAutenticado {
     $usuario = $this->repository->buscarUsuarioPorEmail($credenciais->email);
+    if (!$usuario) return null;
 
-    $senhaValida = password_verify($credenciais->senha, $usuario['Senha']);
-    return !($usuario && $senhaValida) ? null : $usuario;
+    $senhaValida = password_verify($credenciais->senha, $usuario->senha); 
+    return $senhaValida ? $usuario : null; 
   }
 }

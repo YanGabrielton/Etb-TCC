@@ -11,7 +11,7 @@ use KissPhp\Services\Dotenv as ServicesDotenv;
 
 BoundinaryError::register();
 Session::init();
-ServicesDotenv::load(Paths::ENV_PATH);
+ServicesDotenv::load(__DIR__ . '/../../');
 
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 $uriParsed = parse_url($uri, PHP_URL_PATH) ?? '';

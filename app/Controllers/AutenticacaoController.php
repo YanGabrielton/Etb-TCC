@@ -19,7 +19,7 @@ class AutenticacaoController extends WebController {
     $ultimasCredenciaisInseridas = $session->get('UltimasCredenciaisInseridas');
 
     $this->render('Pages/login/page', [
-      'usuario' => $ultimasCredenciaisInseridas ?? []
+      'usuario' => $ultimasCredenciaisInseridas ?? [],
     ]);
   }
 
@@ -28,7 +28,7 @@ class AutenticacaoController extends WebController {
     $session = $request->session;
     $usuarioAutenticado = $this->service->obterUsuarioAutenticado($user);
 
-    if ($usuarioAutenticado !== null) {
+    if ($usuarioAutenticado) {
       $session->set('UsuarioAutenticado', $usuarioAutenticado);
       return $this->redirect('/servicos');
     }

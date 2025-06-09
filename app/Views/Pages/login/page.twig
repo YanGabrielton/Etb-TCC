@@ -2,28 +2,33 @@
 
 {% block main %}
 	<main class="d-flex flex-grow-1 justify-content-center align-items-center">
-		<div class="card shadow-sm" style="width: 27rem;">
-			<div class="card-body">
-
-				<h2 class="car-title text-center mb-4">Login</h2>
-				{% include "Pages/login/autenticar-form.twig" %}
-
-				<div class="d-flex flex-column align-items-center text-center gap-3">
-					<button form="login-form" type="submit" class="btn btn-warning shadow-sm w-100 p-2">
-						<i class="bi bi-box-arrow-in-right"></i> Entrar 
-					</button>
+		<div>
+			<div class="card shadow-sm" style="width: 27rem;">
+				<div class="card-body">
+					<h2 class="car-title text-center mb-4">
+						Login
+					</h2>
 					
-					<span class="text-nowrap">
-						Não tem uma conta?
-						<a href="/user/register" class="link-dark link-opacity-50-hover w-100">
-							Cadastre-se
-						</a>
-					</span>
-				</div>
+					{% include "Pages/login/autenticar-form.twig" %}
 
+					<div class="d-flex flex-column align-items-center text-center gap-3">
+						<button form="login-form" type="submit" class="btn btn-warning shadow-sm w-100 p-2">
+							<i class="bi bi-box-arrow-in-right"></i> Entrar 
+						</button>
+						
+						<span class="text-nowrap">
+							Não tem uma conta?
+							<a href="/user/register" class="link-dark link-opacity-50-hover w-100">
+								Cadastre-se
+							</a>
+						</span>
+					</div>
+				</div>
 			</div>
 
-			{% if usuario is defined and usuario is not empty %}
+			{% set hasError = getInputError('email') or getInputError('senha') %}
+
+			{% if hasError %}
 				<div class="alert alert-danger mt-3" role="alert">
 					<i class="bi bi-exclamation-triangle-fill me-2"></i>
 					Credenciais inválidas. Por favor, tente novamente.
