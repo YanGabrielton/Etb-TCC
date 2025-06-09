@@ -1,4 +1,4 @@
-<form action="/autenticacao" method="post" id="login-form">
+<form method="post" id="login-form">
 	<div class="mb-4">
 		<label for="email" class="form-label">E-mail</label>
 		<input
@@ -7,17 +7,19 @@
 			name="email"
 			type="email"
 			class="form-control p-2"
+			value="{{ usuario.email|default('') }}"
 		>
 	</div>
 
 	<div class="mb-4">
-		<label for="password" class="form-label">Senha</label>
+		<label for="senha" class="form-label">Senha</label>
 		<input
 			required
-			id="password"
+			id="senha"
 			name="senha"
 			type="password"
 			class="form-control p-2"
+			value="{{ usuario.senha|default('') }}"
 		>
 		<div class="form-text text-end">
 			<a href="/user/forget-password" class="opacity-75 link-dark link-opacity-50-hover">

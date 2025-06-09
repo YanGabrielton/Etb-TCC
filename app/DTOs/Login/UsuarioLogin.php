@@ -9,5 +9,5 @@ class UsuarioLogin {
   public string $email;
 
   #[Validate(Password::class)]
-  public string $password;
+  public string $senha;
 }

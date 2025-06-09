@@ -7,7 +7,7 @@ use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\{ Controller, Get, Post };
 
 use App\DTOs\Login\UsuarioLogin;
-use App\Repositories\Autenticacao\AutenticacaoService;
+use App\Services\Autenticacao\AutenticacaoService;
 
 #[Controller('/autenticacao')]
 class AutenticacaoController extends WebController {
@@ -16,26 +16,29 @@ class AutenticacaoController extends WebController {
   #[Get()]
   public function exibirPaginaDeLogin(Request $request) {
     $session = $request->session;
-    $ultimasCredenciaisInseridas = $this->service->obterUltimasCredenciais($session);
-    $this->render('Pages/login/page', $ultimasCredenciaisInseridas);
+    $ultimasCredenciaisInseridas = $session->get('UltimasCredenciaisInseridas');
+
+    $this->render('Pages/login/page', [
+      'usuario' => $ultimasCredenciaisInseridas ?? []
+    ]);
   }
 
   #[Post()]
   public function autenticar(#[DTO] UsuarioLogin $user, Request $request) {
     $session = $request->session;
-    $userVerificado = $this->service->verificarCredenciais($user);
+    $usuarioAutenticado = $this->service->obterUsuarioAutenticado($user);
 
-    if ($userVerificado !== null) {
-      $this->service->salvarUltimasCredenciais($session, $user);
+    if ($usuarioAutenticado !== null) {
+      $session->set('UsuarioAutenticado', $usuarioAutenticado);
       return $this->redirect('/servicos');
     }
-    $this->service->salvarUltimasCredenciais($session, $user);
+    $session->set('UltimasCredenciaisInseridas', $user);
     return $this->redirect('/autenticacao');
   }
 
   #[Get('/sair')]
   public function finalizarSessao(Request $request) {
-    $this->service->deslogarUsuario($request->session);
+    $request->session->clear();
     return $this->redirect('/autenticacao');
   }
 }

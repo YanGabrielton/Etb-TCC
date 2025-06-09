@@ -3,6 +3,8 @@ namespace App\Repositories\Autenticacao;
 
 use App\DTOs\Login\UsuarioAutenticado;
 
+use Database\Database;
+
 class AutenticacaoRepository {
   public function buscarUsuarioPorEmail(string $email): ?UsuarioAutenticado {
     $sql = "
@@ -11,7 +13,7 @@ class AutenticacaoRepository {
       AND StatusUsuario = 'ATIVO'
     ";
 
-    $stmt = new \PDO('', '', '')->prepare($sql);
+    $stmt = (new Database())->getConnection()->prepare($sql);
     $stmt->bindParam(':email', $email);
     $stmt->execute();
 
