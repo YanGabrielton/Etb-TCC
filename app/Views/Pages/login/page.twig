@@ -26,7 +26,7 @@
 				</div>
 			</div>
 
-			{% set hasError = getInputError('email') or getInputError('senha') %}
+			{% set hasError = UltimasCredenciaisInseridas is defined and not empty %}
 
 			{% if hasError %}
 				<div class="alert alert-danger mt-3" role="alert">

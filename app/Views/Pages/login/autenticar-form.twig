@@ -7,7 +7,7 @@
 			name="email"
 			type="email"
 			class="form-control p-2"
-			value="{{ usuario.email|default('') }}"
+			value="{{ UltimasCredenciaisInseridas.email|default('') }}"
 		>
 	</div>
 
@@ -19,7 +19,7 @@
 			name="senha"
 			type="password"
 			class="form-control p-2"
-			value="{{ usuario.senha|default('') }}"
+			value="{{ UltimasCredenciaisInseridas.senha|default('') }}"
 		>
 		<div class="form-text text-end">
 			<a href="/user/forget-password" class="opacity-75 link-dark link-opacity-50-hover">
