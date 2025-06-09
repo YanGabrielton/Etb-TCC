@@ -1,269 +1,375 @@
+<?php
+session_start();
+include '../backend/config/ConexaoBanco.php';
+
+// Verifica se o usuário está logado
+if(!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Busca dados do usuário no banco
+$usuario_id = $_SESSION['usuario_id'];
+$stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
+$stmt->execute([$usuario_id]);
+$usuario = $stmt->fetch();
+
+// Busca o serviço do prestador
+$stmt_servico = $pdo->prepare("SELECT * FROM servicos WHERE prestador_id = ?");
+$stmt_servico->execute([$usuario_id]);
+$servico = $stmt_servico->fetch();
+
+// Busca avaliações
+$stmt_avaliacoes = $pdo->prepare("SELECT * FROM avaliacoes WHERE servico_id = ?");
+$stmt_avaliacoes->execute([$servico['id']]);
+$avaliacoes = $stmt_avaliacoes->fetchAll();
+
+// Calcula média de avaliações
+$media_avaliacoes = 0;
+if(count($avaliacoes) > 0) {
+    $soma = 0;
+    foreach($avaliacoes as $av) {
+        $soma += $av['nota'];
+    }
+    $media_avaliacoes = round($soma / count($avaliacoes), 1);
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job4You - Meu Perfil</title>
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        /* Estilos adicionais se necessário */
-        .navbar {
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meu Perfil - Job4You</title>
+    
+    <!-- CSS global -->
+    <link rel="stylesheet" href="/src/css/global.css">
+    
+    <!-- Tailwind CSS direto da CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuração personalizada do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#F59E0B', // Amarelo principal do projeto
+                            600: '#D97706', // Tom mais escuro para hover
+                        },
+                        dark: {
+                            800: '#1F2937', // Tom escuro usado no menu e footer
+                            900: '#111827',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'], // Fonte principal
+                    },
+                }
+            }
         }
-        .footer {
-            background-color: #f8f9fa;
+    </script>
+
+    <!-- Ícones do Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Fonte Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .star-rating {
+            unicode-bidi: bidi-override;
+            color: #c5c5c5;
+            font-size: 25px;
+            position: relative;
+            display: inline-block;
+        }
+        .star-rating .filled {
+            color: #F59E0B;
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="bg-gray-100">
-<!-- Menu de Navegação Atualizado -->
-<nav class="bg-gray-800 text-white px-4 py-3 shadow-md">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between">
-        <a class="text-2xl font-bold text-white hover:text-gray-300" href="/index.php">
-            Job4You
-        </a>
 
-        <button class="md:hidden focus:outline-none text-white" type="button" id="mobile-menu-button">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-        </button>
+<body class="bg-white font-sans flex flex-col min-h-screen">
 
-        <div class="hidden w-full md:flex md:w-auto md:items-center" id="navbarNav">
-            <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 items-center">
-                <li>
-                    <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
-                       href="/index.php">Home</a>
-                </li>
-                <li>
-                    <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
-                       href="#">Sobre</a>
-                </li>
-                <li>
-                    <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
-                       href="#">Meu Perfil</a>
-                </li>
-                
-                <!-- Área do usuário logado -->
-                <li class="flex items-center space-x-2">
-                    <span class="text-white text-sm">Olá, <span id="userName" class="font-medium">Usuário</span></span>
-                    <img id="profileImage" src="https://via.placeholder.com/32" alt="Foto do perfil" 
-                         class="w-8 h-8 rounded-full border-2 border-blue-500 cursor-pointer">
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-    <!-- Conteúdo principal -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="flex flex-col md:flex-row gap-8">
-            <!-- Coluna esquerda - Informações do perfil -->
-            <div class="w-full md:w-1/3">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <!-- Foto de perfil e nome -->
-                    <div class="flex flex-col items-center mb-6">
-                        <img id="profileImageLarge" src="https://via.placeholder.com/150" alt="Foto do perfil" 
-                             class="w-32 h-32 rounded-full mb-4 border-4 border-blue-500">
-                        <h2 class="text-2xl font-bold" id="userFullName">Italo Vasconcelos</h2>
-                        <p class="text-gray-600" id="userProfession">Prestador de Serviços</p>
-                    </div>
-                    
-                    <!-- Informações pessoais -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-semibold mb-4 border-b pb-2">Informações Pessoais</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">CPF</label>
-                                <p class="mt-1 text-gray-900" id="userCPF">123.456.789-00</p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Data de Nascimento</label>
-                                <p class="mt-1 text-gray-900" id="userBirthDate">15/05/1990</p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Celular</label>
-                                <p class="mt-1 text-gray-900" id="userPhone">(11) 98765-4321</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Endereço -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-semibold mb-4 border-b pb-2">Endereço</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">CEP</label>
-                                <p class="mt-1 text-gray-900" id="userCEP">01234-567</p>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Endereço</label>
-                                <p class="mt-1 text-gray-900" id="userAddress">Rua Exemplo, 123 - Bairro, Cidade/SP</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Contatos -->
-                    <div class="mb-6">
-                        <h3 class="text-lg font-semibold mb-4 border-b pb-2">Contatos</h3>
-                        <div class="space-y-3" id="userContacts">
-                            <!-- Dinâmico - preenchido por JS -->
-                        </div>
-                    </div>
-                    
-                    <!-- Botão de edição -->
-                    <button id="editProfileBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                        Editar Perfil
-                    </button>
-                </div>
-            </div>
+    <!-- MENU DE NAVEGAÇÃO -->
+    <nav class="bg-dark-800 py-4 px-6 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="index.php">Job4You</a>
             
-            <!-- Coluna direita - Avaliações e serviços -->
-            <div class="w-full md:w-2/3">
-                <!-- Resumo de serviços -->
-                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">Meus Serviços</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-blue-50 p-4 rounded-lg text-center">
-                            <p class="text-3xl font-bold text-blue-600" id="totalServices">5</p>
-                            <p class="text-gray-600">Serviços Publicados</p>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
+                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
+                   href="./src/pages/logout.php">Sair</a>
+            </div>
+
+            <button class="md:hidden text-white focus:outline-none" id="menuButton">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- MENU MOBILE -->
+        <div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="index.php">Home</a>
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="#">Sobre</a>
+            <a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" 
+               href="./src/pages/logout.php">Sair</a>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL DO PERFIL -->
+    <main class="flex-grow">
+        <div class="max-w-4xl mx-auto px-6 py-8">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                
+                <!-- CABEÇALHO DO PERFIL -->
+                <div class="bg-dark-800 text-white px-8 py-6">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="relative">
+                            <img src="<?= $usuario['foto_perfil'] ?: 'https://via.placeholder.com/150' ?>" 
+                                 alt="Foto de perfil" 
+                                 class="profile-image rounded-full border-4 border-primary-500">
+                            <button class="absolute bottom-2 right-2 bg-primary-500 hover:bg-primary-600 text-white rounded-full p-2">
+                                <i class="fas fa-camera"></i>
+                            </button>
                         </div>
-                        <div class="bg-green-50 p-4 rounded-lg text-center">
-                            <p class="text-3xl font-bold text-green-600" id="totalFavorites">12</p>
-                            <p class="text-gray-600">Favoritados</p>
-                        </div>
-                        <div class="bg-yellow-50 p-4 rounded-lg text-center">
-                            <p class="text-3xl font-bold text-yellow-600" id="averageRating">4.8</p>
-                            <p class="text-gray-600">Avaliação Média</p>
+                        <div class="text-center md:text-left">
+                            <h1 class="text-2xl font-bold"><?= htmlspecialchars($usuario['nome']) ?></h1>
+                            <p class="text-gray-300 mt-1">Olá <?= htmlspecialchars(explode(' ', $usuario['nome'])[0]) ?>!</p>
+                            <div class="mt-3 flex justify-center md:justify-start gap-2">
+                                <span class="bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full text-sm">Prestador</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Avaliações recebidas -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 border-b pb-2">Avaliações Recebidas</h3>
-                    <div class="space-y-4" id="userReviews">
-                        <!-- Dinâmico - preenchido por JS -->
-                        <div class="border-b pb-4 mb-4">
-                            <p class="text-gray-500 italic">Carregando avaliações...</p>
+
+                <!-- ABA DE NAVEGAÇÃO -->
+                <div class="border-b border-gray-200">
+                    <nav class="flex overflow-x-auto">
+                        <a href="#perfil" class="border-b-2 border-primary-500 text-primary-500 px-6 py-4 font-medium whitespace-nowrap">
+                            <i class="fas fa-user-circle mr-2"></i> Perfil
+                        </a>
+                        <a href="#servico" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-6 py-4 font-medium whitespace-nowrap">
+                            <i class="fas fa-briefcase mr-2"></i> Meu Serviço
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- SEÇÃO DE PERFIL -->
+                <div id="perfil" class="p-6 md:p-8">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Informações Pessoais</h2>
+                    
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Nome Completo -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                                <input type="text" value="<?= htmlspecialchars($usuario['nome']) ?>" 
+                                       class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            
+                            <!-- CPF/CNPJ -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">CPF/CNPJ</label>
+                                <input type="text" value="<?= htmlspecialchars($usuario['documento']) ?>" 
+                                       class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" value="<?= htmlspecialchars($usuario['email']) ?>" 
+                                       class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            
+                            <!-- Telefone -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                                <input type="tel" value="<?= htmlspecialchars($usuario['telefone']) ?>" 
+                                       class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
                         </div>
-                    </div>
+                        
+                        <!-- Botões de Ação -->
+                        <div class="flex justify-end gap-4 border-t pt-6">
+                            <button type="button" class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-md">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SEÇÃO DE SERVIÇO -->
+                <div id="servico" class="p-6 md:p-8 hidden">
+                    <?php if($servico): ?>
+                        <div class="space-y-6">
+                            <!-- Resumo do Serviço -->
+                            <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h2 class="text-xl font-bold"><?= htmlspecialchars($servico['titulo']) ?></h2>
+                                        <p class="text-gray-600 mt-2"><?= htmlspecialchars($servico['descricao']) ?></p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Ativo</span>
+                                </div>
+                                
+                                <!-- Estatísticas -->
+                                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <!-- Avaliação Média -->
+                                    <div class="bg-blue-50 p-4 rounded-lg">
+                                        <div class="flex items-center justify-center">
+                                            <div class="star-rating">
+                                                ★★★★★
+                                                <div class="filled" style="width: <?= ($media_avaliacoes / 5) * 100 ?>%">★★★★★</div>
+                                            </div>
+                                            <span class="ml-2 font-bold"><?= $media_avaliacoes ?></span>
+                                        </div>
+                                        <p class="text-center text-gray-600 mt-1">Avaliação Média</p>
+                                    </div>
+                                    
+                                    <!-- Total de Avaliações -->
+                                    <div class="bg-green-50 p-4 rounded-lg text-center">
+                                        <p class="text-3xl font-bold text-green-600"><?= count($avaliacoes) ?></p>
+                                        <p class="text-gray-600">Avaliações Recebidas</p>
+                                    </div>
+                                    
+                                    <!-- Favoritos -->
+                                    <div class="bg-yellow-50 p-4 rounded-lg text-center">
+                                        <p class="text-3xl font-bold text-yellow-600"><?= $servico['favoritos'] ?? 0 ?></p>
+                                        <p class="text-gray-600">Quantidade de Favoritos</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Avaliações Recentes -->
+                                <div class="mt-8">
+                                    <h3 class="text-lg font-semibold mb-4">Avaliações Recentes</h3>
+                                    <div class="space-y-4">
+                                        <?php if(count($avaliacoes) > 0): ?>
+                                            <?php foreach(array_slice($avaliacoes, 0, 3) as $avaliacao): ?>
+                                                <div class="border-b pb-4">
+                                                    <div class="flex items-center">
+                                                        <div class="text-yellow-400">
+                                                            <?php for($i = 1; $i <= 5; $i++): ?>
+                                                                <?php if($i <= $avaliacao['nota']): ?>
+                                                                    <i class="fas fa-star"></i>
+                                                                <?php elseif($i - 0.5 <= $avaliacao['nota']): ?>
+                                                                    <i class="fas fa-star-half-alt"></i>
+                                                                <?php else: ?>
+                                                                    <i class="far fa-star"></i>
+                                                                <?php endif; ?>
+                                                            <?php endfor; ?>
+                                                        </div>
+                                                        <span class="ml-2 text-gray-600"><?= date('d/m/Y', strtotime($avaliacao['data_avaliacao'])) ?></span>
+                                                    </div>
+                                                    <p class="mt-2 text-gray-800"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <p class="text-gray-500 italic">Nenhuma avaliação recebida ainda.</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                
+                                <!-- Botões de Ação -->
+                                <div class="mt-8 pt-6 border-t flex justify-end space-x-4">
+                                    <button class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                        Editar Serviço
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="text-center py-12">
+                            <i class="fas fa-briefcase text-4xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-medium text-gray-700">Você ainda não cadastrou um serviço</h3>
+                            <p class="text-gray-500 mt-2 mb-6">Cadastre seu serviço para começar a receber solicitações</p>
+                            <button class="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-md font-medium">
+                                <i class="fas fa-plus mr-2"></i> Cadastrar Serviço
+                            </button>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Modal de edição de perfil -->
-    <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">Editar Perfil</h3>
-                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            </div>
-            
-            <form id="profileForm" class="space-y-4">
-                <!-- Seção de foto -->
-                <div class="flex flex-col items-center mb-6">
-                    <img id="profileImageEdit" src="https://via.placeholder.com/150" alt="Foto do perfil" 
-                         class="w-32 h-32 rounded-full mb-4 border-4 border-blue-500 cursor-pointer">
-                    <input type="file" id="profileImageInput" accept="image/*" class="hidden">
-                    <button type="button" id="changePhotoBtn" class="text-blue-600 hover:text-blue-800 text-sm">
-                        Alterar foto
-                    </button>
-                </div>
-                
-                <!-- Informações básicas -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="editName" class="block text-sm font-medium text-gray-700">Nome Completo</label>
-                        <input type="text" id="editName" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                    </div>
-                    <div>
-                        <label for="editCPF" class="block text-sm font-medium text-gray-700">CPF</label>
-                        <input type="text" id="editCPF" class="mt-1 block w-full border border-gray-300 rounded-md p-2" disabled>
-                    </div>
-                    <div>
-                        <label for="editBirthDate" class="block text-sm font-medium text-gray-700">Data de Nascimento</label>
-                        <input type="date" id="editBirthDate" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                    </div>
-                    <div>
-                        <label for="editPhone" class="block text-sm font-medium text-gray-700">Celular</label>
-                        <input type="tel" id="editPhone" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                    </div>
-                </div>
-                
-                <!-- Endereço -->
-                <div class="pt-4 border-t">
-                    <h4 class="text-lg font-medium mb-4">Endereço</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="editCEP" class="block text-sm font-medium text-gray-700">CEP</label>
-                            <input type="text" id="editCEP" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label for="editStreet" class="block text-sm font-medium text-gray-700">Rua</label>
-                            <input type="text" id="editStreet" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                        </div>
-                        <div>
-                            <label for="editNeighborhood" class="block text-sm font-medium text-gray-700">Bairro</label>
-                            <input type="text" id="editNeighborhood" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                        </div>
-                        <div>
-                            <label for="editCity" class="block text-sm font-medium text-gray-700">Cidade</label>
-                            <input type="text" id="editCity" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                        </div>
-                        <div>
-                            <label for="editState" class="block text-sm font-medium text-gray-700">Estado</label>
-                            <select id="editState" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                                <option value="">Selecione</option>
-                                <option value="AC">Acre</option>
-                                <option value="AL">Alagoas</option>
-                                <!-- Outros estados... -->
-                                <option value="SP" selected>São Paulo</option>
-                                <!-- Todos os estados brasileiros -->
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Contatos -->
-                <div class="pt-4 border-t">
-                    <h4 class="text-lg font-medium mb-4">Contatos</h4>
-                    <div id="contactFields" class="space-y-4">
-                        <!-- Dinâmico - preenchido por JS -->
-                    </div>
-                    <button type="button" id="addContactBtn" class="mt-2 text-blue-600 hover:text-blue-800 text-sm flex items-center">
-                        <i class="bi bi-plus-circle mr-1"></i> Adicionar Contato
-                    </button>
-                </div>
-                
-                <!-- Botões de ação -->
-                <div class="flex justify-end space-x-4 pt-4 border-t">
-                    <button type="button" id="cancelEditBtn" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                        Salvar Alterações
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="mb-0">© 2025 Job4You - Todos os direitos reservados.</p>
+    <!-- RODAPÉ (padrão igual ao seu) -->
+    <footer class="bg-dark-800 py-6 text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p>© 2025 Job4You - Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Externo -->
-    <script src="profile.js"></script>
+    <!-- SCRIPTS -->
+    <script>
+        // Menu mobile toggle
+        document.getElementById('menuButton').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Upload de foto de perfil
+        document.querySelector('.relative button').addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.click();
+            
+            input.onchange = function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        document.querySelector('.profile-image').src = event.target.result;
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            };
+        });
+
+        // Alternar entre abas
+        const links = document.querySelectorAll('[href="#perfil"], [href="#servico"]');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Atualiza aba ativa
+                document.querySelectorAll('[href="#perfil"], [href="#servico"]').forEach(el => {
+                    el.classList.remove('border-primary-500', 'text-primary-500');
+                    el.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+                });
+                this.classList.add('border-primary-500', 'text-primary-500');
+                this.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+                
+                // Mostra seção correspondente
+                document.getElementById('perfil').classList.add('hidden');
+                document.getElementById('servico').classList.add('hidden');
+                document.querySelector(this.getAttribute('href')).classList.remove('hidden');
+            });
+        });
+    </script>
 </body>
 </html>
