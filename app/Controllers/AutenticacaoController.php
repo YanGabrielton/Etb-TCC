@@ -9,8 +9,6 @@ use KissPhp\Attributes\Http\{ Controller, Get, Post };
 use App\DTOs\Login\UsuarioLogin;
 use App\Services\Autenticacao\AutenticacaoService;
 
-use function App\Utils\bp;
-
 #[Controller('/autenticacao')]
 class AutenticacaoController extends WebController {
   public function __construct(private AutenticacaoService $service) { }
@@ -19,9 +17,10 @@ class AutenticacaoController extends WebController {
   public function exibirPaginaDeLogin(Request $request) {
     $session = $request->session;
     $ultimasCredenciaisInseridas = $session->get('UltimasCredenciaisInseridas');
+    $session->remove('UltimasCredenciaisInseridas');
 
     $this->render('Pages/login/page', [
-      'UltimasCredenciaisInseridas' => $ultimasCredenciaisInseridas ?? [],
+      'UltimasCredenciaisInseridas' => $ultimasCredenciaisInseridas,
     ]);
   }
 
