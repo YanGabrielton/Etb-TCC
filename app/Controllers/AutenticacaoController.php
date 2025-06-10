@@ -19,7 +19,7 @@ class AutenticacaoController extends WebController {
     $ultimasCredenciaisInseridas = $session->get('UltimasCredenciaisInseridas');
     $session->remove('UltimasCredenciaisInseridas');
 
-    $this->render('Pages/login/page', [
+    $this->render('Pages/auth/login', [
       'UltimasCredenciaisInseridas' => $ultimasCredenciaisInseridas,
     ]);
   }
