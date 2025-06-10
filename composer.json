@@ -26,13 +26,8 @@
       "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php"
     }
   },
+  "minimum-stability": "dev",
   "require": {
     "kiss-php/framework": "dev-main"
-  },
-  "minimum-stability": "dev",
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    }
   }
 }

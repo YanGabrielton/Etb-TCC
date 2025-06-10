@@ -9,7 +9,7 @@ class Password extends DataValidator {
   public function check(): array {
     return $this->newValidate()
       ->whenNot(preg_match('#[\w\d\s]{8,24}#', $this->passwaord))
-      ->notify('Formato de senha inválida.')
+      ->notify('Senha inválida.')
       ->result();
   }
 }

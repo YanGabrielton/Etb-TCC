@@ -75,20 +75,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php.git",
-                "reference": "97f407d70266ee9c8efab0e3b5b8717306a28f72"
+                "reference": "68fcc9ecb78218925304f87d1e56a29b2fabbc5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/97f407d70266ee9c8efab0e3b5b8717306a28f72",
-                "reference": "97f407d70266ee9c8efab0e3b5b8717306a28f72",
+                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/68fcc9ecb78218925304f87d1e56a29b2fabbc5c",
+                "reference": "68fcc9ecb78218925304f87d1e56a29b2fabbc5c",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "^3.21.1",
                 "vlucas/phpdotenv": "^5.6.2"
-            },
-            "require-dev": {
-                "pestphp/pest": "^3.8.2"
             },
             "default-branch": true,
             "type": "library",
@@ -97,7 +94,10 @@
                     "KissPhp\\": "src/",
                     "KissPhp\\Config\\": "config/",
                     "KissPhp\\Protocols\\": "src/Core/Protocols/"
-                }
+                },
+                "files": [
+                    "src/Support/SessionInitializer.php"
+                ]
             },
             "license": [
                 "MIT"
@@ -111,7 +111,7 @@
                 "source": "https://github.com/ItaloBrazucaDeveloper/kiss-php/tree/main",
                 "issues": "https://github.com/ItaloBrazucaDeveloper/kiss-php/issues"
             },
-            "time": "2025-06-06T02:00:55+00:00"
+            "time": "2025-06-10T19:46:59+00:00"
         },
         {
             "name": "phpoption/phpoption",

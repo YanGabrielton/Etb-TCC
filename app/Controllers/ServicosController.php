@@ -3,11 +3,15 @@ namespace App\Controllers;
 
 use KissPhp\Protocols\Http\Request;
 use KissPhp\Abstractions\WebController;
-use KissPhp\Attributes\Http\{ Controller, Get, Post };
-use KissPhp\Attributes\Data\DTO;
+
+use KissPhp\Attributes\Http\Controller;
+
+use KissPhp\Attributes\Http\Request\Body;
+use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
 use App\Services\Servicos\ServicosService;
 use App\DTOs\Servicos\CadastroServico;
+use KissPhp\Attributes\Http\Request\RouteParam;
 
 #[Controller('/servicos')]
 class ServicosController extends WebController {
@@ -23,11 +27,10 @@ class ServicosController extends WebController {
   }
 
   #[Get('/postar-servico')]
-  public function exibirPaginaDePostarServico(Request $request) {
-    $session = $request->session;
+  public function exibirPaginaDePostarServico() {
+    $session = $this->session;
     $ultimoServicoInserido = $session->get('UltimoServicoInserido');
-    $session->remove('UltimoServicoInserido');
-
+    
     $categorias = $this->service->buscarCategorias();
 
     $this->render('Pages/servicos/postar-servico-form', [
@@ -39,21 +42,21 @@ class ServicosController extends WebController {
   #[Post('/postar-servico')]
   public function cadastrarServico(
     Request $request,
-    #[DTO] CadastroServico $servico
+    #[Body] CadastroServico $servico
   ) {
     $foto = $request->body->get('foto');
     $foiCadastrado = $this->service->cadastrarServico($servico, $foto);
 
     if ($foiCadastrado) return $this->redirect('/servicos');
 
-    $request->session->set('UltimoServicoInserido', $servico);
+    $this->session->set('UltimoServicoInserido', $servico);
     return $this->redirect('/servicos/postar-servico');
   }
 
   #[Post('/desativar/{id}')]
-  public function desativarServico(Request $request, int $id) {
+  public function desativarServico(#[RouteParam] int $id) {
     try {
-      $idUsuario = $request->session->get('id_usuario');
+      $idUsuario = $this->session->get('id_usuario');
       
       if (!$idUsuario) {
         return $this->redirect('/login');

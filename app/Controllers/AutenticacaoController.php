@@ -1,10 +1,13 @@
 <?php
 namespace App\Controllers;
 
-use KissPhp\Attributes\Data\DTO;
-use KissPhp\Protocols\Http\Request;
 use KissPhp\Abstractions\WebController;
-use KissPhp\Attributes\Http\{ Controller, Get, Post };
+use KissPhp\Attributes\Http\Controller;
+
+use KissPhp\Enums\FlashMessageType;
+
+use KissPhp\Attributes\Http\Request\Body;
+use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
 use App\DTOs\Login\UsuarioLogin;
 use App\Services\Autenticacao\AutenticacaoService;
@@ -14,32 +17,29 @@ class AutenticacaoController extends WebController {
   public function __construct(private AutenticacaoService $service) { }
 
   #[Get()]
-  public function exibirPaginaDeLogin(Request $request) {
-    $session = $request->session;
-    $ultimasCredenciaisInseridas = $session->get('UltimasCredenciaisInseridas');
-    $session->remove('UltimasCredenciaisInseridas');
-
-    $this->render('Pages/auth/login', [
-      'UltimasCredenciaisInseridas' => $ultimasCredenciaisInseridas,
+  public function exibirPaginaDeLogin() {
+    $this->render('Pages/auth/login.twig', [
+      'flashMessage' => $this->session->getFlashMessage()
     ]);
   }
 
   #[Post()]
-  public function autenticar(#[DTO] UsuarioLogin $user, Request $request) {
-    $session = $request->session;
+  public function autenticar(#[Body] UsuarioLogin $user) {
+    $session = $this->session;
     $usuarioAutenticado = $this->service->obterUsuarioAutenticado($user);
 
     if ($usuarioAutenticado) {
-      $session->set('UsuarioAutenticado', $usuarioAutenticado);
+      $session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');
       return $this->redirect('/servicos');
     }
-    $session->set('UltimasCredenciaisInseridas', $user);
+
+    $session->setFlashMessage(FlashMessageType::Error, 'Usuário inválido!');
     return $this->redirect('/autenticacao');
   }
 
   #[Get('/sair')]
-  public function finalizarSessao(Request $request) {
-    $request->session->clear();
+  public function finalizarSessao() {
+    $this->session->clearAll();
     return $this->redirect('/autenticacao');
   }
 }

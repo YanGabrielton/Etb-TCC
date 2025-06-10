@@ -9,7 +9,7 @@ class Email extends DataValidator {
   public function check(): array {
     return $this->newValidate()
       ->whenNot(filter_var($this->email, FILTER_VALIDATE_EMAIL))
-      ->notify('Formato de email inválido.')
+      ->notify('E-mail inválido.')
       ->result();
   }
 }

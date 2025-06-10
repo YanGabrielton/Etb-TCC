@@ -2,24 +2,25 @@
 
 require '../vendor/autoload.php';
 
-use KissPhp\Config\Paths;
-use KissPhp\Config\Session;
+use KissPhp\Services\Container;
+use KissPhp\Services\Dotenv\Env;
 use KissPhp\Core\DED\BoundinaryError;
 use KissPhp\Core\Routing\DispatchRouter;
-use KissPhp\Services\Container;
-use KissPhp\Services\Dotenv as ServicesDotenv;
+use KissPhp\Services\SessionInitializer;
 
-BoundinaryError::register();
-Session::init();
-ServicesDotenv::load(__DIR__ . '/../../');
+BoundinaryError::wrap(function() {
+  BoundinaryError::register();
+  Env::load(__DIR__ . '/../../');
 
-$uri = $_SERVER['REQUEST_URI'] ?? '';
-$uriParsed = parse_url($uri, PHP_URL_PATH) ?? '';
+  include __DIR__ . '/../app/SetSessionCookieParams.php';
+  SessionInitializer::init();
 
-$endpoint = $uriParsed === '/' ? '' : $uriParsed;
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+  $uri = $_SERVER['REQUEST_URI'] ?? '';
+  $uriParsed = parse_url($uri, PHP_URL_PATH) ?? '';
 
-BoundinaryError::wrap(function() use ($endpoint, $method) {
+  $endpoint = $uriParsed === '/' ? '' : $uriParsed;
+  $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
   $container = Container::getInstance();
   $dispatcher = $container->get(DispatchRouter::class);
   $dispatcher->dispatch($method, $endpoint);
