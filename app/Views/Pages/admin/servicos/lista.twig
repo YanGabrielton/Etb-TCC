@@ -1,0 +1,452 @@
+{% extends "root.layout.twig" %}
+
+{% block title %}Lista de Serviços | Job4You ADM{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            transition: all 0.3s;
+        }
+        .main-content {
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.active {
+                width: 250px;
+            }
+            .main-content.active {
+                margin-left: 250px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="flex">
+    <!-- Sidebar -->
+    <div class="sidebar fixed h-full bg-gray-800 text-white">
+        <div class="p-4">
+            <h1 class="text-2xl font-bold">Job4You ADM</h1>
+        </div>
+        <nav class="mt-6">
+            <ul>
+                <li class="px-4 py-3 hover:bg-gray-700">
+                    <a href="/admin" class="flex items-center">
+                        <i class="bi bi-house-door mr-2"></i> Home
+                    </a>
+                </li>
+                <li class="px-4 py-3 hover:bg-gray-700">
+                    <a href="/admin/usuarios" class="flex items-center">
+                        <i class="bi bi-people mr-2"></i> Usuários
+                    </a>
+                </li>
+                <li class="px-4 py-3 hover:bg-gray-700">
+                    <a href="/admin/prestadores" class="flex items-center">
+                        <i class="bi bi-briefcase mr-2"></i> Prestadores
+                    </a>
+                </li>
+                <li class="px-4 py-3 bg-gray-700">
+                    <a href="/admin/servicos" class="flex items-center">
+                        <i class="bi bi-tools mr-2"></i> Serviços
+                    </a>
+                </li>
+                <li class="px-4 py-3 hover:bg-gray-700">
+                    <a href="/admin/aprovacoes" class="flex items-center">
+                        <i class="bi bi-check-circle mr-2"></i> Aprovações
+                    </a>
+                </li>
+                <li class="px-4 py-3 hover:bg-gray-700">
+                    <a href="/admin/configuracoes" class="flex items-center">
+                        <i class="bi bi-gear mr-2"></i> Configurações
+                    </a>
+                </li>
+                <li class="px-4 py-3 hover:bg-gray-700 mt-6 border-t border-gray-600">
+                    <a href="/admin/logout" class="flex items-center text-red-400">
+                        <i class="bi bi-box-arrow-right mr-2"></i> Sair
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content w-full">
+        <!-- Top Bar -->
+        <header class="bg-white shadow-sm">
+            <div class="flex justify-between items-center p-4">
+                <button id="menuToggle" class="md:hidden text-gray-700">
+                    <i class="bi bi-list text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-700">Olá, {{ admin.nome }}</span>
+                    <img src="{{ admin.foto ?: 'https://via.placeholder.com/40' }}" alt="Admin" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h1 class="text-2xl font-bold text-gray-800 mb-6">Lista de Serviços Cadastrados</h1>
+                
+                <!-- Filtros e Busca -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <div class="flex items-center space-x-2">
+                        <label for="statusFilter" class="text-sm font-medium text-gray-700">Status:</label>
+                        <select id="statusFilter" class="border border-gray-300 rounded-md p-2 text-sm">
+                            <option value="all">Todos</option>
+                            <option value="active">Ativos</option>
+                            <option value="inactive">Inativos</option>
+                            <option value="pending">Pendentes</option>
+                        </select>
+                        <label for="categoryFilter" class="text-sm font-medium text-gray-700 ml-2">Categoria:</label>
+                        <select id="categoryFilter" class="border border-gray-300 rounded-md p-2 text-sm">
+                            <option value="all">Todas</option>
+                            {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="relative w-full md:w-64">
+                        <input type="text" id="searchInput" placeholder="Buscar serviço..." 
+                               class="w-full border border-gray-300 rounded-md p-2 pl-8 text-sm">
+                        <i class="bi bi-search absolute left-2 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Tabela de Serviços -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    ID
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Serviço
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Prestador
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Categoria
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Valor
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Avaliação
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% if servicos|length > 0 %}
+                                {% for servico in servicos %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ servico.id }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {{ servico.nome }}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ servico.prestador_nome }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ servico.categoria_nome }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            R$ {{ servico.valor|number_format(2, ',', '.') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex items-center">
+                                                    {% for i in 1..5 %}
+                                                        {% if i <= servico.avaliacao %}
+                                                            <i class="bi bi-star-fill text-yellow-400"></i>
+                                                        {% else %}
+                                                            <i class="bi bi-star text-yellow-400"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <span class="ml-2 text-sm text-gray-500">({{ servico.total_avaliacoes }})</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {% if servico.status == 'ativo' %}
+                                                    bg-green-100 text-green-800
+                                                {% elseif servico.status == 'inativo' %}
+                                                    bg-red-100 text-red-800
+                                                {% elseif servico.status == 'pendente' %}
+                                                    bg-yellow-100 text-yellow-800
+                                                {% else %}
+                                                    bg-gray-100 text-gray-800
+                                                {% endif %}">
+                                                {{ servico.status|capitalize }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <button onclick="servicoModal.open({{ servico.id }})" 
+                                                    class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button onclick="servicoModal.edit({{ servico.id }})" 
+                                                    class="text-blue-600 hover:text-blue-900 mr-3">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            {% if servico.status == 'pendente' %}
+                                                <button onclick="approvalModal.open({{ servico.id }})" 
+                                                        class="text-green-600 hover:text-green-900">
+                                                    <i class="bi bi-check-circle"></i>
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+                                        Nenhum serviço encontrado.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginação -->
+                <div class="flex justify-between items-center mt-6">
+                    <div class="text-sm text-gray-700">
+                        Mostrando <span>{{ paginacao.inicio }}</span> a <span>{{ paginacao.fim }}</span> de <span>{{ paginacao.total }}</span> serviços
+                    </div>
+                    <div class="flex space-x-1">
+                        {% if paginacao.pagina_atual > 1 %}
+                            <a href="?pagina={{ paginacao.pagina_atual - 1 }}" 
+                               class="px-3 py-1 border rounded-md text-sm hover:bg-gray-50">
+                                Anterior
+                            </a>
+                        {% else %}
+                            <button class="px-3 py-1 border rounded-md text-sm opacity-50 cursor-not-allowed" disabled>
+                                Anterior
+                            </button>
+                        {% endif %}
+                        
+                        {% if paginacao.pagina_atual < paginacao.total_paginas %}
+                            <a href="?pagina={{ paginacao.pagina_atual + 1 }}" 
+                               class="px-3 py-1 border rounded-md text-sm hover:bg-gray-50">
+                                Próxima
+                            </a>
+                        {% else %}
+                            <button class="px-3 py-1 border rounded-md text-sm opacity-50 cursor-not-allowed" disabled>
+                                Próxima
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal de Detalhes -->
+<div id="servicoModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">Detalhes do Serviço</h3>
+            <button onclick="servicoModal.close()" class="text-gray-500 hover:text-gray-700">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        
+        <div id="servicoDetails">
+            <!-- Conteúdo será preenchido via JavaScript -->
+            <p>Carregando detalhes do serviço...</p>
+        </div>
+        
+        <div class="flex justify-end space-x-4 pt-6 border-t">
+            <button type="button" onclick="servicoModal.close()" 
+                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Aprovação -->
+<div id="approvalModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">Aprovar Serviço</h3>
+            <button onclick="approvalModal.close()" class="text-gray-500 hover:text-gray-700">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        
+        <div id="approvalModalContent">
+            <p id="approvalText">Deseja aprovar este serviço?</p>
+            <div class="mt-4 space-y-3">
+                <label for="approvalNotes" class="block text-sm font-medium text-gray-700">Observações (opcional)</label>
+                <textarea id="approvalNotes" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm"></textarea>
+            </div>
+        </div>
+        
+        <div class="flex justify-end space-x-4 pt-6 border-t">
+            <button type="button" onclick="approvalModal.close()" 
+                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                Cancelar
+            </button>
+            <button type="button" onclick="approvalModal.confirm()" 
+                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                Confirmar
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Toggle do menu mobile
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('active');
+        document.querySelector('.main-content').classList.toggle('active');
+    });
+
+    // Modal de serviço
+    const servicoModal = {
+        modal: document.getElementById('servicoModal'),
+        
+        open: function(servicoId) {
+            // Aqui você pode fazer uma requisição AJAX para buscar os detalhes do serviço
+            fetch(`/admin/servicos/${servicoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('servicoDetails').innerHTML = this.renderServicoDetails(data);
+                    this.modal.style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar detalhes do serviço:', error);
+                });
+        },
+        
+        edit: function(servicoId) {
+            window.location.href = `/admin/servicos/${servicoId}/editar`;
+        },
+        
+        close: function() {
+            this.modal.style.display = 'none';
+        },
+        
+        renderServicoDetails: function(servico) {
+            return `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-lg font-semibold">${servico.nome}</h4>
+                        <p class="text-gray-600">${servico.descricao}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">Prestador</p>
+                            <p class="font-medium">${servico.prestador_nome}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Categoria</p>
+                            <p class="font-medium">${servico.categoria_nome}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Valor</p>
+                            <p class="font-medium">R$ ${servico.valor}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Status</p>
+                            <p class="font-medium">${servico.status}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Avaliação</p>
+                        <div class="flex items-center">
+                            ${Array(5).fill().map((_, i) => `
+                                <i class="bi bi-star${i < servico.avaliacao ? '-fill' : ''} text-yellow-400"></i>
+                            `).join('')}
+                            <span class="ml-2 text-sm text-gray-500">(${servico.total_avaliacoes})</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    };
+
+    // Modal de aprovação
+    const approvalModal = {
+        modal: document.getElementById('approvalModal'),
+        servicoId: null,
+        
+        open: function(servicoId) {
+            this.servicoId = servicoId;
+            this.modal.style.display = 'flex';
+        },
+        
+        close: function() {
+            this.modal.style.display = 'none';
+            this.servicoId = null;
+            document.getElementById('approvalNotes').value = '';
+        },
+        
+        confirm: function() {
+            const notes = document.getElementById('approvalNotes').value;
+            
+            fetch(`/admin/servicos/${this.servicoId}/aprovar`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ notes })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Erro ao aprovar serviço: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao aprovar serviço:', error);
+            });
+        }
+    };
+
+    // Filtros e busca
+    document.getElementById('statusFilter').addEventListener('change', function() {
+        // Implementar lógica de filtro
+    });
+
+    document.getElementById('categoryFilter').addEventListener('change', function() {
+        // Implementar lógica de filtro por categoria
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        // Implementar lógica de busca
+    });
+</script>
+{% endblock %} 

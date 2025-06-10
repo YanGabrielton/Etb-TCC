@@ -49,4 +49,20 @@ class ServicosController extends WebController {
     $request->session->set('UltimoServicoInserido', $servico);
     return $this->redirect('/servicos/postar-servico');
   }
+
+  #[Post('/desativar/{id}')]
+  public function desativarServico(Request $request, int $id) {
+    try {
+      $idUsuario = $request->session->get('id_usuario');
+      
+      if (!$idUsuario) {
+        return $this->redirect('/login');
+      }
+
+      $this->service->desativarServico($id, $idUsuario);
+      return $this->redirect('/prestadores?sucesso=1');
+    } catch (\Exception $e) {
+      return $this->redirect('/prestadores?erro=' . urlencode($e->getMessage()));
+    }
+  }
 }

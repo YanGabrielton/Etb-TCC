@@ -12,4 +12,4 @@ class Descricao extends DataValidator {
       ->notify('A descrição deve ter entre 10 e 1000 caracteres.')
       ->result();
   }
-} 
+}

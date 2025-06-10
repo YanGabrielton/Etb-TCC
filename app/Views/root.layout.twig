@@ -1,29 +1,80 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
   <head>
-    {% block metas %}
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Job4You{% endblock %}</title>
 
-    {% block links %}
-      <link rel="stylesheet" href="/assets/css/bootstrap-icons.min.css">
-      <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/assets/css/global.css">
-    {% endblock %}
+    <!-- CSS global -->
+    <link rel="stylesheet" href="/css/global.css">
 
-    <title>{% block pageTitle %} JOB4YOU {% endblock %}</title>
+    {% block styles %}{% endblock %}
   </head>
   
-  <body>
-    {% block content %} {% endblock %}
+  <body class="bg-white font-sans flex flex-col min-h-screen">
+    <!-- MENU DE NAVEGAÇÃO -->
+    <nav class="bg-dark-800 py-4 px-6 shadow-sm">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <!-- LOGO -->
+        <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="/">
+          Job4You
+        </a>
 
-    {% block debugging %}
-      {% include '@Infra/DED/debug-container.twig' %}
-    {% endblock %}
+        <!-- LINKS DO MENU (versão desktop) -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a class="text-gray-300 hover:text-white transition-colors" href="/">Home</a>
+          <a class="text-gray-300 hover:text-white transition-colors" href="/sobre">Sobre Nós</a>
+          {% if not session.id_usuario %}
+            <a class="text-gray-300 hover:text-white transition-colors" href="/usuarios/cadastro">Cadastre-se</a>
+            <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
+               href="/auth/login">Login</a>
+          {% else %}
+            <a class="text-gray-300 hover:text-white transition-colors" href="/usuarios/perfil">Meu Perfil</a>
+            <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
+               href="/auth/logout">Sair</a>
+          {% endif %}
+        </div>
 
-    {% block scripts %}
-      <script src="/assets/js/bootstrap.bundle.min.js"></script>
-    {% endblock %}
+        <!-- BOTÃO HAMBÚRGUER (para mobile) -->
+        <button class="md:hidden text-white focus:outline-none" id="menuButton">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+
+      <!-- MENU MOBILE (invisível até clicar) -->
+      <div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
+        <a class="block text-gray-300 hover:text-white px-3 py-2" href="/">Home</a>
+        <a class="block text-gray-300 hover:text-white px-3 py-2" href="/sobre">Sobre</a>
+        {% if not session.id_usuario %}
+          <a class="block text-gray-300 hover:text-white px-3 py-2" href="/usuarios/cadastro">Cadastre-se</a>
+          <a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" 
+             href="/auth/login">Login</a>
+        {% else %}
+          <a class="block text-gray-300 hover:text-white px-3 py-2" href="/usuarios/perfil">Meu Perfil</a>
+          <a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" 
+             href="/auth/logout">Sair</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    {% block content %}{% endblock %}
+
+    <!-- RODAPÉ FIXO -->
+    <footer class="bg-dark-800 py-6 text-white mt-auto">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <p>© 2025 Job4You - Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Toggle mobile menu
+      document.getElementById('menuButton').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenu.classList.toggle('hidden');
+      });
+    </script>
+    {% block scripts %}{% endblock %}
   </body>
 </html>
