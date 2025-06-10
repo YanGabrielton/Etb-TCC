@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block metas %}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+
     <title>{% block title %}Job4You{% endblock %}</title>
 
     <!-- CSS global -->
-    <link rel="stylesheet" href="/css/global.css">
-
-    {% block styles %}{% endblock %}
+    <link rel="stylesheet" href="/assets/css/tailwind.css">
+    {% block styles %} {% endblock %}
   </head>
   
   <body class="bg-white font-sans flex flex-col min-h-screen">
@@ -58,7 +60,7 @@
     </nav>
 
     <!-- CONTEÚDO PRINCIPAL -->
-    {% block content %}{% endblock %}
+    {% block content %} {% endblock %}
 
     <!-- RODAPÉ FIXO -->
     <footer class="bg-dark-800 py-6 text-white mt-auto">
@@ -75,6 +77,6 @@
         mobileMenu.classList.toggle('hidden');
       });
     </script>
-    {% block scripts %}{% endblock %}
+    {% block scripts %} {% endblock %}
   </body>
 </html>

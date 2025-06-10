@@ -4,4 +4,4 @@
 .idea
 
 vendor/
-_old/
+node_modules/
