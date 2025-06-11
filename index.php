@@ -75,7 +75,7 @@ session_start();
         <!-- MENU MOBILE (invisível até clicar) -->
         <div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
             <a class="block text-gray-300 hover:text-white px-3 py-2" href="index.php">Home</a>
-            <a class="block text-gray-300 hover:text-white px-3 py-2" href="#">Sobre</a>
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="/src/pages/sobre_nos.php">Sobre</a>
             <a class="block text-gray-300 hover:text-white px-3 py-2" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
             <a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" 
                href="./src/pages/login.php">Login</a>
