@@ -1,41 +1,41 @@
 {# MENU DE MENU (versão desktop) --> NAVEGAÇÃO #}
-<nav class="bg-dark-800 py-4 px-6 shadow-sm">
+<nav class="bg-slate-950/90 py-4 px-6 shadow-sm">
 	<div
 		class="max-w-7xl mx-auto flex justify-between items-center">
 		{# LOGO --> MENU (versão desktop) #}
-		<a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="/">
+		<a class="text-2xl font-bold text-gray-100 hover:text-yellow-500/90 transition-colors" href="/">
 			Job4You
 		</a>
 
 		{# LINKS DO MENU (versão desktop) #}
 		<div class="hidden md:flex items-center space-x-8">
-			<a class="text-gray-300 hover:text-white transition-colors" href="/">Home</a>
-			<a class="text-gray-300 hover:text-white transition-colors" href="/sobre">Sobre Nós</a>
+			<a class="text-gray-300 hover:text-gray-100 transition-colors" href="/">Home</a>
+			<a class="text-gray-300 hover:text-gray-100 transition-colors" href="/sobre">Sobre Nós</a>
 			{% if not session.id_usuario %}
-				<a class="text-gray-300 hover:text-white transition-colors" href="/usuarios/cadastro">Cadastre-se</a>
-				<a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="/auth/login">Login</a>
+				<a class="text-gray-300 hover:text-gray-100 transition-colors" href="/usuarios/cadastro">Cadastre-se</a>
+				<a class="bg-yellow-500/90 hover:bg-yellow-600 text-gray-100 px-6 py-2 rounded-full font-medium transition-colors" href="/auth/login">Login</a>
 			{% else %}
-				<a class="text-gray-300 hover:text-white transition-colors" href="/usuarios/perfil">Meu Perfil</a>
-				<a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="/auth/logout">Sair</a>
+				<a class="text-gray-300 hover:text-gray-100 transition-colors" href="/usuarios/perfil">Meu Perfil</a>
+				<a class="bg-yellow-500/90 hover:bg-yellow-600 text-gray-100 px-6 py-2 rounded-full font-medium transition-colors" href="/auth/logout">Sair</a>
 			{% endif %}
 		</div>
 
 		{# BOTÃO HAMBÚRGUER (para mobile) #}
-		<button class="md:hidden text-white focus:outline-none" id="menuButton">
+		<button class="md:hidden text-gray-100 focus:outline-none" id="menuButton">
 			<i class="fas fa-bars text-2xl"></i>
 		</button>
 	</div>
 
 	{# MENU MOBILE (invisível até clicar) #}
-	<div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
-		<a class="block text-gray-300 hover:text-white px-3 py-2" href="/">Home</a>
-		<a class="block text-gray-300 hover:text-white px-3 py-2" href="/sobre">Sobre</a>
+	<div class="md:hidden hidden mt-4 space-y-3 bg-slate-950/90 rounded-lg p-4" id="mobileMenu">
+		<a class="block text-gray-300 hover:text-gray-100 px-3 py-2" href="/">Home</a>
+		<a class="block text-gray-300 hover:text-gray-100 px-3 py-2" href="/sobre">Sobre</a>
 		{% if not session.id_usuario %}
-			<a class="block text-gray-300 hover:text-white px-3 py-2" href="/usuarios/cadastro">Cadastre-se</a>
-			<a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" href="/auth/login">Login</a>
+			<a class="block text-gray-300 hover:text-gray-100 px-3 py-2" href="/usuarios/cadastro">Cadastre-se</a>
+			<a class="block bg-yellow-500/90 hover:bg-yellow-600 text-gray-100 px-3 py-2 rounded text-center mt-2" href="/auth/login">Login</a>
 		{% else %}
-			<a class="block text-gray-300 hover:text-white px-3 py-2" href="/usuarios/perfil">Meu Perfil</a>
-			<a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" href="/auth/logout">Sair</a>
+			<a class="block text-gray-300 hover:text-gray-100 px-3 py-2" href="/usuarios/perfil">Meu Perfil</a>
+			<a class="block bg-yellow-500/90 hover:bg-yellow-600 text-gray-100 px-3 py-2 rounded text-center mt-2" href="/auth/logout">Sair</a>
 		{% endif %}
 	</div>
 </nav>
