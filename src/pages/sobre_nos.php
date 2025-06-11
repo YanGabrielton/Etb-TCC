@@ -208,11 +208,15 @@
                                     <p class="text-white text-opacity-90 text-sm">Perfis verificados</p>
                                 </div>
                             </div>
-                            <div class="flex items-start bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur-sm">
-                                <i class="bi bi-chat-square-dots text-lg mr-3 mt-1"></i>
+                            <div class="flex items-start bg-white bg-opacity-20 p-6 rounded-lg backdrop-blur-sm md:col-span-2">
+                                <div class="flex-shrink-0 mr-4">
+                                    <i class="bi bi-chat-square-dots text-2xl"></i>
+                                </div>
                                 <div>
-                                    <h4 class="font-medium">Comunicação</h4>
-                                    <p class="text-white text-opacity-90 text-sm">Contato direto e fácil</p>
+                                    <h4 class="font-medium text-lg mb-2">Comunicação Direta e Eficiente</h4>
+                                    <p class="text-white text-opacity-90">
+                                        Nossa plataforma oferece contato direto e fácil apenas com um clique.
+                                    </p>
                                 </div>
                             </div>
                         </div>
