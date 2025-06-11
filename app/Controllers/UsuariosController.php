@@ -22,22 +22,22 @@ class UsuariosController extends WebController {
 
   #[Post('/cadastro')]
   public function cadastrarUsuario(#[Body] CadastroUsuario $usuario) {
-    try {
-      $this->service->cadastrarUsuario($usuario);
-      return $this->redirect('/login');
-    } catch (\Exception $e) {
-      $this->session->set('ErroCadastro', $e->getMessage());
-      return $this->redirect('/usuarios/cadastro');
-    }
+    // try {
+    //   $this->service->cadastrarUsuario($usuario);
+    //   return $this->redirect('/login');
+    // } catch (\Exception $e) {
+    //   $this->session->set('ErroCadastro', $e->getMessage());
+    //   return $this->redirect('/usuarios/cadastro');
+    // }
   }
 
   #[Get('/tipo/{id}')]
   public function verificarTipoUsuario(#[RouteParam] int $id) {
-    try {
-      $tipo = $this->service->verificarTipoUsuario($id);
-      $this->render('Pages/usuarios/tipo', ['tipo' => $tipo]);
-    } catch (\Exception $e) {
-      $this->render('Pages/usuarios/tipo', ['erro' => $e->getMessage()]);
-    }
+    // try {
+    //   $tipo = $this->service->verificarTipoUsuario($id);
+    //   $this->render('Pages/usuarios/tipo', ['tipo' => $tipo]);
+    // } catch (\Exception $e) {
+    //   $this->render('Pages/usuarios/tipo', ['erro' => $e->getMessage()]);
+    // }
   }
 }

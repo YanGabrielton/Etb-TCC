@@ -21,7 +21,7 @@ class ServicosController extends WebController {
   public function exibirPaginaDeServicos() {
     // $servicos = $this->service->buscarServicos();
 
-    $this->render('Pages/servicos/page.twig', [
+    $this->render('Pages/servicos/listar-servicos.twig', [
       'Servicos' => []
     ]);
   }

@@ -19,8 +19,8 @@ class AutenticacaoController extends WebController {
 
   #[Get()]
   public function exibirPaginaDeLogin(Request $request) {
-    $this->render('Pages/auth/login.twig', [
-      'flashMessage' => $request->session->getFlashMessage()
+    $this->render('Pages/login.twig', [
+      // 'flashMessage' => $request->session->getFlashMessage()
     ]);
   }
 
