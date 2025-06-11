@@ -21,6 +21,13 @@ main {
   width: auto;
 }
 
+/* Remove o botão de visualização de senha padrão do Chrome e do Edge */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none !important;
+}
+
 @media (max-width: 767px) {
   .hero-image {
     max-height: 50vh; /* Responsividade para telas menores */

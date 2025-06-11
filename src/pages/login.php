@@ -110,29 +110,28 @@
                         </div>
                     </div>
 
-                    <!-- Campo de senha -->
-                    <div>
-                        <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <!-- Ícone de cadeado à esquerda -->
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="bi bi-lock text-gray-400"></i>
-                            </div>
-                            <!-- Input de senha -->
-                            <input id="senha" name="senha" type="password" autocomplete="current-password" required
-                                class="py-2 pl-10 pr-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                placeholder="Sua senha">
-                            <!-- Botão de visualização da senha -->
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <button type="button" id="togglePassword" aria-label="Mostrar/ocultar senha"
-                                    class="text-gray-400 hover:text-gray-500 focus:outline-none">
-                                    <!-- Ícone dinâmico do olho -->
-                                    <i id="eyeIcon" class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- Campo de senha -->
+<div>
+    <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
+    <div class="mt-1 relative rounded-md shadow-sm">
+        <!-- Ícone de cadeado à esquerda -->
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="bi bi-lock text-gray-400"></i>
+        </div>
+        <!-- Input de senha -->
+        <input id="senha" name="senha" type="password" autocomplete="current-password" required
+            class="py-2 pl-10 pr-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+            placeholder="Sua senha">
+        <!-- Botão de visualização da senha -->
+        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <button type="button" id="togglePassword" aria-label="Mostrar/ocultar senha"
+                class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                <!-- Ícone dinâmico do olho -->
+                <i id="eyeIcon" class="fas fa-eye"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
                 <!-- Lembrar-me + Esqueceu a senha -->
                 <div class="flex items-center justify-between">
