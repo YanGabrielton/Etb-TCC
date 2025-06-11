@@ -1,9 +1,5 @@
 {% extends "Layouts/main.layout.twig" %}
 
-{% import "Partials/servicos/categorias.twig" as categorias %}
-{% import "Partials/servicos/carrosel-prestadores/carrossel-prestadores.twig" as carrossel %}
-{% import "Partials/servicos/modal-prestador/modal.twig" as modal %}
-
 {% block title %}Serviços | Job4You{% endblock %}
 
 {% block main %}
@@ -12,8 +8,7 @@
 			<div class="max-w-7xl mx-auto px-6 text-center">
 				<h1 class="text-4xl font-bold text-gray-900 mb-4">
 					{% if categorias|length > 0 %}
-						{% set categoria = categorias|first %}
-						Prestadores de {{ categoria.nome }}
+						{% set categoria = categorias|first %} Prestadores de {{ categoria.nome }}
 					{% else %}
 						Encontre Serviços Informais em Diversas Categorias
 					{% endif %}
@@ -28,14 +23,10 @@
 			</div>
 		</section>
 	
-		{% set mostrarCarrosel = categorias|length > 0 and prestadores|length > 0 %}
+		{% include "Partials/servicos/carrosel-prestadores/carrossel-prestadores.twig" %}
 	
-		{% if mostrarCarrosel %}
-			{{ carrossel.render(prestadores) }}
-		{% endif %}
+		{% include "Partials/servicos/categorias.twig" %}
 	
-		{{ categorias.render(categorias) }}
-	
-		{{ modal.render() }}
+		{% include "Partials/servicos/modal-prestador/modal.twig" %}
 	</div>
 {% endblock %}
