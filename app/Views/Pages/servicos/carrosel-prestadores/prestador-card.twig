@@ -1,0 +1,39 @@
+{% macro card(prestador) %}
+    <div class="px-2">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+            <div class="p-6 text-center">
+                <div class="h-32 w-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                    <img src="{{ prestador.foto ? '/uploads/' ~ prestador.foto : '/img/fotoperfil.jpg' }}" alt="{{ prestador.nome }}" class="h-full w-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">{{ prestador.nome }}</h3>
+                <p class="text-gray-600 mb-1">{{ prestador.categoria }}</p>
+                <p class="text-gray-500 text-sm mb-3">
+                    <i class="bi bi-cash-stack mr-1"></i>
+                    R$ {{ prestador.valor|number_format(2, ',', '.') }}
+                </p>
+                <div class="flex justify-center text-yellow-400 mb-4">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="text-gray-500 text-xs ml-1">({{ prestador.quantidade_favorito }})</span>
+                </div>
+                <button onclick="prestadorModal.open(
+                    '{{ prestador.nome|escape('js') }}',
+                    '{{ prestador.categoria|escape('js') }}',
+                    'R$ {{ prestador.valor|number_format(2, ',', '.')|escape('js') }}',
+                    '4.5',
+                    '{{ prestador.quantidade_favorito|escape('js') }}',
+                    '{{ prestador.foto ? '/uploads/' ~ prestador.foto|escape('js') : '/img/fotoperfil.jpg'|escape('js') }}',
+                    '{{ prestador.sobre|escape('js') }}',
+                    '{{ prestador.whatsapp|default('')|escape('js') }}',
+                    '{{ prestador.celular|default('')|escape('js') }}',
+                    '{{ prestador.facebook|default('')|escape('js') }}'
+                )" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                    Ver Perfil
+                </button>
+            </div>
+        </div>
+    </div>
+{% endmacro %} 

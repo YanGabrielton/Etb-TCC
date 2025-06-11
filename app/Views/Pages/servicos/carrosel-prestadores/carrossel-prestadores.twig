@@ -1,0 +1,19 @@
+{% import "Pages/servicos/carrosel-prestadores/prestador-card.twig" as card %}
+{% import "Pages/servicos/carrosel-prestadores/navegacao.twig" as nav %}
+
+{% macro render(prestadores) %}
+	<section class="py-12 bg-gray-50 relative">
+		<div class="max-w-7xl mx-auto px-6 relative">
+			<div class="glider-contain">
+			
+				<div class="glider">
+					{% for prestador in prestadores %}
+						{{ card.card(prestador) }}
+					{% endfor %}
+				</div>
+
+				{{ nav.botoes() }}
+			</div>
+		</div>
+	</section>
+{% endmacro %}

@@ -1,0 +1,5 @@
+{% macro render(href, text, class = '') %}
+	<a href="{{ href }}" class="font-medium text-gray-500 hover:text-gray-600 {{ class }}">
+		{{ text }}
+	</a>
+{% endmacro %}
