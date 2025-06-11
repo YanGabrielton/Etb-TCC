@@ -1,7 +1,8 @@
 {% extends "Layouts/main.layout.twig" %}
 
-{% import "Pages/servicos/categorias.twig" as categorias %}
-{% import "Pages/servicos/carrosel-prestadores/carrossel-prestadores.twig" as carrossel %}
+{% import "Partials/servicos/categorias.twig" as categorias %}
+{% import "Partials/servicos/carrosel-prestadores/carrossel-prestadores.twig" as carrossel %}
+{% import "Partials/servicos/modal-prestador/macro.twig" as modal %}
 
 {% block title %}Serviços | Job4You{% endblock %}
 
@@ -34,5 +35,5 @@
 
 	{{ categorias.render(categorias) }}
 
-	{% include "Pages/servicos/modal-prestador.twig" %}
+	{{ modal.render() }}
 {% endblock %}
