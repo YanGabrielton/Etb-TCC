@@ -3,10 +3,9 @@
 require '../vendor/autoload.php';
 
 use KissPhp\Services\Container;
-use KissPhp\Services\Dotenv\Env;
 use KissPhp\Core\DED\BoundinaryError;
 use KissPhp\Core\Routing\DispatchRouter;
-use KissPhp\Services\SessionInitializer;
+use KissPhp\Support\{ Env, SessionInitializer };
 
 BoundinaryError::wrap(function() {
   BoundinaryError::register();

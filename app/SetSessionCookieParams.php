@@ -1,6 +1,6 @@
 <?php
 
-use KissPhp\Services\SessionCookieParams;
+use KissPhp\Support\SessionCookieParams;
 
 SessionCookieParams::set([
   'httponly' => true

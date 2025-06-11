@@ -5,19 +5,3 @@
 * {
   font-family: "Reddit Sans", sans-serif;
 }
-
-body {
-  -webkit-font-smothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Espaçamento nas seções principais */
-.hero-section {
-  padding: 60px 0;
-}
-
-/* Imagens responsivas */
-.hero-img {
-  max-width: 100%;
-  height: auto;
-}

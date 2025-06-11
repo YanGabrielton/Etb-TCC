@@ -1,26 +1,41 @@
-<nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
-
-	<div class="container-fluid px-4">
-		<a class="navbar-brand fs-4 fw-bold" href="#">
+{# MENU DE MENU (versão desktop) --> NAVEGAÇÃO #}
+<nav class="bg-dark-800 py-4 px-6 shadow-sm">
+	<div
+		class="max-w-7xl mx-auto flex justify-between items-center">
+		{# LOGO --> MENU (versão desktop) #}
+		<a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="/">
 			Job4You
-		</a>  
-		<button
-			type="button"
-			class="navbar-toggler shadow-none border-0"
-			data-bs-toggle="collapse"
-			data-bs-target="#navbarNav"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		</a>
 
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<div class="navbar-nav text-light ms-auto">
-				<a class="nav-link" href="/">Home</a>
-				<a class="nav-link" href="/sobre">Sobre a empresa</a>
-				<a class="nav-link" href="/usuario/criar-conta">Cadastrar-se</a>
-				<a class="nav-link" href="/autenticacao">Entrar</a>
-			</div>
+		{# LINKS DO MENU (versão desktop) #}
+		<div class="hidden md:flex items-center space-x-8">
+			<a class="text-gray-300 hover:text-white transition-colors" href="/">Home</a>
+			<a class="text-gray-300 hover:text-white transition-colors" href="/sobre">Sobre Nós</a>
+			{% if not session.id_usuario %}
+				<a class="text-gray-300 hover:text-white transition-colors" href="/usuarios/cadastro">Cadastre-se</a>
+				<a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="/auth/login">Login</a>
+			{% else %}
+				<a class="text-gray-300 hover:text-white transition-colors" href="/usuarios/perfil">Meu Perfil</a>
+				<a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="/auth/logout">Sair</a>
+			{% endif %}
 		</div>
+
+		{# BOTÃO HAMBÚRGUER (para mobile) #}
+		<button class="md:hidden text-white focus:outline-none" id="menuButton">
+			<i class="fas fa-bars text-2xl"></i>
+		</button>
 	</div>
 
+	{# MENU MOBILE (invisível até clicar) #}
+	<div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
+		<a class="block text-gray-300 hover:text-white px-3 py-2" href="/">Home</a>
+		<a class="block text-gray-300 hover:text-white px-3 py-2" href="/sobre">Sobre</a>
+		{% if not session.id_usuario %}
+			<a class="block text-gray-300 hover:text-white px-3 py-2" href="/usuarios/cadastro">Cadastre-se</a>
+			<a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" href="/auth/login">Login</a>
+		{% else %}
+			<a class="block text-gray-300 hover:text-white px-3 py-2" href="/usuarios/perfil">Meu Perfil</a>
+			<a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2" href="/auth/logout">Sair</a>
+		{% endif %}
+	</div>
 </nav>
