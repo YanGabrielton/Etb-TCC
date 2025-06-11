@@ -1,8 +1,8 @@
-{% extends "root.layout.twig" %}
+{% extends "Layouts/main.layout.twig" %}
 
 {% block title %}Meu Perfil | Job4You{% endblock %}
 
-{% block content %}
+{% block main %}
 	<!-- CONTEÚDO PRINCIPAL DO PERFIL -->
 	<main class="flex-grow">
 		<div class="max-w-4xl mx-auto px-6 py-8">
@@ -12,8 +12,10 @@
 				{% include "Partials/usuarios/_nav.twig" %}
 
 				<!-- SEÇÃO DE PERFIL -->
-				<div id="perfil" class="p-6 md:p-8">
-					<h2 class="text-xl font-bold text-gray-800 mb-6">Informações Pessoais</h2>
+				<section id="perfil" class="p-6 md:p-8">
+					<h2 class="text-xl font-bold text-gray-800 mb-6">
+						Informações Pessoais
+					</h2>
 
 					<form action="{{ usuario.tipo == 'prestador' ? '/prestadores/atualizar-perfil' : '/usuarios/atualizar-perfil' }}" method="POST" class="space-y-6">
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -27,7 +29,7 @@
 							</button>
 						</div>
 					</form>
-				</div>
+				</section>
 
 				{% if usuario.tipo == 'prestador' %}
 					{% include "Partials/usuarios/_servico.twig" %}

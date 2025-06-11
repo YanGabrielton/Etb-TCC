@@ -11,13 +11,18 @@ use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 use App\DTOs\Usuarios\CadastroUsuario;
 use App\Services\Usuarios\UsuariosService;
 
-#[Controller('/usuarios')]
+#[Controller('')]
 class UsuariosController extends WebController {
-  public function __construct(private UsuariosService $service) {}
+  // public function __construct(private UsuariosService $service) {}
 
   #[Get('/cadastro')]
   public function exibirPaginaDeCadastro() {
-    $this->render('Pages/usuarios/cadastro');
+    $this->render('Pages/usuarios/cadastro.twig');
+  }
+
+  #[Get('/meu-perfil')]
+  public function exibirPaginaDeMeuPerfil() {
+    $this->render('Pages/usuarios/meu-perfil.twig');
   }
 
   #[Post('/cadastro')]
