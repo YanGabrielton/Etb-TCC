@@ -1,6 +1,8 @@
 <?php
 // Conexão com o banco de dados
-require_once 'admin_backend.php';
+
+
+include '../backend/includes/painel_admin.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
