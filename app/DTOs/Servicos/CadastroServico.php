@@ -5,7 +5,7 @@ class CadastroServico {
   public readonly string $titulo;
   public readonly string $descricao;
   public readonly float $preco;
-  public readonly int $categoriaServico;
-  public readonly int $idUsuario;
-  public readonly ?string $fotoNome;
+  public readonly int $categoria;
+  public readonly int $usuario;
+  public readonly ?string $foto;
 }

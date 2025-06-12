@@ -1,30 +1,31 @@
 <?php
 namespace App\Repositories\Autenticacao;
 
+use App\Entities\Usuario;
 use KissPhp\Abstractions\Repository;
-
-use App\Models\Usuario;
 
 class AutenticacaoRepository extends Repository {
   public function buscarUsuarioPorEmail(string $email): ?Usuario {
-    $sql = "
-      SELECT * FROM ViewUsuarioLogin
-      WHERE Email = ?
-      AND StatusUsuario = 'ATIVO'
-    ";
+    try {
+      $query = $this->database()
+        ->createQueryBuilder()
+        ->select('u.*')
+        ->from('ViewUsuarioLogin', 'u')
+        ->where('u.Email = :email')
+        ->setParameter('email', $email)
+        ->getQuery();
 
-    // try {
-    //   $stmt = $this->database()->prepare($sql);
-    //   $stmt->bind_param('s', $email);
-    //   $stmt->execute();
-      
-    //   $result = $stmt->get_result();
-    //   $row = $result->fetch_object(Usuario::class);
+      $result = $query->execute()->fetchAssociative();
+      if (!$result) return null;
 
-    //   return $row;
-    // } catch (\Throwable $th) {
-    //   error_log("[Error] AutenticacaoRepository: {$th->getMessage()}");
-    //   return null;
-    // }
+      return $this->database()->getReference(Usuario::class, $result['ID']);
+    } catch (\Throwable $th) {
+      error_log("[Error] AutenticacaoRepository: {$th->getMessage()}");
+      return null;
+    }
   }
+
+  public function cadastrarUsuario(): bool {
+    return false;
+  }  
 }

@@ -1,21 +1,26 @@
 {% extends "Layouts/main.layout.twig" %}
 
+{% import "Macros/link.twig" as Link %}
+{% import "Macros/alert.twig" as Alert %}
 {% import "Macros/label.twig" as Label %}
 {% import "Macros/input.twig" as Input %}
 {% import "Macros/button.twig" as Button %}
 {% import "Macros/checkbox.twig" as Checkbox %}
-{% import "Macros/link.twig" as Link %}
 
 {% block title %}Login | Job4You{% endblock %}
 
 {% block main %}
 	<main class="flex-grow flex items-center justify-center py-12 px-4 md:px-6 lg:px-8">
 		<div class="w-full max-w-md space-y-8">
-			<div class="text-center">
+			<header class="text-center">
 				<h2 class="mt-6 text-3xl font-bold text-gray-900">
 					Login
 				</h2>
-			</div>
+
+				{% if flash_message is not empty %}
+					{{ Alert.render(flash_message.type|lower, flash_message.message, 'mt-4') }}
+				{% endif %}
+			</header>
 
 			<form class="mt-8 space-y-6" action="/autenticacao" method="POST">
 				<div class="space-y-4">
@@ -40,12 +45,10 @@
 			</form>
 
 			{# Link para cadastro #}
-			<div class="text-center">
-				<span class="text-sm text-gray-600">
-					Não tem uma conta?
-					{{ Link.render('/usuarios/cadastro', 'Cadastre-se', 'text-gray-600 hover:text-gray-700') }}
-				</span>
-			</div>
+			<span class="text center text-sm text-gray-600">
+				Não tem uma conta?
+				{{ Link.render('/usuarios/cadastro', 'Cadastre-se', 'text-gray-600 hover:text-gray-700') }}
+			</span>
 		</div>
 	</main>
 {% endblock %}

@@ -13,12 +13,11 @@ use Doctrine\ORM\Mapping\{
   JoinColumn,
   GeneratedValue
 };
+use \Doctrine\Common\Collections\ArrayCollection;
 
 #[Entity]
 class Usuario extends KissEntity {
-  #[Id]
-  #[GeneratedValue]
-  #[Column(type: "integer", unsigned: true)]
+  #[Id, GeneratedValue, Column(type: "integer", unsigned: true)]
   public ?int $id = null;
 
   #[Column(length: 50)]
@@ -64,8 +63,8 @@ class Usuario extends KissEntity {
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();
-    $this->informacoesContato = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->publicacoesServico = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->servicosFavoritos = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->informacoesContato = new ArrayCollection();
+    $this->publicacoesServico = new ArrayCollection();
+    $this->servicosFavoritos = new ArrayCollection();
   }
 }

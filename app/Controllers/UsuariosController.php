@@ -8,7 +8,7 @@ use KissPhp\Attributes\Http\Controller;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 
-use App\DTOs\Usuarios\CadastroUsuario;
+use App\DTOs\Usuarios\UsuarioCadastro;
 use App\Services\Usuarios\UsuariosService;
 
 #[Controller('/usuarios')]
@@ -26,7 +26,7 @@ class UsuariosController extends WebController {
   }
 
   #[Post('/cadastro')]
-  public function cadastrarUsuario(#[Body] CadastroUsuario $usuario) {
+  public function cadastrarUsuario(#[Body] UsuarioCadastro $usuario) {
     // try {
     //   $this->service->cadastrarUsuario($usuario);
     //   return $this->redirect('/login');

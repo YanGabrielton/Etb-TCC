@@ -10,7 +10,7 @@ use KissPhp\Protocols\Http\Request;
 use KissPhp\Attributes\Http\Request\Body;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
-use App\DTOs\Login\UsuarioLogin;
+use App\DTOs\CredenciaisLogin;
 use App\Services\Autenticacao\AutenticacaoService;
 
 #[Controller('/autenticacao')]
@@ -25,8 +25,8 @@ class AutenticacaoController extends WebController {
   }
 
   #[Post]
-  public function autenticar(#[Body] UsuarioLogin $user, Request $request) {
-    $usuarioAutenticado = $this->service->obterUsuarioAutenticado($user);
+  public function autenticar(#[Body] CredenciaisLogin $usuario, Request $request) {
+    $usuarioAutenticado = $this->service->obterUsuarioAutenticado($usuario);
 
     if ($usuarioAutenticado) {
       $request->session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');

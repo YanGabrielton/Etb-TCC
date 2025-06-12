@@ -1,17 +1,9 @@
 <?php
 namespace App\Repositories\Usuarios;
 
-use App\Utils\DatabaseConnection;
+use KissPhp\Abstractions\Repository;
 
-class UsuariosRepository {
-    private $database;
-    private $conexao;
-
-    public function __construct() {
-        $this->database = new DatabaseConnection();
-        $this->conexao = $this->database->getConnection();
-    }
-
+class UsuariosRepository extends Repository {
     public function verificarEmailExistente(string $email): bool {
         $stmt = $this->conexao->prepare("SELECT ID FROM Credencial WHERE Email = ?");
         $stmt->bind_param("s", $email);
