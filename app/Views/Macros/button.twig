@@ -1,4 +1,9 @@
-{% macro render(type = 'button', text, variant = 'default', class = '') %}
+{% macro render(
+  type = 'button',
+  text,
+  variant = 'default',
+  class = ''
+) %}
 	{% set variants = {
     'default': 'bg-yellow-500 hover:opacity-80 text-gray-100',
     'outlined': 'bg-transparent border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500/10',

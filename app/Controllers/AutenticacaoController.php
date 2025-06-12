@@ -19,7 +19,7 @@ class AutenticacaoController extends WebController {
 
   #[Get]
   public function exibirPaginaDeLogin(Request $request) {
-    $this->render('Pages/login.twig', [
+    $this->render('Pages/autenticacao/login.twig', [
       'flash_message' => $request->session->getFlashMessage()
     ]);
   }
@@ -30,15 +30,15 @@ class AutenticacaoController extends WebController {
 
     if ($usuarioAutenticado) {
       $request->session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');
-      return $this->redirect('/servicos');
+      return $this->redirectTo('/servicos');
     }
     $request->session->setFlashMessage(FlashMessageType::Error, 'Usuário inválido!');
-    return $this->redirect('/autenticacao');
+    return $this->redirectTo('/autenticacao');
   }
 
   #[Get('/sair')]
   public function finalizarSessao(Request $request) {
     $request->session->clearAll();
-    return $this->redirect('/autenticacao');
+    return $this->redirectTo('/autenticacao');
   }
 }

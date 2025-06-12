@@ -17,12 +17,12 @@ class UsuariosController extends WebController {
 
   #[Get('/cadastro')]
   public function exibirPaginaDeCadastro() {
-    $this->render('Pages/usuarios/cadastro.twig');
+    $this->render('Pages/usuarios/cadastro.twig', []);
   }
 
   #[Get('/meu-perfil')]
   public function exibirPaginaDeMeuPerfil() {
-    $this->render('Pages/usuarios/meu-perfil.twig');
+    $this->render('Pages/usuarios/meu-perfil.twig', []);
   }
 
   #[Post('/cadastro')]
