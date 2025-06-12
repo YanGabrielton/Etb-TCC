@@ -14,5 +14,5 @@ Dockerfile
 docker-compose.yaml
 
 vendor/
-!vendor/kiss-php/
+node_modules/
 database/

@@ -17,23 +17,22 @@ use App\Services\Autenticacao\AutenticacaoService;
 class AutenticacaoController extends WebController {
   public function __construct(private AutenticacaoService $service) { }
 
-  #[Get()]
+  #[Get]
   public function exibirPaginaDeLogin(Request $request) {
     $this->render('Pages/login.twig', [
-      // 'flashMessage' => $request->session->getFlashMessage()
+      'flash_message' => $request->session->getFlashMessage()
     ]);
   }
 
-  #[Post()]
+  #[Post]
   public function autenticar(#[Body] UsuarioLogin $user, Request $request) {
-    $session = $request->session;
     $usuarioAutenticado = $this->service->obterUsuarioAutenticado($user);
 
     if ($usuarioAutenticado) {
-      $session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');
+      $request->session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');
       return $this->redirect('/servicos');
     }
-    $session->setFlashMessage(FlashMessageType::Error, 'Usuário inválido!');
+    $request->session->setFlashMessage(FlashMessageType::Error, 'Usuário inválido!');
     return $this->redirect('/autenticacao');
   }
 

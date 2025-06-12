@@ -3,7 +3,8 @@
   "type": "project",
   "license": "MIT",
   "scripts": {
-    "dev": "php -S localhost:5173 -t ./public"
+    "dev": "php -S localhost:5173 -t ./public",
+    "doctrine": "vendor/bin/doctrine"
   },
   "autoload": {
     "psr-4": {
@@ -28,6 +29,9 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "kiss-php/framework": "dev-main"
+    "kiss-php/framework": "dev-main",
+    "doctrine/doctrine-bundle": "2.15.x-dev",
+    "symfony/console": "7.4.x-dev",
+    "doctrine/orm": "3.4.x-dev"
   }
 }

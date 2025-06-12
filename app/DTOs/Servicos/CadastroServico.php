@@ -1,16 +1,11 @@
 <?php
 namespace App\DTOs\Servicos;
 
-use KissPhp\Attributes\Data\DTO;
-
-#[DTO]
 class CadastroServico {
-    public function __construct(
-        public string $titulo,
-        public string $descricao,
-        public float $preco,
-        public int $categoriaServico,
-        public int $idUsuario,
-        public ?string $fotoNome = null
-    ) {}
-} 
+  public readonly string $titulo;
+  public readonly string $descricao;
+  public readonly float $preco;
+  public readonly int $categoriaServico;
+  public readonly int $idUsuario;
+  public readonly ?string $fotoNome;
+}

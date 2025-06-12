@@ -1,34 +1,30 @@
 <?php
 namespace App\Repositories\Autenticacao;
 
-use App\DTOs\Login\UsuarioAutenticado;
-use App\Utils\DatabaseConnection;
+use KissPhp\Abstractions\Repository;
 
-class AutenticacaoRepository {
-  public function buscarUsuarioPorEmail(string $email): ?UsuarioAutenticado {
+use App\Models\Usuario;
+
+class AutenticacaoRepository extends Repository {
+  public function buscarUsuarioPorEmail(string $email): ?Usuario {
     $sql = "
       SELECT * FROM ViewUsuarioLogin
       WHERE Email = ?
       AND StatusUsuario = 'ATIVO'
     ";
-    $db = new DatabaseConnection();
 
-    try {
-      $conn = $db->getConnection();
+    // try {
+    //   $stmt = $this->database()->prepare($sql);
+    //   $stmt->bind_param('s', $email);
+    //   $stmt->execute();
       
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param('s', $email);
-      $stmt->execute();
-      
-      $result = $stmt->get_result();
-      $row = $result->fetch_object(UsuarioAutenticado::class);
+    //   $result = $stmt->get_result();
+    //   $row = $result->fetch_object(Usuario::class);
 
-      return $row;
-    } catch (\Throwable $th) {
-      error_log("[Error] AutenticacaoRepository: {$th->getMessage()}");
-      return null;
-    } finally {
-      $stmt->close();
-    }
+    //   return $row;
+    // } catch (\Throwable $th) {
+    //   error_log("[Error] AutenticacaoRepository: {$th->getMessage()}");
+    //   return null;
+    // }
   }
 }
