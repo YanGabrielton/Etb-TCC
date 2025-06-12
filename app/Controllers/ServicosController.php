@@ -26,20 +26,19 @@ class ServicosController extends WebController {
     ]);
   }
 
-  #[Get('/postar-servico')]
+  #[Get('/cadastro')]
   public function exibirPaginaDePostarServico(Request $request) {
     // $session = $request->session;
     // $ultimoServicoInserido = $session->get('UltimoServicoInserido');
     
     // $categorias = $this->service->buscarCategorias();
 
-    // $this->render('Pages/servicos/postar-servico-form', [
-    //   'Categorias' => $categorias,
-    //   'UltimoServicoInserido' => $ultimoServicoInserido
-    // ]);
+    $this->render('Pages/servicos/cadastro.twig', [
+      'Categorias' => []
+    ]);
   }
 
-  #[Post('/postar-servico')]
+  #[Post('/cadastro')]
   public function cadastrarServico(
     Request $request,
     #[Body] CadastroServico $servico

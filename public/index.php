@@ -11,7 +11,7 @@ BoundinaryError::wrap(function() {
   BoundinaryError::register();
   Env::load(__DIR__ . '/../../');
 
-  include __DIR__ . '/../app/SetSessionCookieParams.php';
+  include __DIR__ . '/../app/settings.php';
   SessionInitializer::init();
 
   $uri = $_SERVER['REQUEST_URI'] ?? '';

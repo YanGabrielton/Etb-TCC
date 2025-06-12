@@ -1,0 +1,103 @@
+{% extends "Layouts/main.layout.twig" %}
+
+{% import "Macros/Input.twig" as Input %}
+{% import "Macros/Label.twig" as Label %}
+{% import "Macros/Button.twig" as Button %}
+
+{% block main %}
+  <main class="flex-grow py-12">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <div class="p-8 sm:p-10">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Cadastro de Serviço</h2>
+            <p class="mt-2 text-gray-600">Preencha os dados do serviço que deseja oferecer</p>
+          </div>
+
+          <form action="/servicos/cadastro" method="POST" enctype="multipart/form-data" class="space-y-6">
+            {# Seção: Dados Pessoais (somente leitura) #}
+            <div>
+              <h4 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                <i class="bi bi-person-circle mr-2"></i> Dados Pessoais
+              </h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  {{ Label.render('nome', 'Nome') }}
+                  {{ Input.render('nome', 'text', null, false, 'bi bi-person', null, 'bg-gray-100') }}
+                </div>
+
+                <div>
+                  {{ Label.render('cpf', 'CPF') }}
+                  {{ Input.render('cpf', 'text', null, false, 'bi bi-card-text', null, 'bg-gray-100') }}
+                </div>
+
+                <div>
+                  {{ Label.render('email', 'Email') }}
+                  {{ Input.render('email', 'email', null, false, 'bi bi-envelope', null, 'bg-gray-100') }}
+                </div>
+                
+                <div>
+                  {{ Label.render('telefone', 'Telefone') }}
+                  {{ Input.render('telefone', 'tel', null, false, 'bi bi-telephone', null, 'bg-gray-100') }}
+                </div>
+              </div>
+            </div>
+
+            {# Seção: Dados do Serviço #}
+            <div>
+              <h4 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                <i class="bi bi-tools mr-2"></i> Dados do Serviço
+              </h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-2 md:col-span-1">
+                  {{ Label.render('categoria', 'Categoria') }}
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <i class="bi bi-grid text-gray-400"></i>
+                    </div>
+                    <select id="categoria" name="categoria" required  class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+                      <option value="" selected disabled>Selecione</option>
+                      {% for categoria in categorias %}
+                        <option value="{{ categoria.ID }}">{{ categoria.Nome }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-span-2 md:col-span-1">
+                  {{ Label.render('preco', 'Preço (R$)') }}
+                  {{ Input.render('preco', 'number', 'Ex: 99.90', true, 'bi bi-currency-dollar', null, '') }}
+                </div>
+
+                <div class="col-span-2">
+                  {{ Label.render('titulo', 'Título do Serviço') }}
+                  {{ Input.render('titulo', 'text', 'Ex: Encanador Residencial', true, 'bi bi-card-heading', null, '') }}
+                </div>
+
+                <div class="col-span-2">
+                  {{ Label.render('foto', 'Foto do Serviço (Opcional)') }}
+                  {{ Input.render('foto', 'file', null, false, 'bi bi-image', null, '') }}
+                </div>
+
+                <div class="col-span-2">
+                  {{ Label.render('descricao', 'Descrição') }}
+                  <div class="relative">
+                    <div class="absolute top-3 left-3">
+                      <i class="bi bi-text-paragraph text-gray-400"></i>
+                    </div>
+                    <textarea id="descricao" name="descricao" rows="4" required
+                      class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                      placeholder="Descreva detalhadamente seu serviço..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {{ Button.render('submit', 'Cadastrar Serviço') }}
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

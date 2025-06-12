@@ -17,7 +17,9 @@
 						Informações Pessoais
 					</h2>
 
-					<form action="{{ usuario.tipo == 'prestador' ? '/prestadores/atualizar-perfil' : '/usuarios/atualizar-perfil' }}" method="POST" class="space-y-6">
+					{% set form_action = usuario.tipo == 'prestador' ? '/prestadores/atualizar-perfil' : '/usuarios/atualizar-perfil' %}
+
+					<form action="{{ form_action }}" method="POST" class="space-y-6">
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 							{% include "Partials/usuarios/_form-fields.twig" %}
 						</div>

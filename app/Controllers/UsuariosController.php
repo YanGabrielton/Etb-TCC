@@ -11,7 +11,7 @@ use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 use App\DTOs\Usuarios\CadastroUsuario;
 use App\Services\Usuarios\UsuariosService;
 
-#[Controller('')]
+#[Controller('/usuarios')]
 class UsuariosController extends WebController {
   // public function __construct(private UsuariosService $service) {}
 

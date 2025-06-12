@@ -11,30 +11,26 @@
 {% block main %}
 	<main class="flex-grow flex items-center justify-center py-12 px-4 md:px-6 lg:px-8">
 		<div class="w-full max-w-md space-y-8">
-			<!-- Título centralizado -->
 			<div class="text-center">
 				<h2 class="mt-6 text-3xl font-bold text-gray-900">
 					Login
 				</h2>
 			</div>
 
-			<!-- Formulário de login -->
 			<form class="mt-8 space-y-6" action="/auth/login" method="POST">
 				<div class="space-y-4">
-					<!-- Campo de e-mail -->
 					<div>
 						{{ Label.render('email', 'E-mail') }}
-						{{ Input.render('email', 'email', 'Seu e-mail', 'bi bi-envelope', 'email') }}
+						{{ Input.render(name: 'email', type: 'email', placeholder: 'Seu e-mail', icon: 'bi bi-envelope', autocomplete: 'email') }}
 					</div>
 
-					<!-- Campo de senha -->
 					<div>
 						{{ Label.render('senha', 'Senha') }}
-						{{ Input.render('senha', 'password', 'Sua senha', 'bi bi-lock', 'current-password') }}
+						{{ Input.render(name: 'senha', type: 'password', placeholder: 'Sua senha', icon: 'bi bi-lock', autocomplete: 'current-password') }}
 					</div>
 				</div>
 
-				<!-- Lembrar-me + Esqueceu a senha -->
+				{# Lembrar-me + Esqueceu a senha #}
 				<div class="flex items-center justify-between">
 					{{ Checkbox.render('remember-me', 'Lembrar-me') }}
 					{{ Link.render('/recuperar-senha', 'Esqueceu sua senha?') }}
@@ -43,7 +39,7 @@
 				{{ Button.render('submit', 'Entrar') }}
 			</form>
 
-			<!-- Link para cadastro -->
+			{# Link para cadastro #}
 			<div class="text-center">
 				<span class="text-sm text-gray-600">
 					Não tem uma conta?
