@@ -53,16 +53,16 @@
 
             <!-- LOGO -->
             <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors"
-                href="index.php">Job4You</a>
+                href="/index.php">Job4You</a>
 
             <!-- LINKS DO MENU (versão desktop) -->
             <div class="hidden md:flex items-center space-x-8">
-                <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/index.php">Home</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/sobre_nos.php">Sobre Nós</a>
                 <a class="text-gray-300 hover:text-white transition-colors"
                     href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
                 <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors"
-                    href="./src/pages/login.php">Login</a>
+                    href="/src/pages/login.php">Login</a>
             </div>
 
             <!-- BOTÃO HAMBÚRGUER (para mobile) -->
@@ -73,12 +73,12 @@
 
         <!-- MENU MOBILE (invisível até clicar) -->
         <div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
-            <a class="block text-gray-300 hover:text-white px-3 py-2" href="index.php">Home</a>
-            <a class="block text-gray-300 hover:text-white px-3 py-2" href="#">Sobre</a>
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="/index.php">Home</a>
+            <a class="block text-gray-300 hover:text-white px-3 py-2" href="/src/pages/sobre_nos.php">Sobre</a>
             <a class="block text-gray-300 hover:text-white px-3 py-2"
                 href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
             <a class="block bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded text-center mt-2"
-                href="./src/pages/login.php">Login</a>
+                href="/src/pages/login.php">Login</a>
         </div>
     </nav>
 

@@ -56,14 +56,14 @@ include '../backend/config/ConexaoBanco.php';
     <nav class="bg-dark-800 py-4 px-6 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <!-- LOGO -->
-            <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="index.php">Job4You</a>
-
-            <!-- LINKS DO MENU (versão desktop) -->
+            <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="/index.php">Job4You</a>
+            
             <div class="hidden md:flex items-center space-x-8">
-                <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
-                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="./src/pages/login.php">Login</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/index.php">Home</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/sobre_nos.php">Sobre Nós</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/perfil_prestador.php">Meu Perfil</a>                 
+                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
+                   href="../backend/includes/logout.php">Sair</a>
             </div>
 
             <!-- BOTÃO HAMBÚRGUER (para mobile) -->
@@ -258,18 +258,18 @@ include '../backend/config/ConexaoBanco.php';
         </div>
     </main>
 
-    <!-- RODAPÉ FIXO -->
+
     <footer class="bg-dark-800 py-6 text-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <p>© 2025 Job4You - Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- SCRIPT JS INTEGRADO (menu hamburguer responsivo) -->
+
     <script>
         document.getElementById('menuButton').addEventListener('click', function() {
             const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden'); // Mostra ou esconde o menu mobile
+            menu.classList.toggle('hidden'); 
         });
     </script>
 

@@ -105,7 +105,7 @@ include '../backend/includes/painel_admin.php';
                         </a>
                     </li>
                     <li class="px-4 py-3 hover:bg-gray-700 mt-auto border-t border-gray-700">
-                        <a href="logout.php" class="flex items-center text-red-400">
+                        <a href="../backend/includes/logout.php" class="flex items-center text-red-400">
                             <i class="fas fa-sign-out-alt mr-2"></i> Sair
                         </a>
                     </li>
@@ -113,7 +113,7 @@ include '../backend/includes/painel_admin.php';
             </nav>
         </div>
 
-        <!-- Área de conteúdo principal -->
+      
         <main class="flex-1 ml-[250px] p-6">
             <!-- Dashboard -->
             <div id="dashboard" class="tab-content active">

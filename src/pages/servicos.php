@@ -84,14 +84,14 @@ if ($categoria_selecionada) {
     <nav class="bg-dark-800 py-4 px-6 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
            
-            <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="index.php">Job4You</a>
-
-            <!-- LINKS DO MENU (versão desktop) -->
+           <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="/index.php">Job4You</a>
+            
             <div class="hidden md:flex items-center space-x-8">
-                <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
-                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" href="./src/pages/login.php">Login</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/index.php">Home</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/sobre_nos.php">Sobre Nós</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/perfil_prestador.php">Meu Perfil</a>                 
+                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
+                   href="../backend/includes/logout.php">Sair</a>
             </div>
 
             <!-- Botão do Menu Mobile -->

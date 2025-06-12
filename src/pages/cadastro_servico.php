@@ -73,34 +73,33 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <!-- Fonte Inter -->
+ 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="bg-gray-50 font-sans flex flex-col min-h-screen">
 
-    <!-- MENU DE NAVEGAÇÃO-->
+   
     <nav class="bg-dark-800 py-4 px-6 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <!-- LOGO -->
-            <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors"
-                href="index.php">Job4You</a>
-
-            <!-- LINKS DO MENU -->
+           
+           <a class="text-2xl font-bold text-white hover:text-primary-500 transition-colors" href="/index.php">Job4You</a>
+            
             <div class="hidden md:flex items-center space-x-8">
-                <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
-                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors"
-                    href="../backend/includes/logout.php">Sair</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/index.php">Home</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/sobre_nos.php">Sobre Nós</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/perfil_prestador.php">Meu Perfil</a>                 
+                <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
+                   href="../backend/includes/logout.php">Sair</a>
             </div>
 
-            <!-- BOTÃO HAMBÚRGUER (para mobile) -->
+        
             <button class="md:hidden text-white focus:outline-none" id="menuButton">
                 <i class="bi bi-list text-2xl"></i>
             </button>
         </div>
 
-        <!-- MENU MOBILE -->
+      
         <div class="md:hidden hidden mt-4 space-y-3 bg-dark-900 rounded-lg p-4" id="mobileMenu">
             <a class="block text-gray-300 hover:text-white px-3 py-2" href="index.php">Home</a>
             <a class="block text-gray-300 hover:text-white px-3 py-2" href="#">Sobre</a>
@@ -155,7 +154,7 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
                                     </div>
                                 </div>
 
-<<<<<<< Updated upstream
+
                                 <!-- Email -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -169,13 +168,13 @@ $categorias = $conexao->query("SELECT ID, Nome FROM CategoriaServico");
                                             readonly>
                                     </div>
                                 </div>
-=======
+
       <div class="d-grid mt-4">
           <button type="submit" class="btn btn-login bg-black text-white">Cadastrar Serviço</button>
       </div>
     </form>
   </main>
->>>>>>> Stashed changes
+
 
                                 <!-- Telefone -->
                                 <div>

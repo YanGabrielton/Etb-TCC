@@ -1,5 +1,10 @@
 <!-- PHP -->
+<?php
 
+
+include __DIR__ . '/src/backend/includes/processa_login.php';
+include __DIR__ . '/src/backend/includes/valida_login.php'; 
+?>
 
 
 <!DOCTYPE html>
@@ -58,7 +63,7 @@
             <!-- LINKS DO MENU (versão desktop) -->
             <div class="hidden md:flex items-center space-x-8">
                 <a class="text-gray-300 hover:text-white transition-colors" href="index.php">Home</a>
-                <a class="text-gray-300 hover:text-white transition-colors" href="#">Sobre Nós</a>
+                <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/sobre_nos.php">Sobre Nós</a>
                 <a class="text-gray-300 hover:text-white transition-colors" href="/src/pages/cadastro_usuario.php">Cadastre-se</a>
                 <a class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-medium transition-colors" 
                    href="./src/pages/login.php">Login</a>

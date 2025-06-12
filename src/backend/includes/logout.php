@@ -4,6 +4,6 @@ $_SESSION=array();
 session_unset();
 session_destroy();
 echo"<script>
-location.href=('index.php')
+location.href=('/src/pages/login.php')
 </script>";
 ?>
