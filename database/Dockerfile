@@ -1,4 +1,5 @@
-# Traz a imagem (receita) do MySql 8.4
+# Imagem docker para desenvolvimento
+
 FROM mysql:8.4.0
 
 # Copia os scripts SQL para o diretório de inicialização do MySQL

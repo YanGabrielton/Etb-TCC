@@ -15,153 +15,147 @@ class ServicosRepository {
 
   /** @return Categoria[] */
   public function buscarCategorias(): array {
-    $sql = "SELECT ID, Nome FROM CategoriaServico";
+    try {
+      $sql = "SELECT ID, Nome FROM CategoriaServico";
+      $resultado = $this->conexao->query($sql);
+      $categorias = [];
 
-    $resultado = $this->conexao->query($sql);
-    $categorias = [];
-
-    while ($row = $resultado->fetch_assoc()) {
-      $categorias[] = new Categoria((int) $row['ID'], $row['Nome']);
+      while ($row = $resultado->fetch_assoc()) {
+        $categorias[] = new Categoria((int) $row['ID'], $row['Nome']);
+      }
+      return $categorias;
+    } catch (\Throwable $th) {
+      error_log("[Error] ServicosRepository::buscarCategorias: {$th->getMessage()}");
+      throw new \Exception("Erro ao buscar categorias");
     }
-    return $categorias;
   }
 
   public function buscarServicos(): array {
-    $sql = "SELECT ps.Titulo, ps.Sobre, ps.Valor, u.Nome, cs.Nome AS Categoria
-            FROM PublicacaoServico ps
-            JOIN Usuario u ON ps.FKUsuario = u.ID
-            JOIN CategoriaServico cs ON ps.FKCategoria = cs.ID
-            WHERE ps.StatusPublicacao = 'ATIVO'";
-            
-    $resultado = $this->conexao->query($sql);
-    $servicos = [];
+    try {
+      $sql = "SELECT ps.Titulo, ps.Sobre, ps.Valor, u.Nome, cs.Nome AS Categoria
+              FROM PublicacaoServico ps
+              JOIN Usuario u ON ps.FKUsuario = u.ID
+              JOIN CategoriaServico cs ON ps.FKCategoria = cs.ID
+              WHERE ps.StatusPublicacao = 'ATIVO'";
+              
+      $resultado = $this->conexao->query($sql);
+      $servicos = [];
 
-    while ($row = $resultado->fetch_assoc()) $servicos[] = $row;
-    return $servicos;
+      while ($row = $resultado->fetch_assoc()) {
+        $servicos[] = $row;
+      }
+      return $servicos;
+    } catch (\Throwable $th) {
+      error_log("[Error] ServicosRepository::buscarServicos: {$th->getMessage()}");
+      throw new \Exception("Erro ao buscar serviços");
+    }
   }
 
   public function cadastrarServico(CadastroServico $dto): bool {
-    $stmt = $this->conexao->prepare("
-      INSERT INTO PublicacaoServico 
-      (Titulo, Sobre, Valor, FKCategoria, FKUsuario, StatusPublicacao, Foto) 
-      VALUES (?, ?, ?, ?, ?, 'EM_ANALISE', ?)
-    ");
-    
-    $stmt->bind_param(
-      "ssdiis",
-      $dto->titulo,
-      $dto->descricao,
-      $dto->preco,
-      $dto->categoriaServico,
-      $dto->idUsuario,
-      $dto->fotoNome
-    );
-    
-    if (!$stmt->execute()) {
-      throw new \Exception("Erro ao cadastrar serviço: " . $this->conexao->error);
-    }
-    
-    $stmt->close();
-    
-    // Verifica se precisa atualizar o nível de acesso
-    $this->atualizarNivelAcesso($dto->idUsuario);
-    
-    return true;
-  }
-
-  private function atualizarNivelAcesso(int $idUsuario): void {
-    // Verificar se o usuário tem serviços ativos
-    $verifica = $this->conexao->prepare("SELECT COUNT(*) AS total FROM PublicacaoServico WHERE FKUsuario = ? AND StatusPublicacao = 'ATIVO'");
-    $verifica->bind_param("i", $idUsuario);
-    $verifica->execute();
-    $res = $verifica->get_result()->fetch_assoc();
-    $verifica->close();
-
-    if ($res['total'] > 0) {
-      // Buscar a credencial do usuário
-      $buscaCredencial = $this->conexao->prepare("SELECT FKCredencial FROM Usuario WHERE ID = ?");
-      $buscaCredencial->bind_param("i", $idUsuario);
-      $buscaCredencial->execute();
-      $resultado = $buscaCredencial->get_result()->fetch_assoc();
-      $buscaCredencial->close();
-
-      $fk_credencial = $resultado['FKCredencial'];
-
-      // Buscar o ID do nível de acesso 'PRESTADOR'
-      $buscaNivel = $this->conexao->prepare("SELECT ID FROM NivelAcesso WHERE Grupo = 'PRESTADOR'");
-      $buscaNivel->execute();
-      $idNivel = $buscaNivel->get_result()->fetch_assoc();
-      $buscaNivel->close();
-
-      $id_prestador = $idNivel['ID'];
-
-      // Atualizar o nível de acesso na tabela Credencial
-      $atualizaNivel = $this->conexao->prepare("UPDATE Credencial SET FKNivelAcesso = ? WHERE ID = ?");
-      $atualizaNivel->bind_param("ii", $id_prestador, $fk_credencial);
-      $atualizaNivel->execute();
-      $atualizaNivel->close();
+    try {
+      $stmt = $this->conexao->prepare("
+        INSERT INTO PublicacaoServico 
+        (Titulo, Sobre, Valor, FKCategoria, FKUsuario, StatusPublicacao, Foto) 
+        VALUES (?, ?, ?, ?, ?, 'EM_ANALISE', ?)
+      ");
+      
+      $stmt->bind_param(
+        "ssdiis",
+        $dto->titulo,
+        $dto->descricao,
+        $dto->preco,
+        $dto->categoriaServico,
+        $dto->idUsuario,
+        $dto->fotoNome
+      );
+      
+      if (!$stmt->execute()) {
+        throw new \Exception("Erro ao cadastrar serviço: " . $this->conexao->error);
+      }
+      
+      $stmt->close();
+      
+      // Verifica se precisa atualizar o nível de acesso
+      $this->atualizarNivelAcesso($dto->idUsuario);
+      
+      return true;
+    } catch (\Throwable $th) {
+      error_log("[Error] ServicosRepository::cadastrarServico: {$th->getMessage()}");
+      throw new \Exception("Erro ao cadastrar serviço");
     }
   }
 
   public function desativarServico(int $idServico, int $idUsuario): bool {
-    // Desativa o serviço
-    $stmt = $this->conexao->prepare("
-      UPDATE PublicacaoServico 
-      SET StatusPublicacao = 'INATIVO' 
-      WHERE ID = ? AND FKUsuario = ?
-    ");
-    
-    $stmt->bind_param("ii", $idServico, $idUsuario);
-    
-    if (!$stmt->execute()) {
-      throw new \Exception("Erro ao desativar serviço: " . $stmt->error);
+    try {
+      $stmt = $this->conexao->prepare("
+        UPDATE PublicacaoServico 
+        SET StatusPublicacao = 'INATIVO' 
+        WHERE ID = ? AND FKUsuario = ?
+      ");
+      
+      $stmt->bind_param("ii", $idServico, $idUsuario);
+      
+      if (!$stmt->execute()) {
+        throw new \Exception("Erro ao desativar serviço: " . $stmt->error);
+      }
+      
+      $stmt->close();
+      
+      // Verifica se precisa voltar para CLIENTE
+      $this->verificarNivelAcesso($idUsuario);
+      
+      return true;
+    } catch (\Throwable $th) {
+      error_log("[Error] ServicosRepository::desativarServico: {$th->getMessage()}");
+      throw new \Exception("Erro ao desativar serviço");
     }
-    
-    $stmt->close();
-    
-    // Verifica se precisa voltar para CLIENTE
-    $this->verificarNivelAcesso($idUsuario);
-    
-    return true;
   }
 
   private function verificarNivelAcesso(int $idUsuario): void {
-    // Verifica quantos serviços ativos restaram
-    $verifica = $this->conexao->prepare("
-      SELECT COUNT(*) AS total 
-      FROM PublicacaoServico 
-      WHERE FKUsuario = ? AND StatusPublicacao = 'ATIVO'
-    ");
-    
-    $verifica->bind_param("i", $idUsuario);
-    $verifica->execute();
-    $res = $verifica->get_result()->fetch_assoc();
-    $verifica->close();
+    try {
+      $verifica = $this->conexao->prepare("
+        SELECT COUNT(*) AS total 
+        FROM PublicacaoServico 
+        WHERE FKUsuario = ? AND StatusPublicacao = 'ATIVO'
+      ");
+      
+      $verifica->bind_param("i", $idUsuario);
+      $verifica->execute();
+      $res = $verifica->get_result()->fetch_assoc();
+      $verifica->close();
 
-    // Se não restar nenhum, volta a ser CLIENTE
-    if ($res['total'] == 0) {
-      // Buscar a credencial do usuário
-      $buscaCredencial = $this->conexao->prepare("SELECT FKCredencial FROM Usuario WHERE ID = ?");
-      $buscaCredencial->bind_param("i", $idUsuario);
-      $buscaCredencial->execute();
-      $resultado = $buscaCredencial->get_result()->fetch_assoc();
-      $buscaCredencial->close();
+      // Se não restar nenhum, volta a ser CLIENTE
+      if ($res['total'] === 0) {
+        $atualiza = $this->conexao->prepare("
+          UPDATE Credencial 
+          SET FKNivelAcesso = 3 
+          WHERE ID = (SELECT FKCredencial FROM Usuario WHERE ID = ?)
+        ");
+        
+        $atualiza->bind_param("i", $idUsuario);
+        $atualiza->execute();
+        $atualiza->close();
+      }
+    } catch (\Throwable $th) {
+      error_log("[Error] ServicosRepository::verificarNivelAcesso: {$th->getMessage()}");
+      throw new \Exception("Erro ao verificar nível de acesso");
+    }
+  }
 
-      $fk_credencial = $resultado['FKCredencial'];
-
-      // Buscar o ID do nível de acesso 'CLIENTE'
-      $buscaNivel = $this->conexao->prepare("SELECT ID FROM NivelAcesso WHERE Grupo = 'CLIENTE'");
-      $buscaNivel->execute();
-      $idNivel = $buscaNivel->get_result()->fetch_assoc();
-      $buscaNivel->close();
-
-      $id_cliente = $idNivel['ID'];
-
-      // Atualizar o nível de acesso na tabela Credencial
-      $atualizaNivel = $this->conexao->prepare("UPDATE Credencial SET FKNivelAcesso = ? WHERE ID = ?");
-      $atualizaNivel->bind_param("ii", $id_cliente, $fk_credencial);
-      $atualizaNivel->execute();
-      $atualizaNivel->close();
+  private function atualizarNivelAcesso(int $idUsuario): void {
+    try {
+      $stmt = $this->conexao->prepare("
+        UPDATE Credencial 
+        SET FKNivelAcesso = 2 
+        WHERE ID = (SELECT FKCredencial FROM Usuario WHERE ID = ?)
+      ");
+      
+      $stmt->bind_param("i", $idUsuario);
+      $stmt->execute();
+      $stmt->close();
+    } catch (\Throwable $th) {
+      error_log("[Error] ServicosRepository::atualizarNivelAcesso: {$th->getMessage()}");
+      throw new \Exception("Erro ao atualizar nível de acesso");
     }
   }
 }

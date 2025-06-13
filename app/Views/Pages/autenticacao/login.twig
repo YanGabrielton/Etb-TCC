@@ -13,12 +13,14 @@
 	<main class="flex-grow flex items-center justify-center py-12 px-4 md:px-6 lg:px-8">
 		<div class="w-full max-w-md space-y-8">
 			<header class="text-center">
-				<h2 class="mt-6 text-3xl font-bold text-gray-900">
-					Login
-				</h2>
+				<h2 class="mt-6 text-3xl font-bold text-gray-900">Login</h2>
 
-				{% if flash_message is not empty %}
-					{{ Alert.render(flash_message.type|lower, flash_message.message, 'mt-4') }}
+				{% if flash_message is not empty or getInputError('email') or getInputError('senha') %}
+					{{ Alert.render(
+						type: flash_message.type|lower|default('error'),
+						message: flash_message.message|default('Credenciais inválidas, tente novamente...'),
+						class: 'mt-4'
+					) }}
 				{% endif %}
 			</header>
 
@@ -44,8 +46,7 @@
 				{{ Button.render('submit', 'Entrar') }}
 			</form>
 
-			{# Link para cadastro #}
-			<span class="text center text-sm text-gray-600">
+			<span class="block w-full text-center text-sm text-gray-600">
 				Não tem uma conta?
 				{{ Link.render('/usuarios/cadastro', 'Cadastre-se', 'text-gray-600 hover:text-gray-700') }}
 			</span>

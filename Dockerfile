@@ -1,3 +1,5 @@
+# Imagem Docker para desenvolvimento
+
 FROM composer:lts as build
 
 WORKDIR /build
@@ -5,7 +7,7 @@ WORKDIR /build
 # Copia os arquivos de dependências
 COPY composer.json composer.lock ./
 # Instala as dependências
-RUN composer install --no-dev --no-scripts --no-autoloader
+RUN composer install --no-scripts --no-autoloader
 
 # Copia o resto do código fonte
 COPY . .

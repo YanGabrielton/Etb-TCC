@@ -1,5 +1,5 @@
 <?php
-namespace App\DTOs\Servicos;
+namespace App\DTOs\CadastroServico;
 
 class CadastroServico {
   public readonly string $titulo;

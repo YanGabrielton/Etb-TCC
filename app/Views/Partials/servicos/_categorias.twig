@@ -1,4 +1,23 @@
-{% if categoria is not empty %}
+{% set categorias = {
+	0: {
+		nome: 'banana',
+		icon: ''
+	},
+	1: {
+		nome: 'banana',
+		icon: ''
+	},
+	2: {
+		nome: 'banana',
+		icon: ''
+	},
+	3: {
+		nome: 'banana',
+		icon: ''
+	}
+} %}
+
+{% if categorias is not empty %}
 	<section class="py-12 bg-gray-50">
 		<div class="max-w-7xl mx-auto px-6">
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -13,7 +32,7 @@
 							<p class="text-gray-600 mb-6">
 								{{ categoria.descricao }}
 							</p>
-							<a href="/servicos?categoria={{ categoria.id }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-6 rounded-full transition-colors">
+							<a href="/servicos?categoria={{ categoria.id }}" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-full transition-colors">
 								Ver Prestadores
 							</a>
 						</div>

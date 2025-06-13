@@ -8,12 +8,15 @@ use KissPhp\Attributes\Http\Controller;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 
-use App\DTOs\Usuarios\UsuarioCadastro;
+use KissPhp\Enums\FlashMessageType;
+use KissPhp\Protocols\Http\Request;
+
+use App\DTOs\CadastroUsuario\Usuario;
 use App\Services\Usuarios\UsuariosService;
 
 #[Controller('/usuarios')]
 class UsuariosController extends WebController {
-  // public function __construct(private UsuariosService $service) {}
+  public function __construct(private UsuariosService $service) {}
 
   #[Get('/cadastro')]
   public function exibirPaginaDeCadastro() {
@@ -26,23 +29,15 @@ class UsuariosController extends WebController {
   }
 
   #[Post('/cadastro')]
-  public function cadastrarUsuario(#[Body] UsuarioCadastro $usuario) {
-    // try {
-    //   $this->service->cadastrarUsuario($usuario);
-    //   return $this->redirect('/login');
-    // } catch (\Exception $e) {
-    //   $this->session->set('ErroCadastro', $e->getMessage());
-    //   return $this->redirect('/usuarios/cadastro');
-    // }
-  }
+  public function cadastrarUsuario(#[Body] Usuario $usuario, Request $request) {
+    $foiCadastrado = $this->service->cadastrarUsuario($usuario);
 
-  #[Get('/tipo/{id}')]
-  public function verificarTipoUsuario(#[RouteParam] int $id) {
-    // try {
-    //   $tipo = $this->service->verificarTipoUsuario($id);
-    //   $this->render('Pages/usuarios/tipo', ['tipo' => $tipo]);
-    // } catch (\Exception $e) {
-    //   $this->render('Pages/usuarios/tipo', ['erro' => $e->getMessage()]);
-    // }
+    if (!$foiCadastrado) {
+      $request->session->setFlashMessage(FlashMessageType::Error, 'Não foi possível terminar o cadastro :/');
+      return $this->redirectTo('/usuarios/cadastro');
+    }
+
+    $request->session->setFlashMessage(FlashMessageType::Success, 'Cadastro realizado com sucesso!');
+    return $this->redirectTo('/autenticacao');
   }
 }

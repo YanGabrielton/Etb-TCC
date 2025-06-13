@@ -1,23 +1,26 @@
 <?php
 namespace App\Services\Usuarios;
 
-use App\DTOs\Usuarios\UsuarioCadastro;
+use App\DTOs\CadastroUsuario\Usuario;
 use App\Repositories\Usuarios\UsuariosRepository;
 
 class UsuariosService {
   public function __construct(private UsuariosRepository $repository) {}
 
-  public function cadastrarUsuario(UsuarioCadastro $usuario): bool {
+  public function cadastrarUsuario(Usuario $usuario): bool {
+    if ($this->repository->verificarEmailExistente($usuario->email)) {
+      return false;
+    }
+    
     $senhaHash = password_hash($usuario->senha, PASSWORD_BCRYPT);
-    return $this->repository->cadastrarUsuario($usuario, $senhaHash);
-  }
+    $idEndereco = $this->repository->cadastrarEndereco($usuario->endereco);
 
-  /**
-   * Verifica o tipo do usuário (CLIENTE ou PRESTADOR) baseado em suas publicações
-   * @param int $idUsuario ID do usuário a ser verificado
-   * @return string "CLIENTE" ou "PRESTADOR"
-   */
-  public function verificarTipoUsuario(int $idUsuario): string {
-    return $this->repository->verificarTipoUsuario($idUsuario);
+    $idCredencial = $this->repository->cadastrarCredencial(
+      $usuario->email, $senhaHash
+    );
+
+    return $this->repository->cadastrarUsuario(
+      $usuario, $idCredencial, $idEndereco
+    );
   }
 }

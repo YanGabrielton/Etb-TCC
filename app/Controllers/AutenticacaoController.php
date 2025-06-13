@@ -10,7 +10,7 @@ use KissPhp\Protocols\Http\Request;
 use KissPhp\Attributes\Http\Request\Body;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
-use App\DTOs\CredenciaisLogin;
+use App\DTOs\Login\Credenciais;
 use App\Services\Autenticacao\AutenticacaoService;
 
 #[Controller('/autenticacao')]
@@ -25,7 +25,7 @@ class AutenticacaoController extends WebController {
   }
 
   #[Post]
-  public function autenticar(#[Body] CredenciaisLogin $usuario, Request $request) {
+  public function autenticar(#[Body] Credenciais $usuario, Request $request) {
     $usuarioAutenticado = $this->service->obterUsuarioAutenticado($usuario);
 
     if ($usuarioAutenticado) {

@@ -1,10 +1,10 @@
 <?php
-namespace App\DTOs;
+namespace App\DTOs\Login;
 
 use KissPhp\Attributes\Data\Validate;
 use App\Validators\{ Password, Email };
 
-class CredenciaisLogin {
+class Credenciais {
   #[Validate(Email::class)]
   public readonly string $email;
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\DTOs\Usuarios;
+namespace App\DTOs\Login;
 
 class UsuarioAutenticado {
   public readonly string $id;
