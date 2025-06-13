@@ -4,9 +4,10 @@ namespace App\Repositories\Servicos;
 use KissPhp\Abstractions\Repository;
 
 use App\Entities\CategoriaServico;
+use App\Entities\Views\ViewPublicacao;
 
 use App\DTOs\CategoriaServicoDTO;
-use App\DTOs\Servicos\CadastroServico;
+use App\DTOs\Servicos\{ ServicoCadastroDTO, ServicoDTO };
 
 class ServicosRepository extends Repository {
   /** @return Categoria[] */
@@ -27,31 +28,31 @@ class ServicosRepository extends Repository {
     }
   }
 
+  /** @return ServicoDTO[] */
   public function buscarServicos(?int $categoriaId = null): array {
     try {
-      $qb = $this->database()->getConnection()->createQueryBuilder();
-      
-      $query = $qb->select('ps.ID', 'ps.Titulo', 'ps.Sobre', 'ps.Valor', 'ps.Foto', 'u.Nome', 'cs.Nome AS Categoria')
-        ->from('PublicacaoServico', 'ps')
-        ->innerJoin('ps', 'Usuario', 'u', 'ps.FKUsuario = u.ID')
-        ->innerJoin('ps', 'CategoriaServico', 'cs', 'ps.FKCategoria = cs.ID')
-        ->where('ps.StatusPublicacao = :status')
-        ->setParameter('status', 'ATIVO');
+      $query = $this->database()
+        ->getConnection()
+        ->createQueryBuilder()
+        ->select('*')
+        ->from('ViewPublicacao', 'vp');
 
       if ($categoriaId) {
-        $query->andWhere('ps.FKCategoria = :categoriaId')
-          ->setParameter('categoriaId', $categoriaId);
+        $query->where('vp.Categoria = :categoriaId')->setParameter('categoriaId', $categoriaId);
       }
+      $resultados = $query->executeQuery()->fetchAllAssociative();
 
-      return $query->executeQuery()
-        ->fetchAllAssociative();
+      return array_map(
+        fn($row) => (new ViewPublicacao())->fromObject((object) $row)->toObject(ServicoDTO::class),
+        $resultados
+      );
     } catch (\Throwable $th) {
       error_log("[Error] ServicosRepository::buscarServicos: {$th->getMessage()}");
       throw new \Exception("Erro ao buscar serviços");
     }
   }
 
-  public function cadastrar(CadastroServico $dto): bool {
+  public function cadastrar(ServicoCadastroDTO $dto): bool {
     try {
       $qb = $this->database()->getConnection()->createQueryBuilder();
       

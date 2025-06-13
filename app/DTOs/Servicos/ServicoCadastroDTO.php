@@ -1,7 +1,7 @@
 <?php
-namespace App\DTOs\CadastroServico;
+namespace App\DTOs\Servicos;
 
-class CadastroServico {
+class ServicoCadastroDTO {
   public readonly string $titulo;
   public readonly string $descricao;
   public readonly float $preco;

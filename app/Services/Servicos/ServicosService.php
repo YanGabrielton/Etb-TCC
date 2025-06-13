@@ -3,6 +3,7 @@ namespace App\Services\Servicos;
 
 use App\Entities\CategoriaServico;
 use App\DTOs\Servicos\CadastroServico;
+use App\DTOs\Servicos\ServicoDTO;
 use App\Repositories\Servicos\ServicosRepository;
 
 class ServicosService {
@@ -13,6 +14,7 @@ class ServicosService {
     return $this->repository->buscarCategorias();
   }
 
+  /** @return ServicoDTO[] */
   public function buscarServicos(?int $categoriaId = null): array {
     return $this->repository->buscarServicos($categoriaId);
   }
