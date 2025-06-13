@@ -11,7 +11,7 @@ use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 use KissPhp\Enums\FlashMessageType;
 use KissPhp\Protocols\Http\Request;
 
-use App\DTOs\CadastroUsuario\Usuario;
+use App\DTOs\Usuario\UsuarioCadastroDTO;
 use App\Services\Usuarios\UsuariosService;
 
 #[Controller('/usuarios')]
@@ -29,7 +29,7 @@ class UsuariosController extends WebController {
   }
 
   #[Post('/cadastro')]
-  public function cadastrarUsuario(#[Body] Usuario $usuario, Request $request) {
+  public function cadastrarUsuario(#[Body] UsuarioCadastroDTO $usuario, Request $request) {
     $foiCadastrado = $this->service->cadastrarUsuario($usuario);
 
     if (!$foiCadastrado) {

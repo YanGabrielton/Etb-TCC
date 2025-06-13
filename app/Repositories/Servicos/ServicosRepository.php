@@ -3,14 +3,14 @@ namespace App\Repositories\Servicos;
 
 use KissPhp\Abstractions\Repository;
 
-use App\Entities\CategoriaServico;
 use App\Entities\Views\ViewPublicacao;
+use App\Entities\Categorias\CategoriaServico;
 
 use App\DTOs\CategoriaServicoDTO;
 use App\DTOs\Servicos\{ ServicoCadastroDTO, ServicoDTO };
 
 class ServicosRepository extends Repository {
-  /** @return Categoria[] */
+  /** @return CategoriaServicoDTO[] */
   public function buscarCategorias(): array {
     try {
       /** @var CategoriaServico[] $categorias */

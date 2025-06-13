@@ -1,5 +1,5 @@
 <?php
-namespace App\DTOs\CadastroUsuario;
+namespace App\DTOs\Usuario;
 
 class EnderecoDTO {
   public readonly string $cep;

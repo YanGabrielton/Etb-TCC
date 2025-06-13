@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Usuarios;
 
-use App\Entities\Usuario;
+use App\Entities\Usuarios\Usuario;
 use KissPhp\Abstractions\Repository;
 
 class UsuariosRepository extends Repository {

@@ -9,8 +9,8 @@ use KissPhp\Attributes\Http\Controller;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 
+use App\DTOs\Servicos\ServicoCadastroDTO;
 use App\Services\Servicos\ServicosService;
-use App\DTOs\CadastroServico\CadastroServico;
 
 #[Controller('/servicos')]
 class ServicosController extends WebController {
@@ -48,7 +48,7 @@ class ServicosController extends WebController {
   #[Post('/cadastro')]
   public function cadastrarServico(
     Request $request,
-    #[Body] CadastroServico $servico
+    #[Body] ServicoCadastroDTO $servico
   ) {
     // $foto = $request->getBody('foto');
     // $foiCadastrado = $this->service->cadastrarServico($servico, $foto);

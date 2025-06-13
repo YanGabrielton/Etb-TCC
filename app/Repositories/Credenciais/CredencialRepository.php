@@ -1,9 +1,9 @@
 <?php
 namespace App\Repositories\Credenciais;
 
-use App\Entities\Usuario;
-use App\Entities\Credencial;
 use KissPhp\Abstractions\Repository;
+
+use App\Entities\Usuarios\{ Usuario, Credencial };
 
 class CredencialRepository extends Repository {
   public function verificarEmailExistente(string $email): bool {

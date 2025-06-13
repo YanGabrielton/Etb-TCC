@@ -1,9 +1,9 @@
 <?php
 namespace App\Services\Usuarios;
 
-use App\Entities\Usuario;
-use App\DTOs\CadastroUsuario\{ UsuarioDTO, EnderecoDTO };
-use App\Entities\Endereco;
+use App\Entities\Usuarios\{ Usuario, Endereco };
+use App\DTOs\Usuario\{ UsuarioCadastroDTO, EnderecoDTO };
+
 use App\Repositories\Usuarios\UsuariosRepository;
 use App\Repositories\Enderecos\EnderecoRepository;
 use App\Repositories\Credenciais\CredencialRepository;
@@ -15,7 +15,7 @@ class UsuariosService {
     private CredencialRepository $credencialRepository
   ) { }
 
-  public function cadastrarUsuario(UsuarioDTO $usuarioDTO): bool {
+  public function cadastrarUsuario(UsuarioCadastroDTO $usuarioDTO): bool {
     if ($this->credencialRepository->verificarEmailExistente($usuarioDTO->email)) {
       return false;
     }

@@ -1,12 +1,12 @@
 <?php
-namespace App\DTOs\CadastroUsuario;
+namespace App\DTOs\Usuario;
 
-class UsuarioDTO {
+class UsuarioCadastroDTO {
   public readonly string $nome;
   public readonly string $email;
   public readonly string $senha;
   public readonly string $cpf;
   public readonly string $celular;
   public readonly string $dataNascimento;
-  public readonly Endereco $endereco;
+  public readonly EnderecoDTO $endereco;
 }

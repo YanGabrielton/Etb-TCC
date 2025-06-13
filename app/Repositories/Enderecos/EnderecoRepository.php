@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Enderecos;
 
-use App\Entities\Endereco;
+use App\Entities\Usuarios\Endereco;
 use KissPhp\Abstractions\Repository;
 
 class EnderecoRepository extends Repository {
@@ -32,7 +32,7 @@ class EnderecoRepository extends Repository {
     }
   }
 
-  public function buscarPorId(): Endereco {
+  // public function buscarPorId(): Endereco {
 
-  }
+  // }
 } 
