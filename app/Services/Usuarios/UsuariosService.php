@@ -1,26 +1,41 @@
 <?php
 namespace App\Services\Usuarios;
 
-use App\DTOs\CadastroUsuario\Usuario;
+use App\Entities\Usuario;
+use App\DTOs\CadastroUsuario\{ UsuarioDTO, EnderecoDTO };
+use App\Entities\Endereco;
 use App\Repositories\Usuarios\UsuariosRepository;
+use App\Repositories\Enderecos\EnderecoRepository;
+use App\Repositories\Credenciais\CredencialRepository;
 
 class UsuariosService {
-  public function __construct(private UsuariosRepository $repository) {}
+  public function __construct(
+    private UsuariosRepository $usuarioRepository,
+    private EnderecoRepository $enderecoRepository,
+    private CredencialRepository $credencialRepository
+  ) { }
 
-  public function cadastrarUsuario(Usuario $usuario): bool {
-    if ($this->repository->verificarEmailExistente($usuario->email)) {
+  public function cadastrarUsuario(UsuarioDTO $usuarioDTO): bool {
+    if ($this->credencialRepository->verificarEmailExistente($usuarioDTO->email)) {
       return false;
     }
+    $senhaHash = password_hash($usuarioDTO->senha, PASSWORD_BCRYPT);
     
-    $senhaHash = password_hash($usuario->senha, PASSWORD_BCRYPT);
-    $idEndereco = $this->repository->cadastrarEndereco($usuario->endereco);
+    $endereco = (new Endereco())->fromObject($usuarioDTO->endereco);
+    $idEndereco = $this->enderecoRepository->cadastrar($endereco);
 
-    $idCredencial = $this->repository->cadastrarCredencial(
-      $usuario->email, $senhaHash
-    );
+    $idCredencial = $this->credencialRepository->cadastrar($usuarioDTO->email, $senhaHash);
 
-    return $this->repository->cadastrarUsuario(
-      $usuario, $idCredencial, $idEndereco
-    );
+    $usuario = new Usuario();
+    $usuario->nome = $usuarioDTO->nome;
+    $usuario->cpf = $usuarioDTO->cpf;
+    $usuario->celular = $usuarioDTO->celular;
+    
+    $usuario->dataNascimento = new \DateTime($usuarioDTO->dataNascimento);
+
+    $usuario->credencial = $this->credencialRepository->buscarPorId($idCredencial);
+    $usuario->endereco = $this->enderecoRepository->buscarPorId($idEndereco);
+
+    return $this->usuarioRepository->cadastrar($usuario);
   }
 }

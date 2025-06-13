@@ -3,62 +3,53 @@ namespace App\Entities;
 
 use KissPhp\Abstractions\Entity as KissEntity;
 
-use Doctrine\ORM\Mapping\{
-  Id,
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  ManyToMany,
-  JoinColumn,
-  GeneratedValue
-};
+use Doctrine\ORM\Mapping as ORM;
 use \Doctrine\Common\Collections\ArrayCollection;
 
-#[Entity]
+#[ORM\Entity]
 class Usuario extends KissEntity {
-  #[Id, GeneratedValue, Column(type: "integer", unsigned: true)]
+  #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", unsigned: true)]
   public ?int $id = null;
 
-  #[Column(length: 50)]
+  #[ORM\Column(length: 50)]
   public string $nome;
 
-  #[Column(length: 11, unique: true)]
+  #[ORM\Column(length: 11, unique: true)]
   public string $cpf;
 
-  #[Column(length: 255, nullable: true)]
+  #[ORM\Column(length: 255, nullable: true)]
   public ?string $foto = null;
 
-  #[Column(length: 11, nullable: true)]
+  #[ORM\Column(length: 11, nullable: true)]
   public ?string $celular = null;
 
-  #[Column(type: "date")]
+  #[ORM\Column(type: "date")]
   public \DateTime $dataNascimento;
 
-  #[ManyToOne(targetEntity: Credencial::class)]
-  #[JoinColumn(name: "FKCredencial", referencedColumnName: "id", nullable: false)]
+  #[ORM\ManyToOne(targetEntity: Credencial::class)]
+  #[ORM\JoinColumn(name: "FKCredencial", referencedColumnName: "id", nullable: false)]
   public Credencial $credencial;
 
-  #[ManyToOne(targetEntity: Endereco::class)]
-  #[JoinColumn(name: "FKEndereco", referencedColumnName: "id", nullable: true)]
+  #[ORM\ManyToOne(targetEntity: Endereco::class)]
+  #[ORM\JoinColumn(name: "FKEndereco", referencedColumnName: "id", nullable: true)]
   public ?Endereco $endereco = null;
 
-  #[Column(type: "datetime")]
+  #[ORM\Column(type: "datetime")]
   public \DateTime $dataCriacao;
 
-  #[Column(type: "datetime", nullable: true)]
+  #[ORM\Column(type: "datetime", nullable: true)]
   public ?\DateTime $ultimaAtualizacao = null;
 
-  #[Column(type: "string", enumType: "StatusUsuario")]
+  #[ORM\Column(type: "string", enumType: "StatusUsuario")]
   public string $statusUsuario = 'ATIVO';
 
-  #[OneToMany(targetEntity: InformacaoContato::class, mappedBy: "usuario")]
+  #[ORM\OneToMany(targetEntity: InformacaoContato::class, mappedBy: "usuario")]
   public $informacoesContato;
 
-  #[OneToMany(targetEntity: PublicacaoServico::class, mappedBy: "usuario")]
+  #[ORM\OneToMany(targetEntity: PublicacaoServico::class, mappedBy: "usuario")]
   public $publicacoesServico;
 
-  #[ManyToMany(targetEntity: PublicacaoServico::class, mappedBy: "usuariosFavoritos")]
+  #[ORM\ManyToMany(targetEntity: PublicacaoServico::class, mappedBy: "usuariosFavoritos")]
   public $servicosFavoritos;
 
   public function __construct() {

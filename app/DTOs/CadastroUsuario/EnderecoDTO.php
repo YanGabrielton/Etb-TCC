@@ -1,7 +1,7 @@
 <?php
 namespace App\DTOs\CadastroUsuario;
 
-class Endereco {
+class EnderecoDTO {
   public readonly string $cep;
   public readonly string $estado;
   public readonly string $rua;

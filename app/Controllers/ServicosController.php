@@ -6,23 +6,22 @@ use KissPhp\Abstractions\WebController;
 
 use KissPhp\Attributes\Http\Controller;
 
-use KissPhp\Attributes\Http\Request\Body;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
+use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 
 use App\Services\Servicos\ServicosService;
-use App\DTOs\Servicos\CadastroServico;
-use KissPhp\Attributes\Http\Request\RouteParam;
+use App\DTOs\CadastroServico\CadastroServico;
 
 #[Controller('/servicos')]
 class ServicosController extends WebController {
-  // public function __construct(private ServicosService $service) { }
+  public function __construct(private ServicosService $service) { }
   
   #[Get()]
   public function exibirPaginaDeServicos() {
-    // $servicos = $this->service->buscarServicos();
+    $categorias = $this->service->buscarCategorias();
 
     $this->render('Pages/servicos/listar-servicos.twig', [
-      'Servicos' => []
+      'categorias' => $categorias
     ]);
   }
 

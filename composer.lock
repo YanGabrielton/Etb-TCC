@@ -1005,12 +1005,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php.git",
-                "reference": "48b50de77d2bbc198cc9645788ec3d9199819820"
+                "reference": "85c452da64100509c238b7f28b2ff7c9e1edb6e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/48b50de77d2bbc198cc9645788ec3d9199819820",
-                "reference": "48b50de77d2bbc198cc9645788ec3d9199819820",
+                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/85c452da64100509c238b7f28b2ff7c9e1edb6e5",
+                "reference": "85c452da64100509c238b7f28b2ff7c9e1edb6e5",
                 "shasum": ""
             },
             "require": {
@@ -1040,7 +1040,7 @@
                 "source": "https://github.com/ItaloBrazucaDeveloper/kiss-php/tree/main",
                 "issues": "https://github.com/ItaloBrazucaDeveloper/kiss-php/issues"
             },
-            "time": "2025-06-12T23:45:05+00:00"
+            "time": "2025-06-13T13:23:26+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -1585,12 +1585,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "40799aa45ae5ede3e22f41ce0ddc702ef19fa991"
+                "reference": "13cff4946131b09c4e44c69e572fa77fbe6e9bd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/40799aa45ae5ede3e22f41ce0ddc702ef19fa991",
-                "reference": "40799aa45ae5ede3e22f41ce0ddc702ef19fa991",
+                "url": "https://api.github.com/repos/symfony/console/zipball/13cff4946131b09c4e44c69e572fa77fbe6e9bd7",
+                "reference": "13cff4946131b09c4e44c69e572fa77fbe6e9bd7",
                 "shasum": ""
             },
             "require": {
@@ -1671,7 +1671,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-11T19:56:25+00:00"
+            "time": "2025-06-13T12:15:18+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -1936,12 +1936,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
-                "reference": "b75b8567d20954d0319fa6002eeedea276e48397"
+                "reference": "5aca12bd64e17bfe3cbb5f51466fdfd9851853b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/error-handler/zipball/b75b8567d20954d0319fa6002eeedea276e48397",
-                "reference": "b75b8567d20954d0319fa6002eeedea276e48397",
+                "url": "https://api.github.com/repos/symfony/error-handler/zipball/5aca12bd64e17bfe3cbb5f51466fdfd9851853b1",
+                "reference": "5aca12bd64e17bfe3cbb5f51466fdfd9851853b1",
                 "shasum": ""
             },
             "require": {
@@ -2004,7 +2004,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-12T11:37:55+00:00"
+            "time": "2025-06-13T00:20:31+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -3355,12 +3355,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "61212d37dad9e7606670032d1d551539da957212"
+                "reference": "01c3819ff3a3278934d11d29f22fd0bf8565b9a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/61212d37dad9e7606670032d1d551539da957212",
-                "reference": "61212d37dad9e7606670032d1d551539da957212",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/01c3819ff3a3278934d11d29f22fd0bf8565b9a2",
+                "reference": "01c3819ff3a3278934d11d29f22fd0bf8565b9a2",
                 "shasum": ""
             },
             "require": {
@@ -3369,6 +3369,7 @@
                 "symfony/polyfill-mbstring": "^1.0"
             },
             "conflict": {
+                "symfony/console": "<7.4",
                 "symfony/error-handler": "<7.4"
             },
             "require-dev": {
@@ -3431,7 +3432,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-12T11:37:55+00:00"
+            "time": "2025-06-13T00:20:31+00:00"
         },
         {
             "name": "symfony/var-exporter",
