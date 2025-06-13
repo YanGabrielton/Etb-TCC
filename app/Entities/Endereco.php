@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\{
 class Endereco extends KissEntity {
   #[Id]
   #[GeneratedValue]
-  #[Column(type: "integer", unsigned: true)]
+  #[Column(type: "integer")]
   public ?int $id = null;
 
   #[Column(length: 8)]

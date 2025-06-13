@@ -4,40 +4,46 @@ namespace App\Repositories\Servicos;
 use KissPhp\Abstractions\Repository;
 
 use App\Entities\CategoriaServico;
-use App\DTOs\Servicos\{ Categoria, CadastroServico };
+
+use App\DTOs\CategoriaServicoDTO;
+use App\DTOs\Servicos\CadastroServico;
 
 class ServicosRepository extends Repository {
   /** @return Categoria[] */
   public function buscarCategorias(): array {
     try {
-      $qb = $this->database()->getConnection()->createQueryBuilder();
+      /** @var CategoriaServico[] $categorias */
+      $categorias = $this->database()
+        ->getRepository(CategoriaServico::class)
+        ->findAll();
       
-      $resultado = $qb->select('ID', 'Nome')
-        ->from('CategoriaServico')
-        ->executeQuery();
-      
-      $categorias = [];
-      while ($row = $resultado->fetchAssociative()) {
-        $categorias[] = new CategoriaServico((int) $row['ID'], $row['Nome']);
-      }
-      return $categorias;
+      return array_map(
+        fn($categoria) => $categoria->toObject(CategoriaServicoDTO::class),
+        $categorias
+      );
     } catch (\Throwable $th) {
       error_log("[Error] ServicosRepository::buscarCategorias: {$th->getMessage()}");
       throw new \Exception("Erro ao buscar categorias");
     }
   }
 
-  public function buscar(): array {
+  public function buscarServicos(?int $categoriaId = null): array {
     try {
       $qb = $this->database()->getConnection()->createQueryBuilder();
       
-      return $qb->select('ps.Titulo', 'ps.Sobre', 'ps.Valor', 'u.Nome', 'cs.Nome AS Categoria')
+      $query = $qb->select('ps.ID', 'ps.Titulo', 'ps.Sobre', 'ps.Valor', 'ps.Foto', 'u.Nome', 'cs.Nome AS Categoria')
         ->from('PublicacaoServico', 'ps')
         ->innerJoin('ps', 'Usuario', 'u', 'ps.FKUsuario = u.ID')
         ->innerJoin('ps', 'CategoriaServico', 'cs', 'ps.FKCategoria = cs.ID')
         ->where('ps.StatusPublicacao = :status')
-        ->setParameter('status', 'ATIVO')
-        ->executeQuery()
+        ->setParameter('status', 'ATIVO');
+
+      if ($categoriaId) {
+        $query->andWhere('ps.FKCategoria = :categoriaId')
+          ->setParameter('categoriaId', $categoriaId);
+      }
+
+      return $query->executeQuery()
         ->fetchAllAssociative();
     } catch (\Throwable $th) {
       error_log("[Error] ServicosRepository::buscarServicos: {$th->getMessage()}");

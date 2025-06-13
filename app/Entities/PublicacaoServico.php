@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping\{
 class PublicacaoServico extends KissEntity {
   #[Id]
   #[GeneratedValue]
-  #[Column(type: "integer", unsigned: true)]
+  #[Column(type: "integer")]
   public ?int $id = null;
 
   #[Column(length: 50)]
@@ -32,7 +32,7 @@ class PublicacaoServico extends KissEntity {
   #[Column(type: "decimal", precision: 7, scale: 2)]
   public float $valor;
 
-  #[Column(type: "integer", unsigned: true)]
+  #[Column(type: "integer")]
   public int $quantidadeFavorito = 0;
 
   #[ManyToOne(targetEntity: CategoriaServico::class)]
@@ -49,7 +49,7 @@ class PublicacaoServico extends KissEntity {
   #[Column(type: "datetime", nullable: true)]
   public ?\DateTime $ultimaAtualizacao = null;
 
-  #[Column(type: "string", enumType: "StatusPublicacao")]
+  #[Column(type: "string", enumType: StatusPublicacao::class)]
   public string $statusPublicacao = 'EM_ANALISE';
 
   #[ManyToMany(targetEntity: Usuario::class, inversedBy: "servicosFavoritos")]

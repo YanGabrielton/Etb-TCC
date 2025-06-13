@@ -8,7 +8,7 @@ use \Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity]
 class Usuario extends KissEntity {
-  #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", unsigned: true)]
+  #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer")]
   public ?int $id = null;
 
   #[ORM\Column(length: 50)]
@@ -40,7 +40,7 @@ class Usuario extends KissEntity {
   #[ORM\Column(type: "datetime", nullable: true)]
   public ?\DateTime $ultimaAtualizacao = null;
 
-  #[ORM\Column(type: "string", enumType: "StatusUsuario")]
+  #[ORM\Column(type: "string", enumType: StatusUsuario::class)]
   public string $statusUsuario = 'ATIVO';
 
   #[ORM\OneToMany(targetEntity: InformacaoContato::class, mappedBy: "usuario")]

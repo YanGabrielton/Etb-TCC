@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\{
 class CategoriaContato extends KissEntity {
   #[Id]
   #[GeneratedValue]
-  #[Column(type: "integer", unsigned: true)]
+  #[Column(type: "integer")]
   private ?int $id = null;
 
   #[Column(length: 255)]

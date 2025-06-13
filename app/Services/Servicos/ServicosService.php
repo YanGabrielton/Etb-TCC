@@ -1,19 +1,20 @@
 <?php
 namespace App\Services\Servicos;
 
+use App\Entities\CategoriaServico;
+use App\DTOs\Servicos\CadastroServico;
 use App\Repositories\Servicos\ServicosRepository;
-use App\DTOs\Servicos\{ CadastroServico, Categoria };
 
 class ServicosService {
   public function __construct(private ServicosRepository $repository) { }
 
-  /** @return Categoria[] */
+  /** @return CategoriaServico[] */
   public function buscarCategorias(): array {
     return $this->repository->buscarCategorias();
   }
 
-  public function buscarServicos(): array {
-    return $this->repository->buscarServicos();
+  public function buscarServicos(?int $categoriaId = null): array {
+    return $this->repository->buscarServicos($categoriaId);
   }
 
   public function cadastrarServico(CadastroServico $dto, ?array $foto): bool {

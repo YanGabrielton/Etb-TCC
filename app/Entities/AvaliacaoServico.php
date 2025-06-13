@@ -17,10 +17,10 @@ use Doctrine\ORM\Mapping\{
 class AvaliacaoServico extends KissEntity {
   #[Id]
   #[GeneratedValue]
-  #[Column(type: "integer", unsigned: true)]
+  #[Column(type: "integer")]
   public ?int $id = null;
 
-  #[Column(type: "integer", unsigned: true)]
+  #[Column(type: "integer")]
   public int $nota = 0;
 
   #[Column(length: 255, nullable: true)]
