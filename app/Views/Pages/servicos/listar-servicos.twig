@@ -27,14 +27,16 @@
 		</div>
 	</section>
 
-	{% if categoriaSelecionada and servicos|length > 0 %}
+	{% if categoriaSelecionada %}
 		{% include "Partials/servicos/_carrossel-prestador.twig" with {'servicos': servicos} %}
+		
+		{% include "Partials/servicos/_modal-prestador.twig" %}
 	{% endif %}
 
-	{% include "Partials/servicos/_categorias.twig" with {
-		'categorias': categorias, 
-		'categoriaSelecionada': categoriaSelecionada,
-	} %}
-
-	{% include "Partials/servicos/_modal-prestador.twig" %}
+	{% if categorias is not empty %}
+		{% include "Partials/servicos/_categorias.twig" with {
+			'categorias': categorias, 
+			'categoriaSelecionada': categoriaSelecionada,
+		} %} 
+	{% endif %}
 {% endblock %}
