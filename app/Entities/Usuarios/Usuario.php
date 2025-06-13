@@ -1,13 +1,15 @@
 <?php
-namespace App\Entities;
+namespace App\Entities\Usuarios;
 
-use KissPhp\Abstractions\Entity as KissEntity;
-
+use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use \Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use App\Entities\Status\StatusUsuario;
+use App\Entities\Servico\{ InformacaoContato, PublicacaoServico };
 
 #[ORM\Entity]
-class Usuario extends KissEntity {
+class Usuario extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer")]
   public ?int $id = null;
 

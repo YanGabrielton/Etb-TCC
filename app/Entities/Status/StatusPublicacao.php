@@ -1,5 +1,5 @@
 <?php
-namespace App\Entities;
+namespace App\Entities\Status;
 
 enum StatusPublicacao: string {
   case ATIVO = 'ATIVO';

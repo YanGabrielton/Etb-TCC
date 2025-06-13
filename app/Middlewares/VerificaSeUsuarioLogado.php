@@ -9,6 +9,6 @@ class VerificaSeUsuarioLogado extends WebMiddleware {
     if ($request->session->has('usuario_autenticado')) {
       return $next($request);
     }
-    return null;
+    return $request->redirectToBack();
   }
 }
