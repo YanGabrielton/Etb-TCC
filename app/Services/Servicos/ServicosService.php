@@ -2,24 +2,33 @@
 namespace App\Services\Servicos;
 
 use App\Entities\CategoriaServico;
-use App\DTOs\Servicos\CadastroServico;
-use App\DTOs\Servicos\ServicoDTO;
 use App\Repositories\Servicos\ServicosRepository;
+use App\DTOs\Servicos\{ ServicoDTO, ServicoCadastroDTO };
 
 class ServicosService {
   public function __construct(private ServicosRepository $repository) { }
 
   /** @return CategoriaServico[] */
   public function buscarCategorias(): array {
-    return $this->repository->buscarCategorias();
+    try {
+      return $this->repository->buscarCategorias();
+    } catch (\Throwable $th) {
+      error_log($th->getMessage());
+      return [];
+    }
   }
 
   /** @return ServicoDTO[] */
   public function buscarServicos(?int $categoriaId = null): array {
-    return $this->repository->buscarServicos($categoriaId);
+    try {
+      return $this->repository->buscarServicos($categoriaId);
+    } catch (\Throwable $th) {
+      error_log($th->getMessage());
+      return [];
+    }
   }
 
-  public function cadastrarServico(CadastroServico $dto, ?array $foto): bool {
+  public function cadastrarServico(ServicoCadastroDTO $dto, ?array $foto): bool {
     try {
       if ($foto && $foto['error'] === UPLOAD_ERR_OK) {
         $ext = pathinfo($foto['name'], PATHINFO_EXTENSION);
@@ -44,14 +53,12 @@ class ServicosService {
     }
   }
 
-  /**
-   * Desativa um serviço e atualiza o nível de acesso do usuário se necessário
-   * @param int $idServico ID do serviço a ser desativado
-   * @param int $idUsuario ID do usuário que está desativando o serviço
-   * @return bool true se o serviço foi desativado com sucesso
-   * @throws \Exception se houver erro ao desativar o serviço
-   */
   public function desativarServico(int $idServico, int $idUsuario): bool {
-    return $this->repository->desativarServico($idServico, $idUsuario);
+    try {
+      return $this->repository->desativarServico($idServico, $idUsuario);
+    } catch (\Throwable $th) {
+      error_log($th->getMessage());
+      return false;
+    }
   }
 }

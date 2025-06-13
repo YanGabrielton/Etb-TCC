@@ -1005,12 +1005,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php.git",
-                "reference": "cafd838a705a1e2c999662c1a607cc17c4ca14dc"
+                "reference": "0b461c677f2e9b1c72000ed92769cf063f637982"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/cafd838a705a1e2c999662c1a607cc17c4ca14dc",
-                "reference": "cafd838a705a1e2c999662c1a607cc17c4ca14dc",
+                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/0b461c677f2e9b1c72000ed92769cf063f637982",
+                "reference": "0b461c677f2e9b1c72000ed92769cf063f637982",
                 "shasum": ""
             },
             "require": {
@@ -1040,7 +1040,7 @@
                 "source": "https://github.com/ItaloBrazucaDeveloper/kiss-php/tree/main",
                 "issues": "https://github.com/ItaloBrazucaDeveloper/kiss-php/issues"
             },
-            "time": "2025-06-13T18:25:51+00:00"
+            "time": "2025-06-13T20:37:51+00:00"
         },
         {
             "name": "phpoption/phpoption",

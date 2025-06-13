@@ -20,9 +20,7 @@ class ServicosController extends WebController {
   public function exibirPaginaDeServicos(Request $request) {
     $categoriaSelecionada = $request->getQueryString('categoria');
 
-    $categorias = !$categoriaSelecionada
-      ? $this->service->buscarCategorias()
-      : [];
+    $categorias = $this->service->buscarCategorias();
 
     $servicos = $categoriaSelecionada
       ? $this->service->buscarServicos((int) $categoriaSelecionada)

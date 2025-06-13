@@ -1,5 +1,7 @@
 {% extends "Layouts/main.layout.twig" %}
 
+{% import "Macros/icones-categoria-servico.twig" as obterIconeDaCategoriaServico %}
+
 {% block title %}Serviços | Job4You{% endblock %}
 
 {% block main %}
@@ -9,7 +11,7 @@
 				{% if categoriaSelecionada %}
 					{% for categoria in categorias %}
 						{% if categoria.id == categoriaSelecionada %}
-							<i class="bi {{ _self.getIconeCategoria(categoria.nome) }} me-2"></i>
+							<i class="bi {{ obterIconeDaCategoriaServico.render(categoria.nome) }} me-2"></i>
 							Prestadores de {{ categoria.nome }}
 						{% endif %}
 					{% endfor %}
@@ -17,6 +19,7 @@
 					Encontre Serviços Informais em Diversas Categorias
 				{% endif %}
 			</h1>
+
 			<span class="text-xl text-gray-600">
 				{% if categoriaSelecionada %}
 					Profissionais qualificados nesta categoria
@@ -33,10 +36,7 @@
 		{% include "Partials/servicos/_modal-prestador.twig" %}
 	{% endif %}
 
-	{% if categorias is not empty %}
-		{% include "Partials/servicos/_categorias.twig" with {
-			'categorias': categorias, 
-			'categoriaSelecionada': categoriaSelecionada,
-		} %} 
+	{% if categorias is not empty and categoriaSelecionada is empty %}
+		{% include "Partials/servicos/_categorias.twig" %} 
 	{% endif %}
 {% endblock %}

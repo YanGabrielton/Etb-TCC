@@ -3,7 +3,7 @@ INSERT INTO CategoriaServico (Nome) VALUES
     ('Limpeza'), -- 2
     ('Jardinagem'), -- 3
     ('Mudança/Frete'), -- 4
-    ('Manuntenção'), -- 5
+    ('Manutenção'), -- 5
     ('Reforço Escolar'), -- 6
     ('Cuidador de Idoso'), -- 7
     ('Cuidado Pet'), -- 8
