@@ -10,8 +10,8 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
     environment: # Captura as variáveis de ambiente do arquivo '.env' para configuração do MySQL
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWD}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes: # Define volumes para persistência de dados do MySQL
       # Mapeia o volume nomeado 'db_data' para persistência de dados do MySQL
       # (dados registrados no banco são salvos mesmo parando de executar o container)
@@ -39,7 +39,7 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
-      - DB_PASSWD=${DB_PASSWD}
+      - DB_PASSWORD=${DB_PASSWORD}
     networks:
       - job4you_network
 
