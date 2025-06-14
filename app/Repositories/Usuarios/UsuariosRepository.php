@@ -1,11 +1,12 @@
 <?php
 namespace App\Repositories\Usuarios;
 
-use App\Entities\Usuarios\{ Usuario, Endereco };
-use App\DTOs\Usuario\UsuarioCadastroDTO;
-use App\Entities\Status\StatusUsuario;
-use App\Repositories\Enderecos\EnderecoRepository;
 use KissPhp\Abstractions\Repository;
+
+use App\DTOs\Usuario\UsuarioCadastroDTO;
+use App\Entities\Usuarios\{ Usuario, Endereco };
+
+use App\Repositories\Enderecos\EnderecoRepository;
 use App\Repositories\Credenciais\CredencialRepository;
 
 class UsuariosRepository extends Repository {
@@ -99,12 +100,19 @@ class UsuariosRepository extends Repository {
 
   public function buscarPorId(int $id): ?Usuario {
     try {
-      return $this->database()
+      $usuario = $this->database()
         ->getRepository(Usuario::class)
         ->find($id);
+
+      if (!$usuario) {
+        error_log("[Error] UsuariosRepository::buscarPorId: Usuário não encontrado para o ID {$id}");
+        return null;
+      }
+
+      return $usuario;
     } catch (\Throwable $th) {
       error_log("[Error] UsuariosRepository::buscarPorId: {$th->getMessage()}");
-      throw new \Exception("Erro ao buscar usuário");
+      return null;
     }
   }
 }

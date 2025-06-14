@@ -5,6 +5,8 @@ use App\DTOs\Usuario\UsuarioCadastroDTO;
 
 use App\Repositories\Usuarios\UsuariosRepository;
 use App\Repositories\Credenciais\CredencialRepository;
+use function App\Utils\bp;
+
 
 class UsuariosService {
   public function __construct(
@@ -22,24 +24,47 @@ class UsuariosService {
 
   public function buscarDadosCompletosUsuario(int $idUsuario): ?array {
     try {
+      if (!$idUsuario) {
+        error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: ID do usuário inválido");
+        return null;
+      }
+
       $usuario = $this->usuarioRepository->buscarPorId($idUsuario);
-      if (!$usuario) return null;
+      
+      if (!$usuario) {
+        error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: Usuário não encontrado");
+        return null;
+      }
+
+      if (!$usuario->credencial) {
+        error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: Credenciais do usuário não encontradas");
+        return null;
+      }
+
+      $dataNascimento = $usuario->dataNascimento instanceof \DateTime 
+        ? $usuario->dataNascimento->format('Y-m-d')
+        : null;
+
+      if (!$dataNascimento) {
+        error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: Data de nascimento inválida");
+        return null;
+      }
 
       return [
         'id' => $usuario->id,
-        'nome' => $usuario->nome,
-        'cpf' => $usuario->cpf,
+        'nome' => $usuario->nome ?? '',
+        'cpf' => $usuario->cpf ?? '',
         'foto' => $usuario->foto,
         'celular' => $usuario->celular,
-        'dataNascimento' => $usuario->dataNascimento->format('Y-m-d'),
-        'email' => $usuario->credencial->email,
-        'statusUsuario' => $usuario->statusUsuario->value,
+        'dataNascimento' => $dataNascimento,
+        'email' => $usuario->credencial->email ?? '',
+        'statusUsuario' => $usuario->statusUsuario?->value ?? 'ATIVO',
         'endereco' => $usuario->endereco ? [
-          'cep' => $usuario->endereco->cep,
-          'estado' => $usuario->endereco->estado,
-          'cidade' => $usuario->endereco->cidade,
-          'bairro' => $usuario->endereco->bairro,
-          'rua' => $usuario->endereco->rua
+          'cep' => $usuario->endereco->cep ?? '',
+          'estado' => $usuario->endereco->estado ?? '',
+          'cidade' => $usuario->endereco->cidade ?? '',
+          'bairro' => $usuario->endereco->bairro ?? '',
+          'rua' => $usuario->endereco->rua ?? ''
         ] : null
       ];
     } catch (\Throwable $th) {

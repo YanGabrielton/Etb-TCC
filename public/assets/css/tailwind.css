@@ -9,6 +9,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-100: oklch(93.6% 0.032 17.717);
+    --color-red-300: oklch(80.8% 0.114 19.571);
     --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
@@ -706,6 +707,9 @@
   }
   .border-purple-400 {
     border-color: var(--color-purple-400);
+  }
+  .border-red-300 {
+    border-color: var(--color-red-300);
   }
   .border-transparent {
     border-color: transparent;

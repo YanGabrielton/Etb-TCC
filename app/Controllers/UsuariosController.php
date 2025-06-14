@@ -30,10 +30,17 @@ class UsuariosController extends WebController {
   #[Get('/meu-perfil', [VerificaSeUsuarioLogado::class])]
   public function exibirPaginaDeMeuPerfil(Request $request) {
     $usuarioLogado = $request->session->get(SessionKeys::USUARIO_AUTENTICADO);
+    
+    if (!$usuarioLogado || !isset($usuarioLogado->id)) {
+      $request->session->setFlashMessage(FlashMessageType::Error, 'Sessão inválida. Por favor, faça login novamente.');
+      return $this->redirectTo('/autenticacao');
+    }
+
     $dadosCompletos = $this->service->buscarDadosCompletosUsuario($usuarioLogado->id);
 
     if (!$dadosCompletos) {
       $request->session->setFlashMessage(FlashMessageType::Error, 'Não foi possível carregar os dados do perfil :/');
+      return $this->redirectTo('/autenticacao');
     }
 
     $this->render('Pages/usuarios/meu-perfil.twig', [

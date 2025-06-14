@@ -1,150 +1,67 @@
-<!-- Nome Completo -->
+{% import "Macros/input.twig" as input %}
+{% import "Macros/label.twig" as label %}
+{% import "Macros/select.twig" as select %}
+
 <div class="{% if usuario.grupo != 'PRESTADOR' %}col-span-2{% endif %}">
-  <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-  <div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <i class="bi bi-person text-gray-400"></i>
-    </div>
-    <input type="text" id="nome" name="nome" required
-      class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-      value="{{ usuario.nome }}">
-  </div>
+  {{ label.render('nome', 'Nome Completo') }}
+  {{ input.render('nome', 'text', null, true, 'bi bi-person', null, '', null, usuario.nome) }}
 </div>
 
-<!-- CPF/CNPJ -->
 <div>
-  <label for="documento" class="block text-sm font-medium text-gray-700 mb-1">
-    {{ usuario.grupo == 'prestador' ? 'CPF/CNPJ' : 'CPF' }}
-  </label>
-  <div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <i class="bi bi-card-text text-gray-400"></i>
-    </div>
-    <input
-      type="text" id="documento" name="documento" required readonly
-      class="py-2 pl-10 block w-full border border-gray-300 rounded-md bg-gray-50"
-      value="{{ usuario.grupo == 'PRESTADOR' ? usuario.documento : usuario.cpf }}">
-  </div>
+  {{ label.render('documento', usuario.grupo == 'PRESTADOR' ? 'CPF/CNPJ' : 'CPF') }}
+  {{ input.render('documento', 'text', null, true, 'bi bi-card-text', null, '', null, usuario.grupo == 'PRESTADOR' ? usuario.documento : usuario.cpf, null, true) }}
 </div>
 
 {% if usuario.grupo != 'PRESTADOR' %}
-  <!-- Data de Nascimento -->
   <div>
-    <label for="data_nascimento" class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="bi bi-calendar text-gray-400"></i>
-      </div>
-      <input type="date" id="data_nascimento" name="data_nascimento" required
-        class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-        value="{{ usuario.data_nascimento }}">
-    </div>
+    {{ label.render('data_nascimento', 'Data de Nascimento') }}
+    {{ input.render('data_nascimento', 'date', null, true, 'bi bi-calendar', null, '', null, usuario.dataNascimento) }}
   </div>
 {% endif %}
 
-<!-- Email -->
 <div>
-  <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-  <div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <i class="bi bi-envelope text-gray-400"></i>
-    </div>
-    <input type="email" id="email" name="email" required
-      class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-      value="{{ usuario.email }}">
-  </div>
+  {{ label.render('email', 'Email') }}
+  {{ input.render('email', 'email', null, true, 'bi bi-envelope', null, '', null, usuario.email) }}
 </div>
 
-<!-- Telefone -->
 <div>
-  <label for="telefone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
-  <div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-      <i class="bi bi-telephone text-gray-400"></i>
-    </div>
-    <input type="tel" id="telefone" name="telefone" required
-      class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-      value="{{ usuario.telefone }}">
-  </div>
+  {{ label.render('telefone', 'Telefone') }}
+  {{ input.render('telefone', 'tel', null, true, 'bi bi-telephone', null, '', null, usuario.celular) }}
 </div>
 
 {% if usuario.grupo != 'prestador' %}
-  <!-- CEP -->
   <div>
-    <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP</label>
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="bi bi-mailbox text-gray-400"></i>
-      </div>
-      <input type="text" id="cep" name="cep" required
-        class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-        value="{{ usuario.cep }}">
-    </div>
+    {{ label.render('cep', 'CEP') }}
+    {{ input.render('cep', 'text', null, true, 'bi bi-mailbox', null, '', null, usuario.endereco.cep) }}
   </div>
 
-  <!-- Estado -->
   <div>
-    <label for="estado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="bi bi-map text-gray-400"></i>
-      </div>
-      <select id="estado" name="estado" required
-        class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
-        <option value="" disabled>Selecione</option>
-        {% for uf, nome in {
-          'AC': 'Acre', 'AL': 'Alagoas', 'AP': 'Amapá', 'AM': 'Amazonas',
-          'BA': 'Bahia', 'CE': 'Ceará', 'DF': 'Distrito Federal',
-          'ES': 'Espírito Santo', 'GO': 'Goiás', 'MA': 'Maranhão',
-          'MT': 'Mato Grosso', 'MS': 'Mato Grosso do Sul', 'MG': 'Minas Gerais',
-          'PA': 'Pará', 'PB': 'Paraíba', 'PR': 'Paraná', 'PE': 'Pernambuco',
-          'PI': 'Piauí', 'RJ': 'Rio de Janeiro', 'RN': 'Rio Grande do Norte',
-          'RS': 'Rio Grande do Sul', 'RO': 'Rondônia', 'RR': 'Roraima',
-          'SC': 'Santa Catarina', 'SP': 'São Paulo', 'SE': 'Sergipe',
-          'TO': 'Tocantins'
-        } %}
-          <option value="{{ uf }}" {% if usuario.estado == uf %}selected{% endif %}>{{ nome }}</option>
-        {% endfor %}
-      </select>
-    </div>
+    {{ label.render('estado', 'Estado') }}
+    {{ select.render('estado', {
+      'AC': 'Acre', 'AL': 'Alagoas', 'AP': 'Amapá', 'AM': 'Amazonas',
+      'BA': 'Bahia', 'CE': 'Ceará', 'DF': 'Distrito Federal',
+      'ES': 'Espírito Santo', 'GO': 'Goiás', 'MA': 'Maranhão',
+      'MT': 'Mato Grosso', 'MS': 'Mato Grosso do Sul', 'MG': 'Minas Gerais',
+      'PA': 'Pará', 'PB': 'Paraíba', 'PR': 'Paraná', 'PE': 'Pernambuco',
+      'PI': 'Piauí', 'RJ': 'Rio de Janeiro', 'RN': 'Rio Grande do Norte',
+      'RS': 'Rio Grande do Sul', 'RO': 'Rondônia', 'RR': 'Roraima',
+      'SC': 'Santa Catarina', 'SP': 'São Paulo', 'SE': 'Sergipe',
+      'TO': 'Tocantins'
+    }, 'Selecione', true, 'bi bi-map', usuario.endereco.estado) }}
   </div>
 
-  <!-- Cidade -->
   <div>
-    <label for="cidade" class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="bi bi-building text-gray-400"></i>
-      </div>
-      <input type="text" id="cidade" name="cidade" required
-        class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-        value="{{ usuario.cidade }}">
-    </div>
+    {{ label.render('cidade', 'Cidade') }}
+    {{ input.render('cidade', 'text', null, true, 'bi bi-building', null, '', null, usuario.endereco.cidade) }}
   </div>
 
-  <!-- Bairro -->
   <div>
-    <label for="bairro" class="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="bi bi-pin-map text-gray-400"></i>
-      </div>
-      <input type="text" id="bairro" name="bairro" required
-        class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-        value="{{ usuario.bairro }}">
-    </div>
+    {{ label.render('bairro', 'Bairro') }}
+    {{ input.render('bairro', 'text', null, true, 'bi bi-pin-map', null, '', null, usuario.endereco.bairro) }}
   </div>
 
-  <!-- Rua -->
   <div>
-    <label for="rua" class="block text-sm font-medium text-gray-700 mb-1">Rua</label>
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <i class="bi bi-signpost text-gray-400"></i>
-      </div>
-      <input type="text" id="rua" name="rua" required
-        class="py-2 pl-10 block w-full border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-        value="{{ usuario.rua }}">
-    </div>
+    {{ label.render('rua', 'Rua') }}
+    {{ input.render('rua', 'text', null, true, 'bi bi-signpost', null, '', null, usuario.endereco.rua) }}
   </div>
 {% endif %} 
