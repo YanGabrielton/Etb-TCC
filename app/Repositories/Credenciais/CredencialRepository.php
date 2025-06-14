@@ -20,7 +20,9 @@ class CredencialRepository extends Repository {
       $credencial = new Credencial();
       $credencial->email = $email;
       $credencial->senha = $senha;
-      $credencial->nivelAcesso = $this->database()->getRepository(NivelAcesso::class)->find(3); // CLIENTE
+      $credencial->nivelAcesso = $this->database()
+        ->getRepository(NivelAcesso::class)
+        ->find(3); // CLIENTE
 
       $this->database()->persist($credencial);
       $this->database()->flush();
@@ -54,19 +56,6 @@ class CredencialRepository extends Repository {
       $credencial = $this->database()
         ->getRepository(Credencial::class)
         ->findOneBy(['email' => $email]);
-
-      return $credencial;
-    } catch (\Throwable $th) {
-      error_log("[Error] CredencialRepository: {$th->getMessage()}");
-      return null;
-    }
-  }
-
-  public function buscarPorId(int $id): ?Credencial {
-    try {
-      $credencial = $this->database()
-        ->getRepository(Credencial::class)
-        ->findOneBy(['id' => $id]);
 
       return $credencial;
     } catch (\Throwable $th) {

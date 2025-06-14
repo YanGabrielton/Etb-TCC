@@ -1,11 +1,12 @@
 <?php
 namespace App\Controllers;
 
+use App\Middlewares\VerificaSeUsuarioLogado;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
-use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
+use KissPhp\Attributes\Http\Request\{ Body };
 
 use KissPhp\Enums\FlashMessageType;
 use KissPhp\Protocols\Http\Request;
@@ -13,18 +14,16 @@ use KissPhp\Protocols\Http\Request;
 use App\DTOs\Usuario\UsuarioCadastroDTO;
 use App\Services\Usuarios\UsuariosService;
 
-use function App\Utils\bp;
-
 #[Controller('/usuarios')]
 class UsuariosController extends WebController {
-  public function __construct(private UsuariosService $service) {}
+  public function __construct(private UsuariosService $service) { }
 
   #[Get('/cadastro')]
   public function exibirPaginaDeCadastro() {
     $this->render('Pages/usuarios/cadastro.twig', []);
   }
 
-  #[Get('/meu-perfil')]
+  #[Get('/meu-perfil', [VerificaSeUsuarioLogado::class])]
   public function exibirPaginaDeMeuPerfil() {
     $this->render('Pages/usuarios/meu-perfil.twig', []);
   }
