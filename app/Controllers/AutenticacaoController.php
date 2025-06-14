@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Middlewares\VerificaSeUsuarioNaoLogado;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
@@ -13,11 +14,11 @@ use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use App\DTOs\Login\Credenciais;
 use App\Services\Autenticacao\AutenticacaoService;
 
-#[Controller('/autenticacao')]
+#[Controller('/autenticacao',[VerificaSeUsuarioNaoLogado::class])]
 class AutenticacaoController extends WebController {
   public function __construct(private AutenticacaoService $service) { }
 
-  #[Get]
+  #[Get()]
   public function exibirPaginaDeLogin(Request $request) {
     $this->render('Pages/autenticacao/login.twig', [
       'flash_message' => $request->session->getFlashMessage()

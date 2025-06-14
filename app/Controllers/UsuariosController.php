@@ -1,12 +1,11 @@
 <?php
 namespace App\Controllers;
 
-use App\Middlewares\VerificaSeUsuarioLogado;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
-use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use KissPhp\Attributes\Http\Request\{ Body };
+use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
 use KissPhp\Enums\FlashMessageType;
 use KissPhp\Protocols\Http\Request;
@@ -14,21 +13,26 @@ use KissPhp\Protocols\Http\Request;
 use App\DTOs\Usuario\UsuarioCadastroDTO;
 use App\Services\Usuarios\UsuariosService;
 
+use App\Middlewares\VerificaSeUsuarioLogado;
+use App\Middlewares\VerificaSeUsuarioNaoLogado;
+
 #[Controller('/usuarios')]
 class UsuariosController extends WebController {
   public function __construct(private UsuariosService $service) { }
 
-  #[Get('/cadastro')]
+  #[Get('/cadastro', [VerificaSeUsuarioNaoLogado::class])]
   public function exibirPaginaDeCadastro() {
     $this->render('Pages/usuarios/cadastro.twig', []);
   }
 
   #[Get('/meu-perfil', [VerificaSeUsuarioLogado::class])]
-  public function exibirPaginaDeMeuPerfil() {
-    $this->render('Pages/usuarios/meu-perfil.twig', []);
+  public function exibirPaginaDeMeuPerfil(Request $request) {
+    $this->render('Pages/usuarios/meu-perfil.twig', [
+      'usuario' => $request->session->get('usuario_logado')
+    ]);
   }
 
-  #[Post('/cadastro')]
+  #[Post('/cadastro', [VerificaSeUsuarioNaoLogado::class])]
   public function cadastrarUsuario(#[Body] UsuarioCadastroDTO $usuario, Request $request) {
     $foiCadastrado = $this->service->cadastrarUsuario($usuario);
 
