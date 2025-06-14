@@ -5,7 +5,6 @@ use App\DTOs\Usuario\UsuarioCadastroDTO;
 
 use App\Repositories\Usuarios\UsuariosRepository;
 use App\Repositories\Credenciais\CredencialRepository;
-use function App\Utils\bp;
 
 
 class UsuariosService {

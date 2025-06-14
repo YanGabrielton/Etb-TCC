@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use App\Utils\SessionKeys;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
@@ -14,41 +13,19 @@ use KissPhp\Protocols\Http\Request;
 use App\DTOs\Usuario\UsuarioCadastroDTO;
 use App\Services\Usuarios\UsuariosService;
 
-use App\Middlewares\VerificaSeUsuarioLogado;
 use App\Middlewares\VerificaSeUsuarioNaoLogado;
 
 
-#[Controller('/usuarios')]
+#[Controller('/usuarios', [VerificaSeUsuarioNaoLogado::class])]
 class UsuariosController extends WebController {
   public function __construct(private UsuariosService $service) { }
 
-  #[Get('/cadastro', [VerificaSeUsuarioNaoLogado::class])]
+  #[Get('/cadastro')]
   public function exibirPaginaDeCadastro() {
     $this->render('Pages/usuarios/cadastro.twig', []);
   }
 
-  #[Get('/meu-perfil', [VerificaSeUsuarioLogado::class])]
-  public function exibirPaginaDeMeuPerfil(Request $request) {
-    $usuarioLogado = $request->session->get(SessionKeys::USUARIO_AUTENTICADO);
-    
-    if (!$usuarioLogado || !isset($usuarioLogado->id)) {
-      $request->session->setFlashMessage(FlashMessageType::Error, 'Sessão inválida. Por favor, faça login novamente.');
-      return $this->redirectTo('/autenticacao');
-    }
-
-    $dadosCompletos = $this->service->buscarDadosCompletosUsuario($usuarioLogado->id);
-
-    if (!$dadosCompletos) {
-      $request->session->setFlashMessage(FlashMessageType::Error, 'Não foi possível carregar os dados do perfil :/');
-      return $this->redirectTo('/autenticacao');
-    }
-
-    $this->render('Pages/usuarios/meu-perfil.twig', [
-      'usuario' => $dadosCompletos
-    ]);
-  }
-
-  #[Post('/cadastro', [VerificaSeUsuarioNaoLogado::class])]
+  #[Post('/cadastro')]
   public function cadastrarUsuario(#[Body] UsuarioCadastroDTO $usuario, Request $request) {
     $foiCadastrado = $this->service->cadastrarUsuario($usuario);
 

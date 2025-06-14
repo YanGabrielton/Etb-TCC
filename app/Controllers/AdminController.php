@@ -7,7 +7,7 @@ use KissPhp\Attributes\Http\Methods\Get;
 
 #[Controller('/admin')]
 class AdminController extends WebController {
-  #[Get('/painel')]
+  #[Get]
   public function exbibirPaginaPainel() {
     $this->render('Pages/admin/painel.twig');
   }

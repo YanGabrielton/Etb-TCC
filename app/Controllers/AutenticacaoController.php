@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use App\Middlewares\VerificaSeUsuarioNaoLogado;
-use App\Utils\SessionKeys;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
@@ -12,14 +10,17 @@ use KissPhp\Protocols\Http\Request;
 use KissPhp\Attributes\Http\Request\Body;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
+use App\Utils\SessionKeys;
 use App\DTOs\Login\Credenciais;
+
+use App\Middlewares\VerificaSeUsuarioLogado;
 use App\Services\Autenticacao\AutenticacaoService;
 
-#[Controller('/autenticacao',[VerificaSeUsuarioNaoLogado::class])]
+#[Controller('/autenticacao', [VerificaSeUsuarioLogado::class])]
 class AutenticacaoController extends WebController {
   public function __construct(private AutenticacaoService $service) { }
 
-  #[Get()]
+  #[Get]
   public function exibirPaginaDeLogin(Request $request) {
     $this->render('Pages/autenticacao/login.twig', [
       'flash_message' => $request->session->getFlashMessage()
@@ -31,7 +32,6 @@ class AutenticacaoController extends WebController {
     $usuarioAutenticado = $this->service->obterUsuarioAutenticado($usuario);
 
     if ($usuarioAutenticado) {
-      $request->session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');
       $request->session->set(SessionKeys::USUARIO_AUTENTICADO, $usuarioAutenticado);
       return $this->redirectTo('/servicos');
     }
