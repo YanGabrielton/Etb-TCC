@@ -5,7 +5,8 @@
   required = true,
   icon = null,
   autocomplete = null,
-  class = ''
+  class = '',
+  errorMessage = null
 ) %}
 	<div class="mt-1 relative rounded-md shadow-sm">
 		{% if icon %}
@@ -21,7 +22,10 @@
       name="{{ name }}"
       type="{{ type }}"
       {% if autocomplete %} autocomplete="{{ autocomplete }}" {% endif %}
-      class="py-2 {% if icon %}pl-10{% endif %} block w-full border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500 {{ class }}"
+      class="py-2 {% if icon %}pl-10{% endif %} block w-full border {% if errorMessage %}border-red-300{% else %}border-gray-300{% endif %} rounded-md focus:ring-gray-500 focus:border-gray-500 {{ class }}"
     >
+		{% if errorMessage %}
+		<span class="mt-1 text-sm text-red-600">{{ errorMessage }}</span>
+		{% endif %}
 	</div>
 {% endmacro %}

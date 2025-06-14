@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Servicos;
 
-use App\Entities\CategoriaServico;
+use App\Entities\Categorias\CategoriaServico;
 use App\Repositories\Servicos\ServicosRepository;
 use App\DTOs\Servicos\{ ServicoDTO, ServicoCadastroDTO };
 

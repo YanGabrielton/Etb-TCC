@@ -18,33 +18,33 @@
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div class="col-span-2">
 								{{ Label.render('nome', 'Nome completo') }}
-								{{ Input.render('nome', 'text', 'Digite seu nome completo', true, 'bi bi-person') }}
+								{{ Input.render('nome', 'text', 'Digite seu nome completo', true, 'bi bi-person', null, '', getInputError('nome')) }}
 							</div>
 
 							<div>
 								{{ Label.render('cpf', 'CPF') }}
-								{{ Input.render('cpf', 'text', '000.000.000-00', true, 'bi bi-card-text') }}
+								{{ Input.render('cpf', 'text', '000.000.000-00', true, 'bi bi-card-text', null, '', getInputError('cpf')) }}
 							</div>
 
 							<div>
-								{{ Label.render('data_nascimento', 'Data de Nascimento') }}
-								{{ Input.render('data_nascimento', 'date', null, true, 'bi bi-calendar') }}
+								{{ Label.render('dataNascimento', 'Data de Nascimento') }}
+								{{ Input.render('dataNascimento', 'date', null, true, 'bi bi-calendar', null, '', getInputError('data_nascimento')) }}
 							</div>
 
 							<div>
 								{{ Label.render('email', 'Email') }}
-								{{ Input.render('email', 'email', 'seu@email.com', true, 'bi bi-envelope') }}
+								{{ Input.render('email', 'email', 'seu@email.com', true, 'bi bi-envelope', null, '', getInputError('email')) }}
 							</div>
 
 							<div>
-								{{ Label.render('telefone', 'Telefone') }}
-								{{ Input.render('telefone', 'text', '(00) 00000-0000', true, 'bi bi-telephone') }}
+								{{ Label.render('celular', 'Número de celular') }}
+								{{ Input.render('celular', 'text', '(00) 00000-0000', true, 'bi bi-telephone', null, '', getInputError('telefone')) }}
 							</div>
 
 							<div>
 								{{ Label.render('senha', 'Senha') }}
 								<div class="relative">
-									{{ Input.render('senha', 'password', 'Crie uma senha', true, 'bi bi-lock') }}
+									{{ Input.render('senha', 'password', 'Crie uma senha', true, 'bi bi-lock', null, '', getInputError('senha')) }}
 									<button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center">
 										<i class="bi bi-eye text-gray-400 hover:text-gray-500"></i>
 									</button>
@@ -53,7 +53,7 @@
 
 							<div>
 								{{ Label.render('cep', 'CEP') }}
-								{{ Input.render('cep', 'text', '00000-000', true, 'bi bi-mailbox') }}
+								{{ Input.render('cep', 'text', '00000-000', true, 'bi bi-mailbox', null, '', getInputError('cep')) }}
 							</div>
 
 							<div>
@@ -73,17 +73,17 @@
 
 							<div>
 								{{ Label.render('cidade', 'Cidade') }}
-								{{ Input.render('cidade', 'text', 'Sua cidade', true, 'bi bi-building') }}
+								{{ Input.render('cidade', 'text', 'Sua cidade', true, 'bi bi-building', null, '', getInputError('cidade')) }}
 							</div>
 
 							<div>
 								{{ Label.render('bairro', 'Bairro') }}
-								{{ Input.render('bairro', 'text', 'Seu bairro', true, 'bi bi-pin-map') }}
+								{{ Input.render('bairro', 'text', 'Seu bairro', true, 'bi bi-pin-map', null, '', getInputError('bairro')) }}
 							</div>
 
 							<div>
 								{{ Label.render('rua', 'Rua') }}
-								{{ Input.render('rua', 'text', 'Sua rua', true, 'bi bi-signpost') }}
+								{{ Input.render('rua', 'text', 'Sua rua', true, 'bi bi-signpost', null, '', getInputError('rua')) }}
 							</div>
 						</div>
 

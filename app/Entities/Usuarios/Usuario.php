@@ -43,7 +43,7 @@ class Usuario extends Entity {
   public ?\DateTime $ultimaAtualizacao = null;
 
   #[ORM\Column(type: "string", enumType: StatusUsuario::class)]
-  public string $statusUsuario = 'ATIVO';
+  public StatusUsuario $statusUsuario = StatusUsuario::ATIVO;
 
   #[ORM\OneToMany(targetEntity: InformacaoContato::class, mappedBy: "usuario")]
   public $informacoesContato;

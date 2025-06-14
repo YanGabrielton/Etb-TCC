@@ -1,19 +1,45 @@
 <?php
 namespace App\Repositories\Usuarios;
 
-use App\Entities\Usuarios\Usuario;
+use App\Entities\Usuarios\{ Usuario, Endereco };
+use App\DTOs\Usuario\UsuarioCadastroDTO;
+use App\Entities\Status\StatusUsuario;
+use App\Repositories\Enderecos\EnderecoRepository;
 use KissPhp\Abstractions\Repository;
+use App\Repositories\Credenciais\CredencialRepository;
 
 class UsuariosRepository extends Repository {
-  public function cadastrar(Usuario $usuario): int {
+  public function __construct(
+    private EnderecoRepository $enderecoRepository,
+    private CredencialRepository $credencialRepository
+  ) { }
+
+  public function cadastrar(UsuarioCadastroDTO $usuarioDTO, string $senhaHash): bool {
     try {
+      $this->database()->getConnection()->beginTransaction();
+
+      $endereco = (new Endereco())->fromObject($usuarioDTO->endereco);
+      $endereco = $this->enderecoRepository->cadastrar($endereco);
+
+      $credencial = $this->credencialRepository->cadastrar($usuarioDTO->email, $senhaHash);
+
+      $usuario = new Usuario();
+      $usuario->nome = $usuarioDTO->nome;
+      $usuario->cpf = $usuarioDTO->cpf;
+      $usuario->celular = $usuarioDTO->celular;
+      $usuario->dataNascimento = new \DateTime($usuarioDTO->dataNascimento);
+      $usuario->credencial = $credencial;
+      $usuario->endereco = $endereco;
+
       $this->database()->persist($usuario);
       $this->database()->flush();
 
-      return $this->database()->getConnection()->lastInsertId();
+      $this->database()->getConnection()->commit();
+      return true;
     } catch (\Throwable $th) {
+      $this->database()->getConnection()->rollBack();
       error_log("[Error] UsuariosRepository::cadastrar: {$th->getMessage()}");
-      throw new \Exception("Erro ao cadastrar usuário");
+      throw new \Exception("Erro ao cadastrar usuário: {$th->getMessage()}");
     }
   }
 

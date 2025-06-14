@@ -8,7 +8,7 @@ use App\Entities\Usuarios\Usuario;
 use App\Entities\Status\StatusPublicacao;
 use App\Entities\Categorias\CategoriaServico;
 
-#[Entity]
+#[ORM\Entity]
 class PublicacaoServico extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer")]
   public ?int $id = null;
@@ -40,7 +40,7 @@ class PublicacaoServico extends Entity {
   public ?\DateTime $ultimaAtualizacao = null;
 
   #[ORM\Column(type: "string", enumType: StatusPublicacao::class)]
-  public string $statusPublicacao = 'EM_ANALISE';
+  public StatusPublicacao $statusPublicacao = StatusPublicacao::EM_ANALISE;
 
   #[ORM\ManyToMany(targetEntity: Usuario::class, inversedBy: "servicosFavoritos")]
   #[ORM\JoinTable(name: "ServicoFavorito",

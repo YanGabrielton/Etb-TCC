@@ -3,7 +3,7 @@ namespace App\Repositories\Credenciais;
 
 use KissPhp\Abstractions\Repository;
 
-use App\Entities\Usuarios\{ Usuario, Credencial };
+use App\Entities\Usuarios\{ Usuario, Credencial, NivelAcesso };
 
 class CredencialRepository extends Repository {
   public function verificarEmailExistente(string $email): bool {
@@ -15,23 +15,17 @@ class CredencialRepository extends Repository {
     }
   }
 
-  public function cadastrar(string $email, string $senha): int {
+  public function cadastrar(string $email, string $senha): Credencial {
     try {
-      $query = $this->database()
-        ->getConnection()
-        ->createQueryBuilder()
-        ->insert('Credencial')
-        ->values([
-          'Email' => ':email',
-          'Senha' => ':senha',
-          'FKNivelAcesso' => ':nivelAcesso'
-        ])
-        ->setParameter('email', $email)
-        ->setParameter('senha', $senha)
-        ->setParameter('nivelAcesso', 3); // CLIENTE
+      $credencial = new Credencial();
+      $credencial->email = $email;
+      $credencial->senha = $senha;
+      $credencial->nivelAcesso = $this->database()->getRepository(NivelAcesso::class)->find(3); // CLIENTE
 
-      $query->executeQuery();
-      return (int) $this->database()->getConnection()->lastInsertId();
+      $this->database()->persist($credencial);
+      $this->database()->flush();
+
+      return $credencial;
     } catch (\Throwable $th) {
       error_log("[Error] CredencialRepository::cadastrar: {$th->getMessage()}");
       throw new \Exception("Erro ao cadastrar credencial");
@@ -63,12 +57,12 @@ class CredencialRepository extends Repository {
 
       return $credencial;
     } catch (\Throwable $th) {
-      error_log("[Error] AutenticacaoRepository: {$th->getMessage()}");
+      error_log("[Error] CredencialRepository: {$th->getMessage()}");
       return null;
     }
   }
 
-  public function buscarPorId(float $id): ?Credencial {
+  public function buscarPorId(int $id): ?Credencial {
     try {
       $credencial = $this->database()
         ->getRepository(Credencial::class)
@@ -76,7 +70,7 @@ class CredencialRepository extends Repository {
 
       return $credencial;
     } catch (\Throwable $th) {
-      error_log("[Error] AutenticacaoRepository: {$th->getMessage()}");
+      error_log("[Error] CredencialRepository: {$th->getMessage()}");
       return null;
     }
   }

@@ -5,34 +5,24 @@ use App\Entities\Usuarios\Endereco;
 use KissPhp\Abstractions\Repository;
 
 class EnderecoRepository extends Repository {
-  public function cadastrar(Endereco $endereco): int {
+  public function cadastrar(Endereco $endereco): Endereco {
     try {
-      $query = $this->database()
-        ->getConnection()
-        ->createQueryBuilder()
-        ->insert('Endereco')
-        ->values([
-          'CEP' => ':cep',
-          'Estado' => ':estado',
-          'Cidade' => ':cidade',
-          'Bairro' => ':bairro',
-          'Rua' => ':rua'
-        ])
-        ->setParameter('cep', $endereco->cep)
-        ->setParameter('estado', $endereco->estado)
-        ->setParameter('cidade', $endereco->cidade)
-        ->setParameter('bairro', $endereco->bairro)
-        ->setParameter('rua', $endereco->rua);
+      $this->database()->persist($endereco);
+      $this->database()->flush();
 
-      $query->executeQuery();
-      return (int) $this->database()->getConnection()->lastInsertId();
+      return $endereco;
     } catch (\Throwable $th) {
       error_log("[Error] EnderecoRepository::cadastrar: {$th->getMessage()}");
       throw new \Exception("Erro ao cadastrar endereço");
     }
   }
 
-  // public function buscarPorId(): Endereco {
-
-  // }
+  public function buscarPorId(int $id): ?Endereco {
+    try {
+      return $this->database()->getRepository(Endereco::class)->findOneBy(['id' => $id]);
+    } catch (\Throwable $th) {
+      error_log("[Error] EnderecoRepository: {$th->getMessage()}");
+      return null;
+    }
+  }
 } 

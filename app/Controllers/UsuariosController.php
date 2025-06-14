@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use KissPhp\Abstractions\WebController;
@@ -13,6 +12,8 @@ use KissPhp\Protocols\Http\Request;
 
 use App\DTOs\Usuario\UsuarioCadastroDTO;
 use App\Services\Usuarios\UsuariosService;
+
+use function App\Utils\bp;
 
 #[Controller('/usuarios')]
 class UsuariosController extends WebController {
