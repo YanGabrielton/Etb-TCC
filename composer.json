@@ -28,7 +28,6 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "kiss-php/framework": "dev-main",
-    "doctrine/orm": "3.4.x-dev"
+    "kiss-php/framework": "dev-main"
   }
 }

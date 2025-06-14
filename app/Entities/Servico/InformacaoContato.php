@@ -21,5 +21,5 @@ class InformacaoContato extends Entity {
 
   #[ORM\ManyToOne(targetEntity: CategoriaContato::class)]
   #[ORM\JoinColumn(name: "FKCategoriaContato", referencedColumnName: "ID", nullable: false)]
-  public CategoriaContato $categoriaContato;
+  public CategoriaContato $categoria;
 } 

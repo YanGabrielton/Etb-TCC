@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entities\Status\StatusUsuario;
 use App\Entities\Servico\{ InformacaoContato, PublicacaoServico };
 
-#[ORM\Entity]
+#[ORM\Entity, ORM\Table(name:"Usuario")]
 class Usuario extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type:"integer", name:"ID")]
   public ?int $id = null;
@@ -28,7 +28,7 @@ class Usuario extends Entity {
   #[ORM\Column(type: "date", name:'DataNascimento')]
   public \DateTime $dataNascimento;
 
-  #[ORM\ManyToOne(targetEntity: Credencial::class)]
+  #[ORM\OneToOne(targetEntity: Credencial::class, inversedBy: "usuario")]
   #[ORM\JoinColumn(name:"FKCredencial", referencedColumnName:"ID", nullable:false)]
   public Credencial $credencial;
 
@@ -45,14 +45,14 @@ class Usuario extends Entity {
   #[ORM\Column(type:"string", enumType:StatusUsuario::class)]
   public StatusUsuario $statusUsuario = StatusUsuario::ATIVO;
 
-  #[ORM\OneToMany(targetEntity:InformacaoContato::class, mappedBy:"Usuario")]
-  public $informacoesContato;
+  #[ORM\OneToMany(targetEntity:InformacaoContato::class, mappedBy:"usuario")]
+  public ArrayCollection $informacoesContato;
 
-  #[ORM\OneToMany(targetEntity:PublicacaoServico::class, mappedBy:"Usuario")]
-  public $publicacoesServico;
+  #[ORM\OneToMany(targetEntity:PublicacaoServico::class, mappedBy:"usuario")]
+  public ArrayCollection $publicacoesServico;
 
-  #[ORM\ManyToMany(targetEntity:PublicacaoServico::class, mappedBy:"UsuariosFavoritos")]
-  public $servicosFavoritos;
+  #[ORM\ManyToMany(targetEntity:PublicacaoServico::class, mappedBy:"usuariosFavoritos")]
+  public ArrayCollection $servicosFavoritos;
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();

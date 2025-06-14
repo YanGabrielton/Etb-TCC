@@ -3,8 +3,9 @@ namespace App\Entities\Usuarios;
 
 use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
-#[ORM\Entity]
+#[ORM\Entity, ORM\Table(name:"Endereco")]
 class Endereco extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
@@ -24,6 +25,10 @@ class Endereco extends Entity {
   #[ORM\Column(length: 255, name: "Rua")]
   public string $rua;
 
-  #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "Endereco")]
-  public $usuarios;
+  #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "endereco")]
+  public ArrayCollection $usuarios;
+
+  public function __construct() {
+    $this->usuarios = new ArrayCollection();
+  }
 } 

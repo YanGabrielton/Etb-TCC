@@ -1,12 +1,13 @@
 <?php
 namespace App\Entities\Usuarios;
 
-use KissPhp\Abstractions\Entity as KissEntity;
+use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
-#[ORM\Entity]
-class NivelAcesso extends KissEntity {
+#[ORM\Entity, ORM\Table(name:"NivelAcesso")]
+class NivelAcesso extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
 
@@ -14,5 +15,9 @@ class NivelAcesso extends KissEntity {
   public string $grupo;
 
   #[ORM\OneToMany(targetEntity: Credencial::class, mappedBy: "nivelAcesso")]
-  public $credenciais;
+  public ArrayCollection $credenciais;
+
+  public function __construct() {
+    $this->credenciais = new ArrayCollection();
+  }
 }

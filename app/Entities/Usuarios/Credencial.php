@@ -5,7 +5,7 @@ use KissPhp\Abstractions\Entity as KissEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 
-#[ORM\Entity]
+#[ORM\Entity, ORM\Table(name:"Credencial")]
 class Credencial extends KissEntity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
@@ -20,6 +20,6 @@ class Credencial extends KissEntity {
   #[ORM\JoinColumn(name: "FKNivelAcesso", referencedColumnName: "ID", nullable: false)]
   public NivelAcesso $nivelAcesso;
 
-  #[ORM\OneToOne(targetEntity: Usuario::class, mappedBy: "Credencial")]
+  #[ORM\OneToOne(targetEntity: Usuario::class, mappedBy: "credencial")]
   public ?Usuario $usuario = null;
 } 

@@ -1,14 +1,16 @@
 <?php
 namespace App\Entities\Servico;
 
-use Doctrine\ORM\Mapping as ORM;
 use KissPhp\Abstractions\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use App\Entities\Usuarios\Usuario;
 use App\Entities\Status\StatusPublicacao;
 use App\Entities\Categorias\CategoriaServico;
 
-#[ORM\Entity]
+#[ORM\Entity, ORM\Table(name:"PublicacaoServico")]
 class PublicacaoServico extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
@@ -42,19 +44,19 @@ class PublicacaoServico extends Entity {
   #[ORM\Column(type: "string", enumType: StatusPublicacao::class, name: "StatusPublicacao")]
   public StatusPublicacao $statusPublicacao = StatusPublicacao::EM_ANALISE;
 
-  #[ORM\ManyToMany(targetEntity:Usuario::class, inversedBy:"servicosFavoritos")]
+  #[ORM\ManyToMany(targetEntity: Usuario::class, inversedBy: "servicosFavoritos")]
   #[ORM\JoinTable(name: "ServicoFavorito",
     joinColumns: [new ORM\JoinColumn(name: "IDServico", referencedColumnName: "ID")],
     inverseJoinColumns: [new ORM\JoinColumn(name: "IDUsuario", referencedColumnName: "ID")]
   )]
-  public $usuariosFavoritos;
+  public ArrayCollection $usuariosFavoritos;
 
-  #[ORM\OneToMany(targetEntity:AvaliacaoServico::class, mappedBy:"publicacao")]
-  public $avaliacoes;
+  #[ORM\OneToMany(targetEntity: AvaliacaoServico::class, mappedBy: "publicacao")]
+  public ArrayCollection $avaliacoes;
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();
-    $this->usuariosFavoritos = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->avaliacoes = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->usuariosFavoritos = new ArrayCollection();
+    $this->avaliacoes = new ArrayCollection();
   }
 } 
