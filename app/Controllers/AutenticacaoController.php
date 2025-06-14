@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Middlewares\VerificaSeUsuarioNaoLogado;
+use App\Utils\SessionKeys;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
@@ -31,7 +32,7 @@ class AutenticacaoController extends WebController {
 
     if ($usuarioAutenticado) {
       $request->session->setFlashMessage(FlashMessageType::Success, 'Usuário autenticado com sucesso!');
-      $request->session->set('usuario_autenticado', $usuarioAutenticado);
+      $request->session->set(SessionKeys::USUARIO_AUTENTICADO, $usuarioAutenticado);
       return $this->redirectTo('/servicos');
     }
     $request->session->setFlashMessage(FlashMessageType::Error, 'Usuário inválido!');

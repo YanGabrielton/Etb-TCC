@@ -96,4 +96,15 @@ class UsuariosRepository extends Repository {
       throw new \Exception("Erro ao verificar tipo de usuário");
     }
   }
+
+  public function buscarPorId(int $id): ?Usuario {
+    try {
+      return $this->database()
+        ->getRepository(Usuario::class)
+        ->find($id);
+    } catch (\Throwable $th) {
+      error_log("[Error] UsuariosRepository::buscarPorId: {$th->getMessage()}");
+      throw new \Exception("Erro ao buscar usuário");
+    }
+  }
 }

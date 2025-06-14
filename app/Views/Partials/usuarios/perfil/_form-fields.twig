@@ -1,5 +1,5 @@
 <!-- Nome Completo -->
-<div class="{% if usuario.tipo != 'prestador' %}col-span-2{% endif %}">
+<div class="{% if usuario.grupo != 'PRESTADOR' %}col-span-2{% endif %}">
   <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
   <div class="relative">
     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -14,19 +14,20 @@
 <!-- CPF/CNPJ -->
 <div>
   <label for="documento" class="block text-sm font-medium text-gray-700 mb-1">
-    {{ usuario.tipo == 'prestador' ? 'CPF/CNPJ' : 'CPF' }}
+    {{ usuario.grupo == 'prestador' ? 'CPF/CNPJ' : 'CPF' }}
   </label>
   <div class="relative">
     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
       <i class="bi bi-card-text text-gray-400"></i>
     </div>
-    <input type="text" id="documento" name="documento" required readonly
+    <input
+      type="text" id="documento" name="documento" required readonly
       class="py-2 pl-10 block w-full border border-gray-300 rounded-md bg-gray-50"
-      value="{{ usuario.tipo == 'prestador' ? usuario.documento : usuario.cpf }}">
+      value="{{ usuario.grupo == 'PRESTADOR' ? usuario.documento : usuario.cpf }}">
   </div>
 </div>
 
-{% if usuario.tipo != 'prestador' %}
+{% if usuario.grupo != 'PRESTADOR' %}
   <!-- Data de Nascimento -->
   <div>
     <label for="data_nascimento" class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
@@ -67,7 +68,7 @@
   </div>
 </div>
 
-{% if usuario.tipo != 'prestador' %}
+{% if usuario.grupo != 'prestador' %}
   <!-- CEP -->
   <div>
     <label for="cep" class="block text-sm font-medium text-gray-700 mb-1">CEP</label>

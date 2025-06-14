@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Utils\SessionKeys;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
@@ -16,6 +17,7 @@ use App\Services\Usuarios\UsuariosService;
 use App\Middlewares\VerificaSeUsuarioLogado;
 use App\Middlewares\VerificaSeUsuarioNaoLogado;
 
+
 #[Controller('/usuarios')]
 class UsuariosController extends WebController {
   public function __construct(private UsuariosService $service) { }
@@ -27,8 +29,15 @@ class UsuariosController extends WebController {
 
   #[Get('/meu-perfil', [VerificaSeUsuarioLogado::class])]
   public function exibirPaginaDeMeuPerfil(Request $request) {
+    $usuarioLogado = $request->session->get(SessionKeys::USUARIO_AUTENTICADO);
+    $dadosCompletos = $this->service->buscarDadosCompletosUsuario($usuarioLogado->id);
+
+    if (!$dadosCompletos) {
+      $request->session->setFlashMessage(FlashMessageType::Error, 'Não foi possível carregar os dados do perfil :/');
+    }
+
     $this->render('Pages/usuarios/meu-perfil.twig', [
-      'usuario' => $request->session->get('usuario_logado')
+      'usuario' => $dadosCompletos
     ]);
   }
 
