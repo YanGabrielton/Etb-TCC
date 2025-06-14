@@ -3,9 +3,9 @@ namespace App\Services\Usuarios;
 
 use App\DTOs\Usuario\UsuarioCadastroDTO;
 
+use App\DTOs\Usuario\UsuarioMeuPerfilDTO;
 use App\Repositories\Usuarios\UsuariosRepository;
 use App\Repositories\Credenciais\CredencialRepository;
-
 
 class UsuariosService {
   public function __construct(
@@ -21,51 +21,19 @@ class UsuariosService {
     return $this->usuarioRepository->cadastrar($usuarioDTO, $senhaHash);
   }
 
-  public function buscarDadosCompletosUsuario(int $idUsuario): ?array {
+  public function obterUsuarioPeloId(int $id): ?UsuarioMeuPerfilDTO {
     try {
-      if (!$idUsuario) {
+      if (!$id) {
         error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: ID do usuário inválido");
         return null;
       }
-
-      $usuario = $this->usuarioRepository->buscarPorId($idUsuario);
+      $usuario = $this->usuarioRepository->buscarPorId($id);
       
       if (!$usuario) {
         error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: Usuário não encontrado");
         return null;
       }
-
-      if (!$usuario->credencial) {
-        error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: Credenciais do usuário não encontradas");
-        return null;
-      }
-
-      $dataNascimento = $usuario->dataNascimento instanceof \DateTime 
-        ? $usuario->dataNascimento->format('Y-m-d')
-        : null;
-
-      if (!$dataNascimento) {
-        error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: Data de nascimento inválida");
-        return null;
-      }
-
-      return [
-        'id' => $usuario->id,
-        'nome' => $usuario->nome ?? '',
-        'cpf' => $usuario->cpf ?? '',
-        'foto' => $usuario->foto,
-        'celular' => $usuario->celular,
-        'dataNascimento' => $dataNascimento,
-        'email' => $usuario->credencial->email ?? '',
-        'statusUsuario' => $usuario->statusUsuario?->value ?? 'ATIVO',
-        'endereco' => $usuario->endereco ? [
-          'cep' => $usuario->endereco->cep ?? '',
-          'estado' => $usuario->endereco->estado ?? '',
-          'cidade' => $usuario->endereco->cidade ?? '',
-          'bairro' => $usuario->endereco->bairro ?? '',
-          'rua' => $usuario->endereco->rua ?? ''
-        ] : null
-      ];
+      return $usuario->toObject(UsuarioMeuPerfilDTO::class);
     } catch (\Throwable $th) {
       error_log("[Error] UsuariosService::buscarDadosCompletosUsuario: {$th->getMessage()}");
       return null;

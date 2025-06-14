@@ -29,8 +29,6 @@
   "minimum-stability": "dev",
   "require": {
     "kiss-php/framework": "dev-main",
-    "doctrine/doctrine-bundle": "2.15.x-dev",
-    "symfony/console": "7.4.x-dev",
     "doctrine/orm": "3.4.x-dev"
   }
 }

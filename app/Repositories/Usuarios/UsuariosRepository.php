@@ -8,6 +8,7 @@ use App\Entities\Usuarios\{ Usuario, Endereco };
 
 use App\Repositories\Enderecos\EnderecoRepository;
 use App\Repositories\Credenciais\CredencialRepository;
+use function App\Utils\bp;
 
 class UsuariosRepository extends Repository {
   public function __construct(
@@ -21,7 +22,6 @@ class UsuariosRepository extends Repository {
 
       $endereco = (new Endereco())->fromObject($usuarioDTO->endereco);
       $endereco = $this->enderecoRepository->cadastrar($endereco);
-
       $credencial = $this->credencialRepository->cadastrar($usuarioDTO->email, $senhaHash);
 
       $usuario = new Usuario();
@@ -103,12 +103,11 @@ class UsuariosRepository extends Repository {
       $usuario = $this->database()
         ->getRepository(Usuario::class)
         ->find($id);
-
+    
       if (!$usuario) {
         error_log("[Error] UsuariosRepository::buscarPorId: Usuário não encontrado para o ID {$id}");
         return null;
       }
-
       return $usuario;
     } catch (\Throwable $th) {
       error_log("[Error] UsuariosRepository::buscarPorId: {$th->getMessage()}");

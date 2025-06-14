@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Middlewares\VerificaSeUsuarioNaoLogado;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
 
@@ -13,10 +14,9 @@ use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use App\Utils\SessionKeys;
 use App\DTOs\Login\Credenciais;
 
-use App\Middlewares\VerificaSeUsuarioLogado;
 use App\Services\Autenticacao\AutenticacaoService;
 
-#[Controller('/autenticacao', [VerificaSeUsuarioLogado::class])]
+#[Controller('/autenticacao', [VerificaSeUsuarioNaoLogado::class])]
 class AutenticacaoController extends WebController {
   public function __construct(private AutenticacaoService $service) { }
 

@@ -8,10 +8,10 @@ use App\Entities\Servico\PublicacaoServico;
 
 #[ORM\Entity]
 class CategoriaServico extends Entity {
-  #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer")]
+  #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
 
-  #[ORM\Column(length: 25)]
+  #[ORM\Column(length: 25, name: "Nome")]
   public string $nome;
 
   #[ORM\OneToMany(targetEntity: PublicacaoServico::class, mappedBy: "categoria")]
