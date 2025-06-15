@@ -26,7 +26,10 @@ class UsuariosController extends WebController {
   }
 
   #[Post('/cadastro')]
-  public function cadastrarUsuario(#[Body] UsuarioCadastroDTO $usuario, Request $request) {
+  public function cadastrarUsuario(
+    Request $request,
+    #[Body] UsuarioCadastroDTO $usuario
+  ) {
     $foiCadastrado = $this->service->cadastrarUsuario($usuario);
 
     if (!$foiCadastrado) {

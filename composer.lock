@@ -827,12 +827,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php.git",
-                "reference": "15eec9778a765786f8e4d35b21d3b266c2a42d22"
+                "reference": "a620b5fab23720aff7a8b6ea40cc22610b8058ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/15eec9778a765786f8e4d35b21d3b266c2a42d22",
-                "reference": "15eec9778a765786f8e4d35b21d3b266c2a42d22",
+                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/a620b5fab23720aff7a8b6ea40cc22610b8058ba",
+                "reference": "a620b5fab23720aff7a8b6ea40cc22610b8058ba",
                 "shasum": ""
             },
             "require": {
@@ -863,7 +863,7 @@
                 "source": "https://github.com/ItaloBrazucaDeveloper/kiss-php/tree/main",
                 "issues": "https://github.com/ItaloBrazucaDeveloper/kiss-php/issues"
             },
-            "time": "2025-06-15T16:07:00+00:00"
+            "time": "2025-06-15T18:37:27+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -1280,12 +1280,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "13cff4946131b09c4e44c69e572fa77fbe6e9bd7"
+                "reference": "d6fb3f949edcfb1cd404b91b03ef88815f4dfd4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/13cff4946131b09c4e44c69e572fa77fbe6e9bd7",
-                "reference": "13cff4946131b09c4e44c69e572fa77fbe6e9bd7",
+                "url": "https://api.github.com/repos/symfony/console/zipball/d6fb3f949edcfb1cd404b91b03ef88815f4dfd4f",
+                "reference": "d6fb3f949edcfb1cd404b91b03ef88815f4dfd4f",
                 "shasum": ""
             },
             "require": {
@@ -1366,7 +1366,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-13T12:15:18+00:00"
+            "time": "2025-06-15T13:17:11+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

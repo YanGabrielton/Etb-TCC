@@ -3,8 +3,8 @@ namespace App\Repositories\Usuarios;
 
 use KissPhp\Abstractions\Repository;
 
+use App\Entities\{ Usuario, Endereco };
 use App\DTOs\Usuario\UsuarioCadastroDTO;
-use App\Entities\Usuarios\{ Usuario, Endereco };
 
 use App\Repositories\Enderecos\EnderecoRepository;
 use App\Repositories\Credenciais\CredencialRepository;
@@ -15,7 +15,7 @@ class UsuariosRepository extends Repository {
     private CredencialRepository $credencialRepository
   ) { }
 
-  public function cadastrar(UsuarioCadastroDTO $usuarioDTO, string $senhaHash): bool {
+  public function cadastrar(UsuarioCadastroDTO $usuarioDTO, string $senhaHash): int {
     try {
       $this->database()->getConnection()->beginTransaction();
 
@@ -35,7 +35,7 @@ class UsuariosRepository extends Repository {
       $this->database()->flush();
 
       $this->database()->getConnection()->commit();
-      return true;
+      return $this->database()->getConnection()->lastInsertId();
     } catch (\Throwable $th) {
       $this->database()->getConnection()->rollBack();
       error_log("[Error] UsuariosRepository::cadastrar: {$th->getMessage()}");

@@ -18,7 +18,8 @@ class UsuariosService {
       return false;
     }
     $senhaHash = password_hash($usuarioDTO->senha, PASSWORD_BCRYPT);
-    return $this->usuarioRepository->cadastrar($usuarioDTO, $senhaHash);
+    $usuarioId = $this->usuarioRepository->cadastrar($usuarioDTO, $senhaHash);
+    return !!$usuarioId;
   }
 
   public function obterUsuarioPeloId(int $id): ?UsuarioMeuPerfilDTO {
