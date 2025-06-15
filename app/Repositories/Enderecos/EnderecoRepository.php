@@ -19,7 +19,9 @@ class EnderecoRepository extends Repository {
 
   public function buscarPorId(int $id): ?Endereco {
     try {
-      return $this->database()->getRepository(Endereco::class)->findOneBy(['id' => $id]);
+      return $this->database()
+        ->getRepository(Endereco::class)
+        ->findOneBy(['id' => $id]);
     } catch (\Throwable $th) {
       error_log("[Error] EnderecoRepository: {$th->getMessage()}");
       return null;

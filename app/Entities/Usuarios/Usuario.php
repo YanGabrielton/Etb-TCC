@@ -46,18 +46,15 @@ class Usuario extends Entity {
   public StatusUsuario $statusUsuario = StatusUsuario::ATIVO;
 
   #[ORM\OneToMany(targetEntity:InformacaoContato::class, mappedBy:"usuario")]
-  public ArrayCollection $informacoesContato;
+  public $informacoesContato;
 
   #[ORM\OneToMany(targetEntity:PublicacaoServico::class, mappedBy:"usuario")]
-  public ArrayCollection $publicacoesServico;
+  public $publicacoesServico;
 
   #[ORM\ManyToMany(targetEntity:PublicacaoServico::class, mappedBy:"usuariosFavoritos")]
-  public ArrayCollection $servicosFavoritos;
+  public $servicosFavoritos;
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();
-    $this->informacoesContato = new ArrayCollection();
-    $this->publicacoesServico = new ArrayCollection();
-    $this->servicosFavoritos = new ArrayCollection();
   }
 }

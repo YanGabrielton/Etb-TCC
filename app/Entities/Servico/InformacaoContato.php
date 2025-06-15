@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entities\Usuarios\Usuario;
 use App\Entities\Categorias\CategoriaContato;
 
-#[ORM\Entity]
+#[ORM\Entity, ORM\Table(name:"InformacaoContato")]
 class InformacaoContato extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;

@@ -11,7 +11,7 @@ use App\Utils\SessionKeys;
 use App\Services\Usuarios\UsuariosService;
 
 use App\Middlewares\VerificaSeUsuarioLogado;
-use function App\Utils\bp;
+
 
 #[Controller('/meu-perfil', [VerificaSeUsuarioLogado::class])]
 class MeuPerfilController extends WebController {
@@ -19,7 +19,7 @@ class MeuPerfilController extends WebController {
 
   #[Get]
   public function exibirPaginaDeMeuPerfil(Request $request) {
-    $usuarioLogado = $request->session::get(SessionKeys::USUARIO_AUTENTICADO);
+    $usuarioLogado = $request->session->get(SessionKeys::USUARIO_AUTENTICADO);
     $dadosCompletos = $this->service->obterUsuarioPeloId($usuarioLogado->id);
 
     $this->render('Pages/usuarios/meu-perfil.twig', [

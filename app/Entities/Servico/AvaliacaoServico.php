@@ -11,14 +11,14 @@ class AvaliacaoServico extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
 
-  #[ORM\Column(type: "integer", name: "Nota")]
+  #[ORM\Column(type: "smallint", name: "Nota")]
   public int $nota = 0;
 
   #[ORM\Column(length: 255, nullable: true, name: "Comentario")]
   public ?string $comentario = null;
 
   #[ORM\ManyToOne(targetEntity: PublicacaoServico::class)]
-  #[ORM\JoinColumn(name: "FkPublicacao", referencedColumnName: "ID", nullable: false)]
+  #[ORM\JoinColumn(name: "FKPublicacao", referencedColumnName: "ID", nullable: false)]
   public PublicacaoServico $publicacao;
 
   #[ORM\ManyToOne(targetEntity: Usuario::class)]

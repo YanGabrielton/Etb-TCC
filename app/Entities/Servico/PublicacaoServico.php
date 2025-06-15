@@ -22,7 +22,7 @@ class PublicacaoServico extends Entity {
   public ?string $sobre = null;
 
   #[ORM\Column(type: "decimal", precision: 7, scale: 2, name: "Valor")]
-  public float $valor;
+  public string $valor;
 
   #[ORM\Column(type: "integer", name: "QuantidadeFavorito")]
   public int $quantidadeFavorito = 0;
@@ -49,14 +49,12 @@ class PublicacaoServico extends Entity {
     joinColumns: [new ORM\JoinColumn(name: "IDServico", referencedColumnName: "ID")],
     inverseJoinColumns: [new ORM\JoinColumn(name: "IDUsuario", referencedColumnName: "ID")]
   )]
-  public ArrayCollection $usuariosFavoritos;
+  public $usuariosFavoritos;
 
   #[ORM\OneToMany(targetEntity: AvaliacaoServico::class, mappedBy: "publicacao")]
-  public ArrayCollection $avaliacoes;
+  public $avaliacoes;
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();
-    $this->usuariosFavoritos = new ArrayCollection();
-    $this->avaliacoes = new ArrayCollection();
   }
 } 

@@ -26,9 +26,5 @@ class Endereco extends Entity {
   public string $rua;
 
   #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "endereco")]
-  public ArrayCollection $usuarios;
-
-  public function __construct() {
-    $this->usuarios = new ArrayCollection();
-  }
+  public $usuarios;
 } 

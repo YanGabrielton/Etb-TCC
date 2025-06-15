@@ -11,7 +11,7 @@ use KissPhp\Abstractions\WebMiddleware;
  */
 class VerificaSeUsuarioNaoLogado extends WebMiddleware {
   public function handle(Request $request, \Closure $next): ?Request {
-    if (!$request->session::has(SessionKeys::USUARIO_AUTENTICADO)) {
+    if (!$request->session->has(SessionKeys::USUARIO_AUTENTICADO)) {
       return $next($request);
     }
     return $request->redirectTo('/servicos');
