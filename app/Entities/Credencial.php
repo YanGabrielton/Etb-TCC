@@ -21,4 +21,4 @@ class Credencial extends Entity {
 
   #[ORM\OneToOne(targetEntity: Usuario::class, mappedBy: "credencial")]
   public ?Usuario $usuario = null;
-} 
+}

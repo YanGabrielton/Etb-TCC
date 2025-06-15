@@ -11,6 +11,7 @@ use App\Utils\SessionKeys;
 use App\Services\Usuarios\UsuariosService;
 
 use App\Middlewares\VerificaSeUsuarioLogado;
+use function App\Utils\bp;
 
 
 #[Controller('/meu-perfil', [VerificaSeUsuarioLogado::class])]

@@ -35,9 +35,11 @@ class UsuariosRepository extends Repository {
       $this->database()->flush();
 
       $this->database()->getConnection()->commit();
-      return $this->database()->getConnection()->lastInsertId();
+      return $usuario->id;
     } catch (\Throwable $th) {
-      $this->database()->getConnection()->rollBack();
+      if ($this->database()->getConnection()->isTransactionActive()) {
+        $this->database()->getConnection()->rollBack();
+      }
       error_log("[Error] UsuariosRepository::cadastrar: {$th->getMessage()}");
       throw new \Exception("Erro ao cadastrar usuário: {$th->getMessage()}");
     }
