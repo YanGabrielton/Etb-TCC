@@ -4,7 +4,7 @@ namespace App\Entities\Servico;
 use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
-use App\Entities\Usuarios\Usuario;
+use App\Entities\Usuario;
 use App\Entities\Categorias\CategoriaContato;
 
 #[ORM\Entity, ORM\Table(name:"InformacaoContato")]

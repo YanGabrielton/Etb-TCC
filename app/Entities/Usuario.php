@@ -1,9 +1,9 @@
 <?php
-namespace App\Entities\Usuarios;
+namespace App\Entities;
 
 use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{ Collection, ArrayCollection };
 
 use App\Entities\Status\StatusUsuario;
 use App\Entities\Servico\{ InformacaoContato, PublicacaoServico };
@@ -46,15 +46,18 @@ class Usuario extends Entity {
   public StatusUsuario $statusUsuario = StatusUsuario::ATIVO;
 
   #[ORM\OneToMany(targetEntity:InformacaoContato::class, mappedBy:"usuario")]
-  public $informacoesContato;
+  public Collection $informacoesContato;
 
   #[ORM\OneToMany(targetEntity:PublicacaoServico::class, mappedBy:"usuario")]
-  public $publicacoesServico;
+  public Collection $publicacoesServico;
 
   #[ORM\ManyToMany(targetEntity:PublicacaoServico::class, mappedBy:"usuariosFavoritos")]
-  public $servicosFavoritos;
+  public Collection $servicosFavoritos;
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();
+    $this->informacoesContato = new ArrayCollection();
+    $this->publicacoesServico = new ArrayCollection();
+    $this->servicosFavoritos = new ArrayCollection();
   }
-}
+} 

@@ -7,7 +7,7 @@ WORKDIR /build
 # Copia os arquivos de dependências
 COPY composer.json composer.lock ./
 # Instala as dependências
-RUN composer install --no-scripts --no-autoloader
+RUN composer install --no-scripts --no-autoloader --no-dev
 
 # Copia o resto do código fonte
 COPY . .
@@ -18,6 +18,9 @@ RUN composer dump-autoload --optimize
 FROM php:8.4-alpine as final
 
 WORKDIR /job4you
+
+RUN mkdir -p var/cache/doctrine/Proxies \
+      && chmod -R 777 var/cache/doctrine
 
 COPY --from=build /build/app ./app
 COPY --from=build /build/public ./public

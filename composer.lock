@@ -98,12 +98,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "cbd5af35caaca2f7057070e0b5fd830260602393"
+                "reference": "67d96cd09108ca7d174593dbeaa65cd19c5711bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/cbd5af35caaca2f7057070e0b5fd830260602393",
-                "reference": "cbd5af35caaca2f7057070e0b5fd830260602393",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/67d96cd09108ca7d174593dbeaa65cd19c5711bb",
+                "reference": "67d96cd09108ca7d174593dbeaa65cd19c5711bb",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-14T16:57:18+00:00"
+            "time": "2025-06-15T14:48:48+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -827,17 +827,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php.git",
-                "reference": "61384f761ff99c5f1c2f0993d893ec0f8d5d5de1"
+                "reference": "15eec9778a765786f8e4d35b21d3b266c2a42d22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/61384f761ff99c5f1c2f0993d893ec0f8d5d5de1",
-                "reference": "61384f761ff99c5f1c2f0993d893ec0f8d5d5de1",
+                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/15eec9778a765786f8e4d35b21d3b266c2a42d22",
+                "reference": "15eec9778a765786f8e4d35b21d3b266c2a42d22",
                 "shasum": ""
             },
             "require": {
-                "doctrine/dbal": "^4.2",
-                "doctrine/orm": "^3.3",
+                "doctrine/dbal": "^4",
+                "doctrine/orm": "^3",
                 "symfony/cache": "^7",
                 "twig/twig": "^3.21.1",
                 "vlucas/phpdotenv": "^5.6.2"
@@ -845,9 +845,6 @@
             "default-branch": true,
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "": "src/"
-                },
                 "psr-4": {
                     "KissPhp\\": "src/",
                     "KissPhp\\Config\\": "config/",
@@ -866,7 +863,7 @@
                 "source": "https://github.com/ItaloBrazucaDeveloper/kiss-php/tree/main",
                 "issues": "https://github.com/ItaloBrazucaDeveloper/kiss-php/issues"
             },
-            "time": "2025-06-14T19:27:29+00:00"
+            "time": "2025-06-15T16:07:00+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -1108,12 +1105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "c380b7c15680a0afdf7bda98e72fe14a984d15b0"
+                "reference": "815ded1eab1851f42eb3ffad930c0efc8591d971"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/c380b7c15680a0afdf7bda98e72fe14a984d15b0",
-                "reference": "c380b7c15680a0afdf7bda98e72fe14a984d15b0",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/815ded1eab1851f42eb3ffad930c0efc8591d971",
+                "reference": "815ded1eab1851f42eb3ffad930c0efc8591d971",
                 "shasum": ""
             },
             "require": {
@@ -1198,7 +1195,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-02T14:13:49+00:00"
+            "time": "2025-06-15T10:08:16+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -2174,12 +2171,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7dca48a57ce105c4a5fb4a15d647f6da38ae3191"
+                "reference": "403bd9d73c2a010e5b26689f2f2eb9d7ddf391af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7dca48a57ce105c4a5fb4a15d647f6da38ae3191",
-                "reference": "7dca48a57ce105c4a5fb4a15d647f6da38ae3191",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/403bd9d73c2a010e5b26689f2f2eb9d7ddf391af",
+                "reference": "403bd9d73c2a010e5b26689f2f2eb9d7ddf391af",
                 "shasum": ""
             },
             "require": {
@@ -2246,7 +2243,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-06T06:01:35+00:00"
+            "time": "2025-06-15T14:42:08+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

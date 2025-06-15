@@ -3,6 +3,7 @@ namespace App\Entities\Categorias;
 
 use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\{ Collection, ArrayCollection };
 
 use App\Entities\Servico\InformacaoContato;
 
@@ -15,5 +16,9 @@ class CategoriaContato extends Entity {
   public string $nome;
 
   #[ORM\OneToMany(targetEntity: InformacaoContato::class, mappedBy: "categoria")]
-  public $informacoesContato;
+  public Collection $informacoesContato;
+
+  public function __construct() {
+    $this->informacoesContato = new ArrayCollection();
+  }
 } 

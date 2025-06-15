@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories\Autenticacao;
 
-use App\DTOs\Login\UsuarioLogin;
 use KissPhp\Abstractions\Repository;
 use App\Entities\Views\ViewUsuarioLogin;
 

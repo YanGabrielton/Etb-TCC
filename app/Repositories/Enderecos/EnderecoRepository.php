@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Enderecos;
 
-use App\Entities\Usuarios\Endereco;
+use App\Entities\Endereco;
 use KissPhp\Abstractions\Repository;
 
 class EnderecoRepository extends Repository {

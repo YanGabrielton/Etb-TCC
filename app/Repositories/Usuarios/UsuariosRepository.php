@@ -8,7 +8,6 @@ use App\Entities\Usuarios\{ Usuario, Endereco };
 
 use App\Repositories\Enderecos\EnderecoRepository;
 use App\Repositories\Credenciais\CredencialRepository;
-use function App\Utils\bp;
 
 class UsuariosRepository extends Repository {
   public function __construct(
@@ -25,12 +24,12 @@ class UsuariosRepository extends Repository {
       $credencial = $this->credencialRepository->cadastrar($usuarioDTO->email, $senhaHash);
 
       $usuario = new Usuario();
-      $usuario->nome = ($usuarioDTO->nome);
-      $usuario->cpf = ($usuarioDTO->cpf);
-      $usuario->celular = ($usuarioDTO->celular);
-      $usuario->dataNascimento = (new \DateTime($usuarioDTO->dataNascimento));
-      $usuario->credencial = ($credencial);
-      $usuario->endereco = ($endereco);
+      $usuario->nome = $usuarioDTO->nome;
+      $usuario->cpf = $usuarioDTO->cpf;
+      $usuario->celular = $usuarioDTO->celular;
+      $usuario->dataNascimento = new \DateTime($usuarioDTO->dataNascimento);
+      $usuario->credencial = $credencial;
+      $usuario->endereco = $endereco;
 
       $this->database()->persist($usuario);
       $this->database()->flush();

@@ -2,11 +2,10 @@
 namespace App\Entities\Servico;
 
 use KissPhp\Abstractions\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\{ Collection, ArrayCollection };
 
-use App\Entities\Usuarios\Usuario;
+use App\Entities\Usuario;
 use App\Entities\Status\StatusPublicacao;
 use App\Entities\Categorias\CategoriaServico;
 
@@ -49,12 +48,14 @@ class PublicacaoServico extends Entity {
     joinColumns: [new ORM\JoinColumn(name: "IDServico", referencedColumnName: "ID")],
     inverseJoinColumns: [new ORM\JoinColumn(name: "IDUsuario", referencedColumnName: "ID")]
   )]
-  public $usuariosFavoritos;
+  public Collection $usuariosFavoritos;
 
   #[ORM\OneToMany(targetEntity: AvaliacaoServico::class, mappedBy: "publicacao")]
-  public $avaliacoes;
+  public Collection $avaliacoes;
 
   public function __construct() {
     $this->dataCriacao = new \DateTime();
+    $this->avaliacoes = new ArrayCollection();
+    $this->usuariosFavoritos = new ArrayCollection();
   }
 } 

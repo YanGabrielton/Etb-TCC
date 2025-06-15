@@ -23,6 +23,8 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
 
   app:
     container_name: job4you_app
+    depends_on:
+      - mysql
     build:
       context: ./ # Define o contexto de construção do container, onde o Dockerfile está localizado
       dockerfile: Dockerfile # Especifica o Dockerfile a ser usado para construir o container do app
@@ -34,6 +36,7 @@ services: # Serviços (containers) necessários para o Job4You funcionar correta
       # (as alterações no código são refletidas imediatamente no container)
       - ./app:/job4you/app
       - ./public:/job4you/public
+      - ./var/cache/doctrine/Proxies:/job4you/var/cache/doctrine/Proxies
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}

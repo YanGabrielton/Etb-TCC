@@ -20,5 +20,6 @@ DatabaseParams::setConnectionParams([
 
 DatabaseParams::setMetadata([
   'isDevMode' => Env::get('DEV_MODE') === 'true',
-  'paths' => [__DIR__ . '/Entities/']
+  'paths' => [__DIR__ . '/Entities'],
+  'proxyDir' => (__DIR__ . '/../var/cache/doctrine/Proxies')
 ]);

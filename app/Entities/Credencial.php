@@ -1,12 +1,11 @@
 <?php
-namespace App\Entities\Usuarios;
+namespace App\Entities;
 
-use KissPhp\Abstractions\Entity as KissEntity;
+use KissPhp\Abstractions\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
-
 #[ORM\Entity, ORM\Table(name:"Credencial")]
-class Credencial extends KissEntity {
+class Credencial extends Entity {
   #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "ID")]
   public ?int $id = null;
 
