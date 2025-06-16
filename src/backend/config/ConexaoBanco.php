@@ -2,12 +2,12 @@
 
 class DataBase
 {
-    private $host = "localhost";
+    private $host = "db.job4you.local";
     private $port = 3306;
 
-    private $dbname = "job4you";
-    private $user = "root";
-    private $password = "";
+    private $dbname = "JOB4YOU";
+    private $user = "brazuca";
+    private $password = "secret";
     
     public $conn;
 

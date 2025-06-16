@@ -18,4 +18,3 @@ while ($row = $result->fetch_assoc()) {
     echo "<p>Cidade: " . $row['Cidade'] . "</p>";
     echo "</div><hr>";
 }
-?>

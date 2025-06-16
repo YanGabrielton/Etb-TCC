@@ -19,4 +19,3 @@ function verificaTipoUsuario($conexao, $idUsuario) {
         return "CLIENTE";
     }
 }
-?>

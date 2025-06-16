@@ -64,7 +64,7 @@ include '../backend/includes/painel_admin.php';
 
                 <!-- Foto do usuário com saudação -->
                 <div class="flex items-center mt-4 p-2 rounded-lg">
-                    <img src="<?php echo !empty($usuario['Foto']) ? htmlspecialchars($usuario['Foto']) : 'https://via.placeholder.com/40'; ?>"
+                    <img src="<?php echo !empty($usuario['Foto']) ? htmlspecialchars($usuario['Foto'] ?? '') : '../img/fotoperfil.jpg'; ?>"
                         alt="Foto do usuário" class="w-10 h-10 rounded-full object-cover border-2 border-yellow-400">
                     <div class="ml-3">
                         <p class="font-medium text-sm">Olá, <span class="text-yellow-400">
@@ -199,7 +199,7 @@ include '../backend/includes/painel_admin.php';
                             </div>
                             <div class="ml-3 flex-1">
                                 <p class="text-sm text-gray-800">
-                                    <?php echo htmlspecialchars($atividade['mensagem']); ?>
+                                    <?php echo htmlspecialchars($atividade['mensagem'] ?? ''); ?>
                                 </p>
                                 <p class="text-xs text-gray-500 mt-1">
                                     <?php echo date('d/m/Y H:i', strtotime($atividade['data'])); ?>
@@ -280,30 +280,30 @@ include '../backend/includes/painel_admin.php';
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 <img class="h-10 w-10 rounded-full object-cover"
-                                                    src="<?php echo !empty($usuario['Foto']) ? htmlspecialchars($usuario['Foto']) : 'https://via.placeholder.com/40'; ?>"
+                                                    src="<?php echo !empty($usuario['Foto']) ? htmlspecialchars($usuario['Foto']) : '../img/fotoperfil.jpg'; ?>"
                                                     alt="">
                                             </div>
                                             <div class="ml-4">
                                                 <div class="text-sm font-medium text-gray-900">
-                                                    <?php echo htmlspecialchars($usuario['Nome']); ?>
+                                                    <?php echo htmlspecialchars($usuario['Nome'] ?? ''); ?>
                                                 </div>
                                                 <div class="text-sm text-gray-500">
-                                                    <?php echo htmlspecialchars($usuario['Email']); ?>
+                                                    <?php echo htmlspecialchars($usuario['Email'] ?? ''); ?>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?php echo htmlspecialchars($usuario['CPF']); ?>
+                                        <?php echo htmlspecialchars($usuario['CPF'] ?? ''); ?>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?php echo htmlspecialchars($usuario['Celular']); ?>
+                                        <?php echo htmlspecialchars($usuario['Celular'] ?? ''); ?>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                       <?php echo $usuario['StatusUsuario'] === 'ativo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                            <?php echo htmlspecialchars($usuario['StatusUsuario']); ?>
+                                            <?php echo htmlspecialchars($usuario['StatusUsuario'] ?? ''); ?>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -441,22 +441,22 @@ include '../backend/includes/painel_admin.php';
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 <img class="h-10 w-10 rounded-full object-cover"
-                                                    src="<?php echo !empty($prestador['Foto']) ? htmlspecialchars($prestador['Foto']) : 'https://via.placeholder.com/40'; ?>"
+                                                    src="<?php echo !empty($prestador['Foto']) ? htmlspecialchars($prestador['Foto'] ?? '') : '../img/fotoperfil.jpg'; ?>"
                                                     alt="">
                                             </div>
                                             <div class="ml-4">
                                                 <div class="text-sm font-medium text-gray-900">
-                                                    <?php echo htmlspecialchars($prestador['Nome']); ?>
+                                                    <?php echo htmlspecialchars($prestador['Nome'] ?? ''); ?>
                                                 </div>
                                                 <div class="text-sm text-gray-500">
-                                                    <?php echo htmlspecialchars($prestador['Email']); ?>
+                                                    <?php echo htmlspecialchars($prestador['Email'] ?? ''); ?>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">
-                                            <?php echo htmlspecialchars($prestador['total_servicos']); ?> serviços
+                                            <?php echo htmlspecialchars($prestador['total_servicos'] ?? ''); ?> serviços
                                         </div>
                                         <div class="text-sm text-gray-500">R$
                                             <?php echo number_format($prestador['faturamento'], 2, ',', '.'); ?>
@@ -479,7 +479,7 @@ include '../backend/includes/painel_admin.php';
                                         <span
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                       <?php echo $prestador['StatusUsuario'] === 'ativo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'; ?>">
-                                            <?php echo htmlspecialchars($prestador['StatusUsuario']); ?>
+                                            <?php echo htmlspecialchars($prestador['StatusUsuario'] ?? ''); ?>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -618,22 +618,22 @@ include '../backend/includes/painel_admin.php';
                                 <tr>
                                     <td class="px-6 py-4">
                                         <div class="text-sm font-medium text-gray-900">
-                                            <?php echo htmlspecialchars($servico['Titulo']); ?>
+                                            <?php echo htmlspecialchars($servico['Titulo'] ?? ''); ?>
                                         </div>
                                         <div class="text-sm text-gray-500 truncate max-w-xs">
-                                            <?php echo htmlspecialchars($servico['Sobre']); ?>
+                                            <?php echo htmlspecialchars($servico['Sobre'] ?? ''); ?>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-8 w-8">
                                                 <img class="h-8 w-8 rounded-full object-cover"
-                                                    src="<?php echo !empty($servico['prestador_foto']) ? htmlspecialchars($servico['prestador_foto']) : 'https://via.placeholder.com/32'; ?>"
+                                                    src="<?php echo !empty($servico['prestador_foto']) ? htmlspecialchars($servico['prestador_foto'] ?? '') : 'https://via.placeholder.com/32'; ?>"
                                                     alt="">
                                             </div>
                                             <div class="ml-2">
                                                 <div class="text-sm text-gray-900">
-                                                    <?php echo htmlspecialchars($servico['prestador']); ?>
+                                                    <?php echo htmlspecialchars($servico['prestador'] ?? ''); ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -643,7 +643,7 @@ include '../backend/includes/painel_admin.php';
                                         <?php echo number_format($servico['Valor'], 2, ',', '.'); ?>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?php echo htmlspecialchars($servico['QuantidadeFavorito']); ?>
+                                        <?php echo htmlspecialchars($servico['QuantidadeFavorito'] ?? ''); ?>
                                         <i class="fas fa-heart text-red-400 ml-1"></i>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -651,7 +651,7 @@ include '../backend/includes/painel_admin.php';
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                       <?php echo $servico['StatusPublicacao'] === 'ativo' ? 'bg-green-100 text-green-800' : 
                              ($servico['StatusPublicacao'] === 'pendente' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'); ?>">
-                                            <?php echo htmlspecialchars($servico['StatusPublicacao']); ?>
+                                            <?php echo htmlspecialchars($servico['StatusPublicacao'] ?? ''); ?>
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -734,7 +734,7 @@ include '../backend/includes/painel_admin.php';
                             <div class="bg-gray-100 rounded-lg p-4 text-center">
                                 <div
                                     class="mx-auto w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-400 mb-4">
-                                    <img src="<?php echo !empty($usuario['Foto']) ? htmlspecialchars($usuario['Foto']) : 'https://via.placeholder.com/128'; ?>"
+                                    <img src="<?php echo !empty($usuario['Foto']) ? htmlspecialchars($usuario['Foto'] ?? '') : 'https://via.placeholder.com/128'; ?>"
                                         alt="Foto do perfil" class="w-full h-full object-cover">
                                 </div>
                                 <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">

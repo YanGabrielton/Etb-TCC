@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../config/ConexaoBanco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -57,4 +57,3 @@ $stmtEndereco->close();
 
     $database->closeConnection();
 }
-?>

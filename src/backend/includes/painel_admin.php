@@ -166,4 +166,3 @@ $prestadores = buscarTodosPrestadores($conexao);
 $servicos = buscarTodosServicos($conexao);
 
 $database->closeConnection();
-?>

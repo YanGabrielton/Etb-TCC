@@ -20,4 +20,3 @@ while ($row = $result->fetch_assoc()) {
     echo "<p>R$ " . number_format($row['Valor'], 2, ',', '.') . "</p>";
     echo "</div><hr>";
 }
-?>

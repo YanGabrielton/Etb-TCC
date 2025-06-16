@@ -1,19 +1,29 @@
 <?php
+
 session_start();
 
-require '/src/backend/config/ConexaoBanco.php';
+// Verifica se as chaves 'email' e 'senha' existem no array $_POST
+if (!isset($_POST["email"]) || !isset($_POST["senha"])) {
+    $_SESSION['erro_login'] = 'Por favor, preencha todos os campos.';
+    header("Location: /src/pages/login.php");
+    exit;
+}
+
+require __DIR__ . '/../config/ConexaoBanco.php';
 
 $database = new DataBase();
 $conexao = $database->getConnection();
 
-$email = mysqli_real_escape_string($conexao, $_POST["email"]);
+$email = $_POST["email"];
 $senha = $_POST["senha"];
 
-$sql = "SELECT u.ID, u.Nome, u.Foto, u.StatusUsuario, c.Email, c.Senha, na.Grupo 
-        FROM Usuario u
-        INNER JOIN Credencial c ON c.ID = u.FKCredencial
-        INNER JOIN NivelAcesso na ON na.ID = c.FKNivelAcesso
-        WHERE c.Email = ? AND u.StatusUsuario = 'ATIVO'";
+$sql = "
+    SELECT u.ID, u.Nome, u.Foto, u.StatusUsuario, c.Email, c.Senha, na.Grupo 
+    FROM Usuario u
+    INNER JOIN Credencial c ON c.ID = u.FKCredencial
+    INNER JOIN NivelAcesso na ON na.ID = c.FKNivelAcesso
+    WHERE c.Email = ? AND u.StatusUsuario = 'ATIVO'
+";
 
 $stmt = $conexao->prepare($sql);
 $stmt->bind_param("s", $email);
@@ -48,11 +58,12 @@ if ($resultado->num_rows == 1) {
     } else {
         $_SESSION['erro_login'] = 'Senha incorreta!';
         header("Location: /src/pages/login.php");
+        exit;
     }
 } else {
     $_SESSION['erro_login'] = 'Usuário não encontrado ou inativo!';
     header("Location: /src/pages/login.php");
+    exit;
 }
 
 $database->closeConnection();
-?>

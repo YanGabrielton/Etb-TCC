@@ -1,12 +1,3 @@
-<!-- PHP -->
-<?php
-
-
-include __DIR__ . '/src/backend/includes/processa_login.php';
-include __DIR__ . '/src/backend/includes/valida_login.php'; 
-?>
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
