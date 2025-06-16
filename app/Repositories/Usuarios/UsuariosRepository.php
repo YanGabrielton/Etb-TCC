@@ -5,7 +5,6 @@ use KissPhp\Abstractions\Repository;
 
 use App\Entities\{ Usuario, Endereco };
 use App\DTOs\Usuario\UsuarioCadastroDTO;
-
 use App\Repositories\Enderecos\EnderecoRepository;
 use App\Repositories\Credenciais\CredencialRepository;
 

@@ -5,8 +5,6 @@ use KissPhp\Abstractions\Repository;
 
 use App\Entities\{ Credencial, NivelAcesso };
 
-use function App\Utils\bp;
-
 class CredencialRepository extends Repository {
   public function verificarEmailExistente(string $email): bool {
     try {
@@ -57,10 +55,9 @@ class CredencialRepository extends Repository {
     try {
       $credencial = $this->database()
         ->getRepository(Credencial::class)
-        ->findOneBy(['email' => $email]);
+        ->find(['email' => $email]);
       return $credencial;
     } catch (\Throwable $th) {
-      bp($th);
       error_log("[Error] CredencialRepository: {$th->getMessage()}");
       return null;
     }

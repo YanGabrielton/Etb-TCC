@@ -1,12 +1,10 @@
 <?php
 namespace App\Services\Usuarios;
 
-use App\DTOs\Usuario\UsuarioCadastroDTO;
-
-use App\DTOs\Usuario\UsuarioMeuPerfilDTO;
 use App\Repositories\Usuarios\UsuariosRepository;
 use App\Factories\Usuarios\UsuarioMeuPerfilDTOFactory;
 use App\Repositories\Credenciais\CredencialRepository;
+use App\DTOs\Usuario\{ UsuarioCadastroDTO, UsuarioMeuPerfilDTO };
 
 class UsuariosService {
   public function __construct(

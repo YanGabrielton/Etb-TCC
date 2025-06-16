@@ -1,20 +1,16 @@
 <?php
 namespace App\Controllers;
 
+use KissPhp\Enums\FlashMessageType;
+use KissPhp\Protocols\Http\Request;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
-
 use KissPhp\Attributes\Http\Request\{ Body };
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
-use KissPhp\Enums\FlashMessageType;
-use KissPhp\Protocols\Http\Request;
-
 use App\DTOs\Usuario\UsuarioCadastroDTO;
 use App\Services\Usuarios\UsuariosService;
-
 use App\Middlewares\VerificaSeUsuarioNaoLogado;
-
 
 #[Controller('/usuarios', [VerificaSeUsuarioNaoLogado::class])]
 class UsuariosController extends WebController {
@@ -42,7 +38,7 @@ class UsuariosController extends WebController {
   }
 
   #[Post('/atualizar')]
-  public function atualizarUsuario(#[Body] UsuarioAtualizacaoDTO $usuario) {
+  public function atualizarUsuario(#[Body] UsuarioAtualizarDTO $usuario) {
     
   }
 }

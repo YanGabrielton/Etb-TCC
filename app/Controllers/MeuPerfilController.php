@@ -1,18 +1,14 @@
 <?php
 namespace App\Controllers;
 
+use KissPhp\Protocols\Http\Request;
 use KissPhp\Abstractions\WebController;
 use KissPhp\Attributes\Http\Controller;
-
-use KissPhp\Protocols\Http\Request;
 use KissPhp\Attributes\Http\Methods\Get;
 
 use App\Utils\SessionKeys;
 use App\Services\Usuarios\UsuariosService;
-
 use App\Middlewares\VerificaSeUsuarioLogado;
-use function App\Utils\bp;
-
 
 #[Controller('/meu-perfil', [VerificaSeUsuarioLogado::class])]
 class MeuPerfilController extends WebController {
@@ -30,6 +26,11 @@ class MeuPerfilController extends WebController {
 
   #[Get('/favoritos')]
   public function exibirListaDeServicosFavoritos() {
+
+  }
+
+  #[Get('/servicos')]
+  public function exibirListaDeServicosPostados() {
 
   }
 }

@@ -3,10 +3,9 @@ namespace App\Repositories\Servicos;
 
 use KissPhp\Abstractions\Repository;
 
+use App\DTOs\CategoriaServicoDTO;
 use App\Entities\Views\ViewPublicacao;
 use App\Entities\Categorias\CategoriaServico;
-
-use App\DTOs\CategoriaServicoDTO;
 use App\DTOs\Servicos\{ ServicoCadastroDTO, ServicoDTO };
 
 class ServicosRepository extends Repository {

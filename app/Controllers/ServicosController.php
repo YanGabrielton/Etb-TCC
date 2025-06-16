@@ -3,14 +3,11 @@ namespace App\Controllers;
 
 use KissPhp\Protocols\Http\Request;
 use KissPhp\Abstractions\WebController;
-
 use KissPhp\Attributes\Http\Controller;
-
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 use KissPhp\Attributes\Http\Request\{ Body, RouteParam };
 
 use App\Utils\SessionKeys;
-
 use App\DTOs\Servicos\ServicoCadastroDTO;
 use App\Services\Servicos\ServicosService;
 
@@ -59,7 +56,7 @@ class ServicosController extends WebController {
 
   #[Post('/desativar/:id:{numeric}')]
   public function desativarServico(#[RouteParam] int $id, Request $request) {
-    $usuario = $request->session::get(SessionKeys::USUARIO_AUTENTICADO);
+    $usuario = $request->session->get(SessionKeys::USUARIO_AUTENTICADO);
 
     if (!$usuario->id) return $this->redirectTo('/login');
 

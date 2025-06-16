@@ -9,7 +9,6 @@ class EnderecoRepository extends Repository {
     try {
       $this->database()->persist($endereco);
       $this->database()->flush();
-
       return $endereco;
     } catch (\Throwable $th) {
       error_log("[Error] EnderecoRepository::cadastrar: {$th->getMessage()}");

@@ -2,7 +2,6 @@
 namespace App\Controllers;
 
 use KissPhp\Abstractions\WebController;
-
 use KissPhp\Attributes\Http\Controller;
 use KissPhp\Attributes\Http\Methods\{ Get, Post };
 
