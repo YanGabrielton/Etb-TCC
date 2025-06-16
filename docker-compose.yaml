@@ -1,3 +1,6 @@
+x-bake:
+  COMPOSE_BAKE: true
+
 services: # Serviços (containers) necessários para o Job4You funcionar corretamente
   mysql:
     container_name: job4you_database

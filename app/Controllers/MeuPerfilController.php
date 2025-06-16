@@ -27,4 +27,9 @@ class MeuPerfilController extends WebController {
       'usuario' => $dadosCompletos
     ]);
   }
+
+  #[Get('/favoritos')]
+  public function exibirListaDeServicosFavoritos() {
+
+  }
 }

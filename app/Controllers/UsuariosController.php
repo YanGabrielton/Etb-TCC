@@ -40,4 +40,9 @@ class UsuariosController extends WebController {
     $request->session->setFlashMessage(FlashMessageType::Success, 'Cadastro realizado com sucesso!');
     return $this->redirectTo('/autenticacao');
   }
+
+  #[Post('/atualizar')]
+  public function atualizarUsuario(#[Body] UsuarioAtualizacaoDTO $usuario) {
+    
+  }
 }

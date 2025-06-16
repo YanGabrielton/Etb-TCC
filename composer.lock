@@ -98,12 +98,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "67d96cd09108ca7d174593dbeaa65cd19c5711bb"
+                "reference": "1f3b6e4db81ccf7ffeb0b756e284692de158d73f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/67d96cd09108ca7d174593dbeaa65cd19c5711bb",
-                "reference": "67d96cd09108ca7d174593dbeaa65cd19c5711bb",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1f3b6e4db81ccf7ffeb0b756e284692de158d73f",
+                "reference": "1f3b6e4db81ccf7ffeb0b756e284692de158d73f",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-15T14:48:48+00:00"
+            "time": "2025-06-15T21:56:04+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -827,12 +827,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ItaloBrazucaDeveloper/kiss-php.git",
-                "reference": "732f7b55ba284fe95d8e3dfdfd1f6dbf40403177"
+                "reference": "b69aad084cc2e50aa4e8c7a9102275c77e4e1239"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/732f7b55ba284fe95d8e3dfdfd1f6dbf40403177",
-                "reference": "732f7b55ba284fe95d8e3dfdfd1f6dbf40403177",
+                "url": "https://api.github.com/repos/ItaloBrazucaDeveloper/kiss-php/zipball/b69aad084cc2e50aa4e8c7a9102275c77e4e1239",
+                "reference": "b69aad084cc2e50aa4e8c7a9102275c77e4e1239",
                 "shasum": ""
             },
             "require": {
@@ -863,7 +863,7 @@
                 "source": "https://github.com/ItaloBrazucaDeveloper/kiss-php/tree/main",
                 "issues": "https://github.com/ItaloBrazucaDeveloper/kiss-php/issues"
             },
-            "time": "2025-06-15T19:04:55+00:00"
+            "time": "2025-06-16T01:43:21+00:00"
         },
         {
             "name": "phpoption/phpoption",

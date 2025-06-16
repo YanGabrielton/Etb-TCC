@@ -19,6 +19,9 @@ FROM php:8.4-alpine as final
 
 WORKDIR /job4you
 
+# Instala o dumb-init
+RUN apk add --no-cache dumb-init
+
 RUN mkdir -p var/cache/doctrine/Proxies \
       && chmod -R 777 var/cache/doctrine
 
@@ -32,5 +35,6 @@ RUN docker-php-ext-install mysqli \
       && docker-php-ext-enable mysqli
 
 EXPOSE 5173
-# Executa o comando para iniciar o servidor embutido do PHP
-CMD [ "php", "-S", "0.0.0.0:5173", "-t", "./public"]
+# Usa dumb-init para gerenciar o processo PHP
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["php", "-S", "0.0.0.0:5173", "-t", "./public"]

@@ -17,7 +17,7 @@
 						Informações Pessoais
 					</h2>
 
-					{% set form_action = usuario.tipo == 'PRESTADOR' ? '/prestadores/atualizar-perfil' : '/usuarios/atualizar-perfil' %}
+					{% set form_action = usuario.tipo == 'PRESTADOR' ? '/prestadores/atualizar' : '/usuarios/atualizar' %}
 
 					<form action="{{ form_action }}" method="POST" class="space-y-6">
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -25,10 +25,8 @@
 						</div>
 
 						<div class="pt-4">
-							<button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-4 rounded-md font-medium transition-colors">
-								<i class="bi bi-save mr-2"></i>
-								Salvar Alterações
-							</button>
+							{% import "Macros/button.twig" as button %}
+							{{ button.render(type: 'submit', text: 'Salvar Alterações') }}
 						</div>
 					</form>
 				</section>

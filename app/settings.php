@@ -3,9 +3,14 @@
 use KissPhp\Support\Env;
 use KissPhp\Support\DatabaseParams;
 use KissPhp\Support\SessionCookieParams;
+use KissPhp\Support\ViewParams;
 
 SessionCookieParams::set([
   'httponly' => true
+]);
+
+ViewParams::addFunctions([
+  'getCurrentUrl' => fn() => $_SERVER['REQUEST_URI'] ?? '/'
 ]);
 
 DatabaseParams::setConnectionParams([
