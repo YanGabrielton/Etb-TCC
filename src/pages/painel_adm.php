@@ -1,7 +1,5 @@
 <?php
 // Conexão com o banco de dados
-
-
 include '../backend/includes/painel_admin.php';
 ?>
 <!DOCTYPE html>

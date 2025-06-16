@@ -1,7 +1,11 @@
 <?php
+session_start();
 
 if (!isset($_SESSION["id_usuario"])) {
-    header("Location: ../pages/login.php");
+    echo '<pre>';
+    print_r($_SESSION);
+    die();
+    header("Location: /src/pages/login.php");
     exit;
 }
 
@@ -74,7 +78,7 @@ if ($stmt->execute()) {
         $atualizaNivel->close();
     }
 
-    header("Location: /src/pages/prestadores.php?sucesso=1");
+    header("Location: /src/pages/servicos.php?sucesso=1");
     exit;
 } else {
     echo "Erro ao cadastrar serviço: " . $stmt->error;
