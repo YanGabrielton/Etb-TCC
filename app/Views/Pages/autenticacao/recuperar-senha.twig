@@ -24,10 +24,16 @@
     <form class="mt-8 space-y-6" action="/recuperar-senha" method="POST">
       <div>
         {{ Label.render(for: 'email', text: 'E-mail') }}
-        {{ Input.render(name: 'email', type: 'email', placeholder: 'Seu e-mail cadastrado', icon: 'bi bi-envelope', autocomplete: 'email') }}
+        {{ Input.render(
+          name: 'email',
+          type: 'email',
+          placeholder: 'Seu e-mail cadastrado',
+          icon: 'bi bi-envelope',
+          autocomplete: 'email'
+        ) }}
       </div>
 
-      {{ Button.render('submit', 'Enviar código de Recuperação') }}
+      {{ Button.render(type: 'submit', text: 'Enviar código de Recuperação') }}
     </form>
   </div>
 </main>
