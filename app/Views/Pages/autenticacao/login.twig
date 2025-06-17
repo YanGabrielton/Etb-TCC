@@ -49,8 +49,8 @@
 				</div>
 				
 				<div class="flex items-center justify-between">
-					{{ Checkbox.render(name: 'remember-me', text: 'Lembrar-me') }}
-					{{ Link.render(href: '/recuperar-senha', text: 'Esqueceu sua senha?') }}
+					{{ Checkbox.render(name: 'remember-me', label: 'Lembrar-me') }}
+					{{ Link.render(href: '/recuperar-senha', text: 'Esqueceu sua senha?', class: 'text-sm') }}
 				</div>
 
 				{{ Button.render(type: 'submit', text: 'Entrar') }}

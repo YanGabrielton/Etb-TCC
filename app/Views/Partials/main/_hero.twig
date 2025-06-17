@@ -1,14 +1,14 @@
-<div class="flex flex-col md:flex-row items-center justify-center h-full gap-8 md:gap-12">
-  <!-- IMAGEM DA HOME -->
-  <div class="md:w-1/2 flex justify-center items-center h-full">
+{% import "Macros/link.twig" as Link %}
+
+<div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+  <div class="overflow-hidden rounded-lg shadow-sm w-11/12 md:w-1/2">
     <img
       src="/images/img_index.jpg"
       alt="mulher apontando para lupa de pesquisa"
-      class="hero-image rounded-lg object-contain"
+      class="object-contain size-full"
     >
   </div>
 
-  <!-- TEXTO E BOTÕES DE AÇÃO -->
   <div class="md:w-1/2 text-center md:text-left flex flex-col justify-center h-full py-8">
     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
       Encontre ou divulgue serviços informais facilmente
@@ -18,16 +18,19 @@
       clientes!
     </p>
 
-    {# BOTÕES: levam para as páginas de serviços e cadastro #}
     <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-      <a href="/servicos"
-        class="text-shadow-sm bg-yellow-500 hover:bg-yellow-600 text-gray-100 font-medium py-3 px-6 rounded-full shadow-sm transition-colors">
-        Ver Serviços
-      </a>
-      <a href="/servicos/cadastro"
-        class="border border-gray-300 hover:border-yellow-500 text-gray-700 hover:text-yellow-500 font-medium py-3 px-6 rounded-full transition-colors">
-        Cadastrar Serviço
-      </a>
+      {{ Link.render(
+        href: '/servicos',
+        text: 'Ver Serviços',
+        variant: 'button',
+        class: 'rounded-full'
+      ) }}
+      {{ Link.render(
+        href: '/servicos/cadastro',
+        text: 'Divulgue seus serviços',
+        variant: 'outlined',
+        class: 'rounded-full'
+      ) }}
     </div>
   </div>
 </div>

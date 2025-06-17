@@ -15,7 +15,7 @@ ViewParams::addGlobals([
 ]);
 
 ViewParams::addFunctions([
-  'getCurrentUrl' => fn() => $_SERVER['REQUEST_URI'] ?? '/'
+  'getCurrentUrl' => fn() => $_SERVER['REQUEST_URI'] ?? '/',
 ]);
 
 DatabaseParams::setConnectionParams([
